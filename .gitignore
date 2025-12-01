@@ -416,3 +416,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# RimWorld mod build outputs (if you don't want to version compiled DLLs)
+1.6/Assemblies/
+*.dll
