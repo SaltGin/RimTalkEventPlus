@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>最適化設定</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>イベントテキストの圧縮を有効にする</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>クエストやイベントを RimTalk に送信するとき、圧縮されたイベントテキストを使ってトークン消費を抑えます。</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>このオプションを有効にすると、Event+ は長くて繰り返しの多いクエスト説明を圧縮し、重要な情報だけを残します。
+
+例（難民のホスピタリティ系クエスト）:
+- 圧縮前: 難民が誰なのか、なぜ逃げてきたのか、どのくらい滞在するのか、そして無料で働き戦うことなどを、複数の段落にわたって説明する長い手紙...
+- 圧縮後: 「コロニーは難民を受け入れた。[reason] のために逃れてきており、休息と立て直しのために X 日間滞在し、その間は無料で働き戦う。」といった短い要約になります。
+
+無効の場合、Event+ は常に元のイベントテキスト全文を送信します。</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>최적화 설정</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>이벤트 텍스트 압축 사용</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>퀘스트와 이벤트를 RimTalk에 보낼 때, 압축된 이벤트 텍스트를 사용해 토큰 사용량을 줄입니다.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>이 옵션을 켜면 Event+가 길고 반복적인 퀘스트 설명을 압축하면서도 핵심 정보는 유지합니다.
+
+예시(난민 수용 퀘스트):
+- 압축 전: 난민이 누구인지, 왜 도망쳐 왔는지, 얼마나 머무를지, 그리고 무료로 일하고 싸우겠다는 내용 등을 여러 문단에 걸쳐 설명하는 긴 편지...
+- 압축 후: "식민지는 난민들을 받아들였습니다. 그들은 [reason] 때문에 도망쳐 왔으며, 휴식과 재정비를 위해 X일 동안 머무를 것이고, 그 기간 동안 무료로 일하고 싸울 것입니다."와 같은 짧은 요약으로 바뀝니다.
+
+이 옵션을 끄면 Event+는 항상 이벤트의 원래 전체 텍스트를 보냅니다.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Setări de optimizare</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Activează comprimarea textului evenimentelor</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Folosește text de eveniment comprimat pentru a reduce consumul de tokeni când trimiți misiuni și evenimente către RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Când această opțiune este activată, Event+ comprimă descrierile de misiuni lungi și repetitive, păstrând totuși informațiile esențiale.
+
+Exemplu (misiune cu refugiați):
+- Înainte: O scrisoare lungă, cu mai multe paragrafe, care explică cine sunt refugiații, de ce au fugit, cât timp vor rămâne și faptul că vor munci și vor lupta gratuit...
+- După: Un scurt rezumat de tipul: "Colonia a acceptat refugiații. Au fugit din cauza [reason], vor rămâne X zile pentru a se odihni și reorganiza și vor munci și lupta gratuit în această perioadă."
+
+Când opțiunea este dezactivată, Event+ trimite întotdeauna textul complet original al evenimentului.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

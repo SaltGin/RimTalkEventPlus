@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Optimization Settings</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Enable event text compression</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Use compressed event text to reduce token usage when sending quests and events to RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>When enabled, Event+ will compress long, repetitive quest descriptions while keeping key facts.
+
+Example (refugee hospitality quest):
+- Before: A long multi-paragraph letter explaining who the refugees are, why they fled, how long they will stay, and that they will work and fight for free...
+- After: A short summary like: "The colony accepted the refugees. They fled for [reason], will stay for X days to rest, and will work and fight for free during that time."
+
+When disabled, Event+ always sends the full original event text.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

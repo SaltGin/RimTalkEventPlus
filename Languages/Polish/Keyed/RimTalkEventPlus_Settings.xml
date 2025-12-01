@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Ustawienia optymalizacji</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Włącz kompresję tekstu zdarzeń</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Używaj skompresowanego tekstu zdarzeń, aby zmniejszyć zużycie tokenów przy wysyłaniu zadań i zdarzeń do RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Gdy ta opcja jest włączona, Event+ kompresuje długie, powtarzalne opisy zadań, zachowując jednak najważniejsze informacje.
+
+Przykład (zadanie z uchodźcami):
+- Przed: Długi list z wieloma akapitami wyjaśniający, kim są uchodźcy, dlaczego uciekli, jak długo zostaną oraz że będą pracować i walczyć za darmo...
+- Po: Krótkie podsumowanie, np.: "Kolonia przyjęła uchodźców. Uciekli z powodu [reason], zostaną przez X dni, aby odpocząć i się zorganizować, i w tym czasie będą pracować oraz walczyć za darmo."
+
+Gdy opcja jest wyłączona, Event+ zawsze wysyła pełny, oryginalny tekst zdarzenia.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

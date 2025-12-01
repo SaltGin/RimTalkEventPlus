@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>最佳化設定</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>啟用事件文字壓縮</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>在向 RimTalk 傳送任務與事件時，使用壓縮後的事件文字，以降低 token 消耗。</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>啟用後，Event+ 會壓縮冗長、重複的任務描述，同時保留關鍵資訊。
+
+範例（收留難民任務）：
+- 壓縮前：一封篇幅很長、包含多個段落的信件，詳細說明難民是誰、為什麼逃離、會停留多久，以及他們會免費幫忙工作與戰鬥等內容……
+- 壓縮後：一段簡短摘要，例如：「殖民地已經接納了這些難民。他們因為 [reason] 而逃離，會在此停留 X 天以休息並重新整頓，在這段期間會免費為你工作與戰鬥。」
+
+當此選項關閉時，Event+ 一律傳送事件的完整原始文字。</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

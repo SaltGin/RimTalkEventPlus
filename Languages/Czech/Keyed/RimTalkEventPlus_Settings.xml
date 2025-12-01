@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Nastavení optimalizace</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Povolit kompresi textu událostí</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Používat komprimovaný text událostí ke snížení spotřeby tokenů při odesílání úkolů a událostí do RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Když je tato volba zapnutá, Event+ komprimuje dlouhé, opakující se popisy úkolů a zachová přitom klíčové informace.
+
+Příklad (úkol s uprchlíky):
+- Předtím: Dlouhý dopis o několika odstavcích vysvětlující, kdo uprchlíci jsou, proč utekli, jak dlouho zůstanou a že budou zdarma pracovat a bojovat...
+- Potom: Krátké shrnutí jako: "Kolonie přijala uprchlíky. Utekli kvůli [reason], zůstanou X dní, aby si odpočinuli a znovu se zorganizovali, a po tu dobu budou zdarma pracovat a bojovat."
+
+Když je volba vypnutá, Event+ vždy odešle původní úplný text události.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

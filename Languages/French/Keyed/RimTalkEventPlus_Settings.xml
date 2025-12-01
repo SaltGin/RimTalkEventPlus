@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Paramètres d’optimisation</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Activer la compression du texte des événements</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Utiliser un texte d’événement compressé pour réduire la consommation de jetons lors de l’envoi de quêtes et d’événements à RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Quand cette option est activée, Event+ compresse les descriptions de quêtes longues et répétitives tout en conservant les informations importantes.
+
+Exemple (quête d’hospitalité pour des réfugiés) :
+- Avant : Une longue lettre en plusieurs paragraphes expliquant qui sont les réfugiés, pourquoi ils ont fui, combien de temps ils resteront et qu’ils travailleront et se battront gratuitement...
+- Après : Un court résumé du type : "La colonie a accepté les réfugiés. Ils ont fui pour [reason], resteront X jours pour se reposer et se réorganiser, et travailleront et se battront gratuitement pendant cette période."
+
+Quand l’option est désactivée, Event+ envoie toujours le texte original complet de l’événement.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

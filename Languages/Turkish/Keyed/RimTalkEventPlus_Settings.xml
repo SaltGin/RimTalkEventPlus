@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Eniyileme ayarları</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Olay metni sıkıştırmasını etkinleştir</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Görevler ve olaylar RimTalk’a gönderilirken token kullanımını azaltmak için sıkıştırılmış olay metni kullan.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Bu seçenek etkinleştirildiğinde Event+, uzun ve tekrar eden görev açıklamalarını sıkıştırır, ancak temel bilgileri korur.
+
+Örnek (mülteci misafir etme görevi):
+- Önce: Mültecilerin kim olduğunu, neden kaçtıklarını, ne kadar kalacaklarını ve ücretsiz çalışıp savaşacaklarını anlatan, birden fazla paragraftan oluşan uzun bir mektup...
+- Sonra: Şuna benzer kısa bir özet: "Koloni mültecileri kabul etti. [reason] nedeniyle kaçtılar, dinlenip toparlanmak için X gün kalacaklar ve bu süre boyunca ücretsiz çalışıp savaşacaklar."
+
+Devre dışı bırakıldığında Event+, her zaman olayın tam orijinal metnini gönderir.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

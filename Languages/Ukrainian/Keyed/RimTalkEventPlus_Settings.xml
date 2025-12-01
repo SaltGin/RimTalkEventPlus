@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Налаштування оптимізації</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Увімкнути стиснення тексту подій</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Використовувати стиснений текст подій, щоб зменшити витрати токенів під час надсилання квестів і подій до RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Якщо опцію увімкнено, Event+ стискає довгі, повторювані описи квестів, зберігаючи при цьому ключові факти.
+
+Приклад (квест із біженцями):
+- До: Довгий лист з кількох абзаців, у якому пояснюється, хто такі біженці, чому вони втекли, як довго залишаться та що вони безкоштовно працюватимуть і воюватимуть...
+- Після: Короткий підсумок на кшталт: "Колонія прийняла біженців. Вони втекли через [reason], залишаться на X днів, щоб відпочити й оговтатися, і весь цей час безкоштовно працюватимуть та воюватимуть."
+
+Якщо опцію вимкнено, Event+ завжди надсилає повний оригінальний текст події.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

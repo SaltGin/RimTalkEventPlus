@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>优化设置</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>启用事件文本压缩</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>在向 RimTalk 发送任务和事件时使用压缩后的事件文本，以减少 token 占用。</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>启用后，Event+ 会压缩冗长、重复的任务描述，同时保留关键信息。
+
+示例（难民投宿任务）：
+- 压缩前：一封篇幅较长、包含多段文字的信，详细说明这些难民是谁、为什么逃离、会待多久，以及他们会免费为你工作和战斗等内容……
+- 压缩后：一段简要总结，例如：“殖民地已经接受了这些难民。他们因为 [reason] 而逃离，将在此停留 X 天以休整和重组，并在此期间免费为你工作和战斗。”
+
+关闭该选项时，Event+ 始终会发送事件的完整原始文本。</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

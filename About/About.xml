@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>RimTalk Event+</name>
+  <packageId>saltgin.rimtalkeventmemory</packageId>
+  <author>SaltGin</author>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modDependencies>
+	<li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+	  <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>cj.rimtalk</packageId>
+      <displayName>RimTalk</displayName>
+	  <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3551203752</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+	  <li>cj.rimtalk</li>
+	</loadAfter>
+  <description>
+    Lightweight event sensing expansion layer for RimTalk. Experimental.
+  </description>
+</ModMetaData>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Optimeringsindstillinger</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Aktivér komprimering af hændelsestekst</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Brug komprimeret hændelsestekst for at reducere forbruget af tokens, når der sendes quests og hændelser til RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Når dette er aktiveret, komprimerer Event+ lange, gentagende quest-beskrivelser, mens de vigtigste oplysninger bevares.
+
+Eksempel (quest med flygtninge):
+- Før: Et langt brev på flere afsnit, der forklarer, hvem flygtningene er, hvorfor de flygtede, hvor længe de bliver, og at de vil arbejde og kæmpe gratis...
+- Efter: Et kort resumé som: "Kolonien har taget imod flygtningene. De flygtede på grund af [reason], bliver i X dage for at hvile og omorganisere sig og vil arbejde og kæmpe gratis i den periode."
+
+Når dette er deaktiveret, sender Event+ altid den fulde originale tekst for hændelsen.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

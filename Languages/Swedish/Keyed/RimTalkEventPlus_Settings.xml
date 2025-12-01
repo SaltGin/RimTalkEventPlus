@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Optimeringsinställningar</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Aktivera komprimering av händelsetext</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Använd komprimerad händelsetext för att minska antalet tokens när uppdrag och händelser skickas till RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>När detta är aktiverat komprimerar Event+ långa, upprepande uppdragsbeskrivningar samtidigt som de viktigaste fakta behålls.
+
+Exempel (uppdrag med flyktingar):
+- Före: Ett långt brev med flera stycken som förklarar vilka flyktingarna är, varför de flydde, hur länge de stannar och att de kommer att arbeta och slåss gratis...
+- Efter: En kort sammanfattning som: "Kolonin har tagit emot flyktingarna. De flydde på grund av [reason], stannar i X dagar för att vila och organisera sig, och kommer att arbeta och slåss gratis under den tiden."
+
+När detta är avaktiverat skickar Event+ alltid händelsens fullständiga originaltext.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

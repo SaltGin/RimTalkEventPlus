@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Optimalisatie-instellingen</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Compressie van gebeurtenistekst inschakelen</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Gebruik gecomprimeerde gebeurtenistekst om het aantal tokens te verminderen wanneer quests en gebeurtenissen naar RimTalk worden gestuurd.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Als deze optie is ingeschakeld, comprimeert Event+ lange, repetitieve questbeschrijvingen, terwijl de belangrijkste feiten behouden blijven.
+
+Voorbeeld (vluchtelingenquest):
+- Voor: Een lange brief met meerdere alinea’s die uitlegt wie de vluchtelingen zijn, waarom ze gevlucht zijn, hoelang ze blijven en dat ze gratis zullen werken en vechten...
+- Na: Een korte samenvatting zoals: "De kolonie heeft de vluchtelingen geaccepteerd. Ze zijn gevlucht vanwege [reason], blijven X dagen om uit te rusten en zich te hergroeperen, en zullen in die tijd gratis werken en vechten."
+
+Als de optie is uitgeschakeld, stuurt Event+ altijd de volledige oorspronkelijke tekst van de gebeurtenis.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

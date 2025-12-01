@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Optimalizációs beállítások</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Eseményszöveg tömörítésének engedélyezése</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Használj tömörített eseményszöveget, hogy csökkentsd a tokenhasználatot, amikor küldetéseket és eseményeket küldesz a RimTalknak.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Ha ez a beállítás engedélyezve van, az Event+ tömöríti a hosszú, ismétlődő küldetésleírásokat, miközben a legfontosabb információk megmaradnak.
+
+Példa (menekültekről szóló küldetés):
+- Előtte: Hosszú, több bekezdéses levél, amely elmagyarázza, kik a menekültek, miért menekültek el, meddig maradnak, és hogy ingyen fognak dolgozni és harcolni...
+- Utána: Rövid összefoglaló, például: "A kolónia befogadta a menekülteket. [reason] miatt menekültek el, X napig maradnak, hogy pihenjenek és újraszerveződjenek, és ez idő alatt ingyen fognak dolgozni és harcolni."
+
+Ha a beállítás ki van kapcsolva, az Event+ mindig az esemény teljes, eredeti szövegét küldi.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>

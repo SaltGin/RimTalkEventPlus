@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <RimTalkEventPlus_SettingsCategory>RimTalk Event+</RimTalkEventPlus_SettingsCategory>
+
+  <RimTalkEventPlus_OptimizationHeader>Optimointiasetukset</RimTalkEventPlus_OptimizationHeader>
+
+  <RimTalkEventPlus_EnableCompression_Label>Ota tapahtumatekstin pakkaus käyttöön</RimTalkEventPlus_EnableCompression_Label>
+
+  <RimTalkEventPlus_EnableCompression_Tooltip>Käytä pakattua tapahtumatekstiä vähentääksesi tokenien käyttöä, kun lähettää tehtäviä ja tapahtumia RimTalkille.</RimTalkEventPlus_EnableCompression_Tooltip>
+
+  <RimTalkEventPlus_Compression_Description>Kun tämä asetus on käytössä, Event+ pakkaa pitkät ja toistuvat tehtävänkuvaukset, mutta säilyttää tärkeimmät tiedot.
+
+Esimerkki (pakolaisten majoitustehtävä):
+- Ennen: Pitkä, monesta kappaleesta koostuva kirje, joka selittää keitä pakolaiset ovat, miksi he pakenivat, kuinka kauan he viipyvät ja että he työskentelevät ja taistelevat ilmaiseksi...
+- Jälkeen: Lyhyt yhteenveto, esimerkiksi: "Siirtokunta otti pakolaiset vastaan. He pakenivat, koska [reason], viipyvät X päivää levätäkseen ja järjestäytyäkseen uudelleen, ja työskentelevät sekä taistelevat tuona aikana ilmaiseksi."
+
+Kun asetus on pois käytöstä, Event+ lähettää aina tapahtuman alkuperäisen täydellisen tekstin.</RimTalkEventPlus_Compression_Description>
+
+</LanguageData>
