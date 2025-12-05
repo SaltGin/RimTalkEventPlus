@@ -203,6 +203,11 @@ namespace RimTalkEventPlus
                 if (cond == null || cond.def == null)
                     continue;
 
+                // Skip game conditions that are explicitly hidden from the UI.
+                // This corresponds to <displayOnUI>false</displayOnUI> in the GameConditionDef.
+                if (!cond.def.displayOnUI)
+                    continue;
+
                 // Use the def's LabelCap/description so we don't depend on newer GameCondition APIs.
                 string label = cond.def.LabelCap;
                 string body = cond.def.description ?? string.Empty;
