@@ -58,10 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventTextCompressionUtil.cs" />
-    <Compile Include="GrammarTemplateUtil.cs" />
     <Compile Include="Map_FinalizeInit_OngoingEventsDump_Patch.cs" />
-    <Compile Include="RimTalkCompressionTemplateDef.cs" />
     <Compile Include="RimTalkEventPlus.cs" />
     <Compile Include="OngoingEventsFormatter.cs" />
     <Compile Include="OngoingEventSnapshot.cs" />

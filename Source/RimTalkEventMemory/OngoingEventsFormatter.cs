@@ -27,16 +27,16 @@ namespace RimTalkEventPlus
                     : e.Body;
 
                 // Optional compression: only if the setting is on and we have a SourceDefName
-                if (RimTalkEventPlus.Settings != null &&
-                    RimTalkEventPlus.Settings.enableEventTextCompression &&
-                    !e.SourceDefName.NullOrEmpty())
-                {
-                    var compressed = EventTextCompressionUtil.TryGetCompressedBody(e);
-                    if (!compressed.NullOrEmpty())
-                    {
-                        body = compressed;
-                    }
-                }
+                //if (RimTalkEventPlus.Settings != null &&
+                //    RimTalkEventPlus.Settings.enableEventTextCompression &&
+                //    !e.SourceDefName.NullOrEmpty())
+                //{
+                //    var compressed = EventTextCompressionUtil.TryGetCompressedBody(e);
+                //    if (!compressed.NullOrEmpty())
+                //    {
+                //        body = compressed;
+                //    }
+                //}
 
                 body = StripSimpleTags(body);
                 string label = StripSimpleTags(e.Label);

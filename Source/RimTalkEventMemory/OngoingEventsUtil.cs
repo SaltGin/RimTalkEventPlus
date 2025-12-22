@@ -7,9 +7,9 @@ namespace RimTalkEventPlus
 {
     public static class OngoingEventsUtil
     {
-        // 0.6 in-game days * 60000 ticks per day = 36000 ticks
+        // 3 in-game hours * 2500 ticks per hour = 7500 ticks
         // Hell yeah no more magical numbers
-        private const int ThreatLetterTimeoutTicks = 36000;
+        private const int ThreatLetterTimeoutTicks = 7500;
 
         /// Get a small list of "ongoing" situations on this map right now.
         /// Stateless: reads QuestManager + archive each time.
@@ -228,7 +228,7 @@ namespace RimTalkEventPlus
 
         /// Threat side: at most one most-recent red threat letter,
         /// only if isInDanger == true, and only if it's not too old
-        /// (currently within 0.6 in-game days).
+        /// (currently within 3 in-game hours).
         private static void TryAddMostRecentThreatLetter(
             List<OngoingEventSnapshot> result,
             int maxEvents,
