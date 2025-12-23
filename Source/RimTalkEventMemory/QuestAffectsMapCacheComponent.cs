@@ -7,14 +7,9 @@ namespace RimTalkEventPlus
     // Goal: avoid repeating QuestAffectsMap reflection scans every talk.
     public class QuestAffectsMapCacheComponent : GameComponent
     {
-        // Revalidate after this many ticks on access.
-        // 60,000 ticks = 1 in-game day.
-        private const int RevalidateIntervalTicks = 60000;
-
         private struct Entry
         {
             public bool affects;
-            public int lastValidatedTick;
         }
 
         private readonly Dictionary<long, Entry> _cache = new Dictionary<long, Entry>();
@@ -36,9 +31,6 @@ namespace RimTalkEventPlus
             if (!_cache.TryGetValue(key, out var entry))
                 return false;
 
-            if (nowTick - entry.lastValidatedTick > RevalidateIntervalTicks)
-                return false;
-
             affects = entry.affects;
 
             return true;
@@ -49,8 +41,7 @@ namespace RimTalkEventPlus
             long key = MakeKey(questId, mapUniqueId);
             _cache[key] = new Entry
             {
-                affects = affects,
-                lastValidatedTick = nowTick
+                affects = affects
             };
         }
 
