@@ -8,6 +8,23 @@ namespace RimTalkEventPlus
     {
         static void Postfix(Map __instance)
         {
+            if (__instance == null) return;
+
+            // Prewarm QuestAffectsMap cache for smoother first call.
+            var quests = Find.QuestManager?.QuestsListForReading;
+            if (quests != null)
+            {
+                for (int i = 0; i < quests.Count; i++)
+                {
+                    var q = quests[i];
+                    if (q == null) continue;
+                    QuestLinkUtil.QuestAffectsMap(q, __instance);
+                }
+            }
+
+            // Only dump/log the ongoing events list in DevMode.
+            if (!Prefs.DevMode) return;
+
             var ongoing = OngoingEventsUtil.GetOngoingEventsNow(
                 __instance,
                 isInDanger: false,
