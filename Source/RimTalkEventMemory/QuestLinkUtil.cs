@@ -152,95 +152,15 @@ namespace RimTalkEventPlus
         /// True if this quest is in the "Ongoing" state and not ended.
         public static bool IsQuestOngoing(Quest quest)
         {
-            if (quest == null)
-                return false;
-
-            var trav = Traverse.Create(quest);
-            object stateObj = null;
-
-            try
-            {
-                stateObj = trav.Field("state").GetValue<object>();
-            }
-            catch
-            {
-                // ignore
-            }
-
-            if (stateObj == null)
-            {
-                try
-                {
-                    stateObj = trav.Property("State").GetValue<object>();
-                }
-                catch
-                {
-                    // ignore
-                }
-            }
-
-            if (stateObj == null)
-                return false;
-
-            string stateString = stateObj.ToString();
-
-            // If there is an "ended" flag, treat it as authoritative
-            try
-            {
-                var travEnded = Traverse.Create(quest);
-                bool? ended = null;
-
-                try
-                {
-                    ended = travEnded.Field("ended").GetValue<bool?>();
-                }
-                catch
-                {
-                    // ignore
-                }
-
-                if (ended == null)
-                {
-                    try
-                    {
-                        ended = travEnded.Property("Ended").GetValue<bool?>();
-                    }
-                    catch
-                    {
-                        // ignore
-                    }
-                }
-
-                if (ended.HasValue && ended.Value)
-                    return false;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            // Default: rely on state == "Ongoing"
-            return string.Equals(stateString, "Ongoing", StringComparison.OrdinalIgnoreCase);
+            // Direct enum comparison
+            return quest?.State == QuestState.Ongoing;
         }
 
         /// Returns a short marker like "accepted ~1.3 days ago" or "accepted ~5 hours ago"
         /// based on acceptanceTick vs current game ticks. Empty string if not accepted.
         public static string GetQuestAcceptedAgeMarker(Quest quest)
         {
-            if (quest == null || Find.TickManager == null)
-                return string.Empty;
-
-            int acceptanceTick = -1;
-            var trav = Traverse.Create(quest);
-
-            try
-            {
-                acceptanceTick = trav.Field("acceptanceTick").GetValue<int>();
-            }
-            catch
-            {
-                // ignore
-            }
+            int acceptanceTick = quest.acceptanceTick;
 
             if (acceptanceTick <= 0)
                 return string.Empty;
@@ -278,23 +198,14 @@ namespace RimTalkEventPlus
             if (quest == null)
                 return string.Empty;
 
-            var questTrav = Traverse.Create(quest);
-            IList parts = null;
-            try
-            {
-                parts = questTrav.Field("parts").GetValue<IList>();
-            }
-            catch
-            {
-                // ignore
-            }
+            var parts = quest.PartsListForReading;
 
-            if (parts == null)
+            if (parts == null || parts.Count == 0)
                 return string.Empty;
 
             var pawns = new List<Pawn>();
 
-            foreach (object partObj in parts)
+            foreach (var partObj in parts)
             {
                 if (partObj == null)
                     continue;
@@ -431,69 +342,104 @@ namespace RimTalkEventPlus
 
         private static bool QuestAffectsMap_Uncached(Quest quest, Map map)
         {
-            bool hasAnyTarget;
-            bool hasAnyMapTarget;
-            bool affectsByTargets = QuestAffectsMapByLookTargetsDetailed(
-                quest,
-                map,
-                out hasAnyTarget,
-                out hasAnyMapTarget
-            );
+            if (quest == null || map == null)
+                return false;
 
-            // LookTargets explicitly reference this map (or its parent/tile) -> definitely affects this map.
-            if (affectsByTargets)
-                return true;
+            MapParent mapParent = map.info?.parent;
+            int mapTile = map.Tile;
 
-            // Fall back to quest parts' association with this map or its parent.
-            MapParent mapParent = map.info != null ? map.info.parent : null;
+            // 1. Check quest-level LookTargets
+            var questLookTargets = quest.QuestLookTargets;
+            if (questLookTargets != null)
+            {
+                foreach (var target in questLookTargets)
+                {
+                    // Check if target has a map and it matches our map
+                    if (target.IsMapTarget && target.Map == map)
+                        return true;
+
+                    // Check if target WorldObject is this map's parent
+                    if (target.HasWorldObject && mapParent != null)
+                    {
+                        var targetParent = target.WorldObject as MapParent;
+                        if (targetParent != null && targetParent == mapParent)
+                            return true;
+                    }
+
+                    // Check tile match
+                    var targetTile = target.Tile;
+                    if (targetTile.Valid && targetTile == mapTile)
+                        return true;
+                }
+            }
+
+            // 2. Check individual quest parts
             if (mapParent == null)
                 return false;
 
-            var questTrav = Traverse.Create(quest);
-            IList parts = null;
-            try
-            {
-                parts = questTrav.Field("parts").GetValue<IList>();
-            }
-            catch
-            {
-                // ignore
-            }
+            var parts = quest.PartsListForReading;
 
-            if (parts != null)
+            if (parts != null && parts.Count > 0)
             {
-                foreach (object partObj in parts)
+                foreach (var part in parts)
                 {
-                    if (partObj == null)
+                    if (part == null)
                         continue;
 
-                    // Skip world-site related or reward-only parts that just use
-                    // the colony map as a drop location / requirement,
-                    // not as the actual quest location.
-                    //
-                    // QuestPart_DropPods typically only "drops" onto a map.
-                    // QuestPart_RequirementsToAcceptPlanetLayer controls whether
-                    // a quest can be accepted, often referencing the colony map in
-                    // a non-location way.
-                    string partTypeName = partObj.GetType().Name;
+                    // Skip parts that don't indicate actual quest location
+                    string partTypeName = part.GetType().Name;
                     if (partTypeName == "QuestPart_DropPods" ||
                         partTypeName == "QuestPart_RequirementsToAcceptPlanetLayer")
                     {
                         continue;
                     }
 
-                    var partTrav = Traverse.Create(partObj);
+                    // Check part's QuestLookTargets
+                    var partLookTargets = part.QuestLookTargets;
+                    if (partLookTargets != null)
+                    {
+                        foreach (var target in partLookTargets)
+                        {
+                            if (target.IsMapTarget && target.Map == map)
+                                return true;
+
+                            if (target.HasWorldObject && mapParent != null)
+                            {
+                                var targetParent = target.WorldObject as MapParent;
+                                if (targetParent != null && targetParent == mapParent)
+                                    return true;
+                            }
+                        }
+                    }
+
+                    // Check part's QuestSelectTargets
+                    var partSelectTargets = part.QuestSelectTargets;
+                    if (partSelectTargets != null)
+                    {
+                        foreach (var target in partSelectTargets)
+                        {
+                            if (target.IsMapTarget && target.Map == map)
+                                return true;
+
+                            if (target.HasWorldObject && mapParent != null)
+                            {
+                                var targetParent = target.WorldObject as MapParent;
+                                if (targetParent != null && targetParent == mapParent)
+                                    return true;
+                            }
+                        }
+                    }
+
+                    // Still need reflection for private "mapParent" field/property
+                    var partTrav = Traverse.Create(part);
                     MapParent partParent = null;
 
-                    // Quick path: try field "mapParent"
+                    // Try field "mapParent"
                     try
                     {
                         partParent = partTrav.Field("mapParent").GetValue<MapParent>();
                     }
-                    catch
-                    {
-                        // ignore
-                    }
+                    catch { }
 
                     // Try property "MapParent"
                     if (partParent == null)
@@ -502,33 +448,21 @@ namespace RimTalkEventPlus
                         {
                             partParent = partTrav.Property("MapParent").GetValue<MapParent>();
                         }
-                        catch
-                        {
-                            // ignore
-                        }
+                        catch { }
                     }
 
                     if (partParent != null)
                     {
-                        // Direct parent match
                         if (partParent == mapParent)
                             return true;
 
-                        // Some MapParent types expose Map; check that too
-                        try
-                        {
-                            Map partMap = Traverse.Create(partParent).Property("Map").GetValue<Map>();
-                            if (partMap == map)
-                                return true;
-                        }
-                        catch
-                        {
-                            // ignore
-                        }
+                        // Check if MapParent has a map property pointing to our map
+                        if (partParent.HasMap && partParent.Map == map)
+                            return true;
                     }
 
                     // More generic scan: look for any MapParent / Map fields or properties on this part.
-                    Type partType = partObj.GetType();
+                    Type partType = part.GetType();
 
                     // Fields
                     FieldInfo[] fields = null;
@@ -536,19 +470,13 @@ namespace RimTalkEventPlus
                     {
                         fields = partType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                     }
-                    catch
-                    {
-                        // ignore
-                    }
+                    catch { }
 
                     if (fields != null)
                     {
                         foreach (var field in fields)
                         {
-                            // Skip threat-scaling-only reference; it does not mean the quest
-                            // "happens" on that map. Example: useMapParentThreatPoints on
-                            // RelicHunt subquest generators, which just uses the colony map
-                            // as a difficulty reference.
+                            // Skip threat-scaling-only reference
                             if (string.Equals(field.Name, "useMapParentThreatPoints", StringComparison.OrdinalIgnoreCase))
                                 continue;
 
@@ -556,17 +484,14 @@ namespace RimTalkEventPlus
                             object value = null;
                             try
                             {
-                                value = field.GetValue(partObj);
+                                value = field.GetValue(part);
                             }
-                            catch
-                            {
-                                continue;
-                            }
+                            catch { continue; }
 
                             if (value == null)
                                 continue;
 
-                            // Any MapParent-like field (e.g. Site, Settlement, custom subclasses)
+                            // Any MapParent-like field
                             if (typeof(MapParent).IsAssignableFrom(fType))
                             {
                                 var mp = value as MapParent;
@@ -575,19 +500,10 @@ namespace RimTalkEventPlus
                                     if (mp == mapParent)
                                         return true;
 
-                                    try
-                                    {
-                                        Map partMap2 = Traverse.Create(mp).Property("Map").GetValue<Map>();
-                                        if (partMap2 == map)
-                                            return true;
-                                    }
-                                    catch
-                                    {
-                                        // ignore
-                                    }
+                                    if (mp.HasMap && mp.Map == map)
+                                        return true;
                                 }
                             }
-                            // Any Map field directly
                             else if (typeof(Map).IsAssignableFrom(fType))
                             {
                                 var m = value as Map;
@@ -603,10 +519,7 @@ namespace RimTalkEventPlus
                     {
                         props = partType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                     }
-                    catch
-                    {
-                        // ignore
-                    }
+                    catch { }
 
                     if (props != null)
                     {
@@ -616,8 +529,7 @@ namespace RimTalkEventPlus
                             if (prop.GetIndexParameters().Length != 0)
                                 continue;
 
-                            // Same reasoning as for fields: useMapParentThreatPoints is a
-                            // difficulty reference, not a location binding.
+                            // Skip difficulty reference
                             if (string.Equals(prop.Name, "useMapParentThreatPoints", StringComparison.OrdinalIgnoreCase))
                                 continue;
 
@@ -627,12 +539,9 @@ namespace RimTalkEventPlus
                             {
                                 if (!prop.CanRead)
                                     continue;
-                                value = prop.GetValue(partObj, null);
+                                value = prop.GetValue(part, null);
                             }
-                            catch
-                            {
-                                continue;
-                            }
+                            catch { continue; }
 
                             if (value == null)
                                 continue;
@@ -645,16 +554,8 @@ namespace RimTalkEventPlus
                                     if (mp == mapParent)
                                         return true;
 
-                                    try
-                                    {
-                                        Map partMap2 = Traverse.Create(mp).Property("Map").GetValue<Map>();
-                                        if (partMap2 == map)
-                                            return true;
-                                    }
-                                    catch
-                                    {
-                                        // ignore
-                                    }
+                                    if (mp.HasMap && mp.Map == map)
+                                        return true;
                                 }
                             }
                             else if (typeof(Map).IsAssignableFrom(pType))
@@ -669,183 +570,6 @@ namespace RimTalkEventPlus
             }
 
             return false;
-        }
-
-        /// Detailed LookTargets check.
-        ///  - returns true if a target is on this map or references its parent/site/tile,
-        ///  - sets hasAnyTarget if there was at least one target,
-        ///  - sets hasAnyMapTarget if at least one target had HasMap == true.
-        private static bool QuestAffectsMapByLookTargetsDetailed(
-            Quest quest,
-            Map map,
-            out bool hasAnyTarget,
-            out bool hasAnyMapTarget)
-        {
-            hasAnyTarget = false;
-            hasAnyMapTarget = false;
-
-            if (quest == null || map == null)
-                return false;
-
-            // Anchor on the current map's parent and tile so we can also match
-            // site/world-object targets that reference this quest map indirectly.
-            MapParent mapParent = map.info != null ? map.info.parent : null;
-            int mapTile = -1;
-            try
-            {
-                mapTile = mapParent != null ? mapParent.Tile : map.Tile;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            bool anyTarget = false;
-            bool anyMapTargetLocal = false;
-            bool found = false;
-
-            var questTrav = Traverse.Create(quest);
-            object lookTargetsObj = null;
-
-            // Try property "LookTargets" first, then field "lookTargets"
-            try
-            {
-                lookTargetsObj = questTrav.Property("LookTargets").GetValue<object>();
-            }
-            catch
-            {
-                // ignore
-            }
-
-            if (lookTargetsObj == null)
-            {
-                try
-                {
-                    lookTargetsObj = questTrav.Field("lookTargets").GetValue<object>();
-                }
-                catch
-                {
-                    // ignore
-                }
-            }
-
-            if (lookTargetsObj == null)
-                return false;
-
-            var ltTrav = Traverse.Create(lookTargetsObj);
-
-            // Local helper that updates local flags instead of out parameters
-            bool ProcessTarget(object targetObj)
-            {
-                if (targetObj == null)
-                    return false;
-
-                anyTarget = true;
-
-                var tTrav = Traverse.Create(targetObj);
-                bool hasMapLocal = false;
-                Map targetMap = null;
-
-                try { hasMapLocal = tTrav.Property("HasMap").GetValue<bool>(); } catch { }
-                try { targetMap = tTrav.Property("Map").GetValue<Map>(); } catch { }
-
-                if (hasMapLocal)
-                {
-                    anyMapTargetLocal = true;
-                    if (targetMap == map)
-                        return true;
-                }
-
-                // Also check for world objects / sites tied to this map's parent or tile.
-                // This lets quests that only target a site (without exposing the map)
-                // still be detected as affecting the quest map that site owns.
-                WorldObject worldObject = null;
-                MapParent targetParent = null;
-                int targetTile = -1;
-
-                try { worldObject = tTrav.Property("WorldObject").GetValue<WorldObject>(); } catch { }
-
-                if (worldObject != null)
-                {
-                    targetParent = worldObject as MapParent;
-                    try { targetTile = worldObject.Tile; } catch { }
-                }
-
-                if (targetParent == null)
-                {
-                    try { targetParent = tTrav.Property("MapParent").GetValue<MapParent>(); } catch { }
-                }
-
-                if (targetTile < 0)
-                {
-                    try { targetTile = tTrav.Property("Tile").GetValue<int>(); } catch { }
-                }
-
-                if (targetParent != null && mapParent != null && targetParent == mapParent)
-                    return true;
-
-                if (targetTile >= 0 && mapTile >= 0 && targetTile == mapTile)
-                    return true;
-
-                return false;
-            }
-
-            // 1) PrimaryTarget
-            try
-            {
-                object primaryObj = ltTrav.Property("PrimaryTarget").GetValue<object>();
-                if (ProcessTarget(primaryObj))
-                    found = true;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            // 2) AllTargets / Targets, only if we didn't already find a match
-            if (!found)
-            {
-                object allTargetsObj = null;
-
-                try
-                {
-                    allTargetsObj = ltTrav.Property("AllTargets").GetValue<object>();
-                }
-                catch
-                {
-                    // ignore
-                }
-
-                if (allTargetsObj == null)
-                {
-                    try
-                    {
-                        allTargetsObj = ltTrav.Property("Targets").GetValue<object>();
-                    }
-                    catch
-                    {
-                        // ignore
-                    }
-                }
-
-                var enumerable = allTargetsObj as IEnumerable;
-                if (enumerable != null)
-                {
-                    foreach (object t in enumerable)
-                    {
-                        if (ProcessTarget(t))
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            // Copy local flags into out parameters before returning
-            hasAnyTarget = anyTarget;
-            hasAnyMapTarget = anyMapTargetLocal;
-            return found;
         }
     }
 }
