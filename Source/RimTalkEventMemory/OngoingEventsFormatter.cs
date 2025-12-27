@@ -68,17 +68,8 @@ namespace RimTalkEventPlus
             if (input.NullOrEmpty())
                 return string.Empty;
 
-            string s = input.Replace("</color>", string.Empty);
-            while (true)
-            {
-                int start = s.IndexOf("<color", System.StringComparison.OrdinalIgnoreCase);
-                if (start < 0) break;
-                int end = s.IndexOf(">", start);
-                if (end < 0) break;
-                s = s.Remove(start, end - start + 1);
-            }
-
-            return s;
+            // Use RimWorld's built-in StripTags
+            return input.StripTags();
         }
     }
 }

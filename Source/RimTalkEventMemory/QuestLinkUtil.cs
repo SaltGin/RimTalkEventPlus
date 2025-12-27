@@ -316,12 +316,11 @@ namespace RimTalkEventPlus
                 if (TryGetQuestId(quest, out questId) && questId >= 0)
                 {
                     int mapUid = map.uniqueID;
-                    int nowTick = tickManager.TicksGame;
 
                     var comp = game.GetComponent<QuestAffectsMapCacheComponent>();
                     if (comp != null)
                     {
-                        if (comp.TryGet(questId, mapUid, nowTick, out bool cached))
+                        if (comp.TryGet(questId, mapUid, out bool cached))
                         {
                             //Log.Message($"[RimTalkEventPlus] QuestAffectsMap cache HIT: questId={questId}, mapUid={mapUid}, affects={cached}");
                             return cached;
@@ -329,7 +328,7 @@ namespace RimTalkEventPlus
 
                         //Log.Message($"[RimTalkEventPlus] QuestAffectsMap cache MISS: questId={questId}, mapUid={mapUid} -> recompute");
                         bool computed = QuestAffectsMap_Uncached(quest, map);
-                        comp.Store(questId, mapUid, nowTick, computed);
+                        comp.Store(questId, mapUid, computed);
                         //Log.Message($"[RimTalkEventPlus] QuestAffectsMap cache STORED: questId={questId}, mapUid={mapUid}, affects={computed}");
                         return computed;
                     }

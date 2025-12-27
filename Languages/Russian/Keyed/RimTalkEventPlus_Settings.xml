@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>Настройки оптимизации</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>Включить сжатие текста событий</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>Включить сжатие текста событий (WIP - скоро будет, переключатель пока ничего не делает)</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>Использовать сжатый текст событий, чтобы сократить расход токенов при отправке квестов и событий в RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@
 - После: Краткое резюме вроде: "Колония приняла беженцев. Они бежали из-за [reason], останутся на X дней, чтобы отдохнуть и прийти в себя, и всё это время будут бесплатно работать и сражаться."
 
 Если опция отключена, Event+ всегда отправляет полный оригинальный текст события.</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>Фильтрация событий</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>Фильтры категорий</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>Включайте или отключайте целые категории событий. Отключённые категории полностью скрыты от ИИ и перекрывают все настройки ниже.</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>ФИЛЬТРАЦИЯ ПО ТИПУ</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>Скрыть все события выбранных типов глобально, во всех сохранениях</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>ФИЛЬТРАЦИЯ ПО ЭКЗЕМПЛЯРАМ</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Скрыть определённые активные события в этом сохранении. Доступно только при загруженном сохранении.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>Доступные типы</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>Отключённые типы</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>Текущие экземпляры</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>Скрытые экземпляры</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>Показать только текущие события</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>Показать все типы событий</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>Показывает только события, активные в вашей игре в данный момент. Доступно только при загруженном сохранении.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>Показывает все возможные типы событий из загруженных модов. Может включать типы событий, которые уже исключены из разговоров RimTalk, даже если они активны в вашей игре (например, фоновые таймеры, дипломатические задания).</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>отключено глобально</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>Задания</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>Условия карты</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>Угрозы</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>Места на карте мира (лагеря бандитов, тайники с предметами и т.д.)</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>Сбросить все фильтры по типу</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>Сбросить все фильтры экземпляров</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>Очищено {0} фильтров типов.</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>Очищено {0} фильтров экземпляров во всех сохранениях.</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

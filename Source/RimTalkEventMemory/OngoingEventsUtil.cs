@@ -11,13 +11,56 @@ namespace RimTalkEventPlus
         // Hell yeah no more magical numbers
         private const int ThreatLetterTimeoutTicks = 7500;
 
-        /// Get a small list of "ongoing" situations on this map right now.
-        /// Stateless: reads QuestManager + archive each time.
-        ///
-        /// Priority order:
-        /// - Threat letter: at most one most-recent red threat letter, only if isInDanger == true.
-        /// - Game conditions: all active GameConditions on this map (solar flare, psychic drone, etc.).
-        /// - Quests: QuestManager-based, only quests that are ongoing and affect this map.
+        // Helper method to check if an event should be filtered based on settings.
+        private static bool IsEventFiltered(string defName, string instanceID, EventCategory? category, EventFilterSettings settings)
+        {
+            if (settings == null)
+                return false;
+
+            // Filter by category
+            if (category.HasValue)
+            {
+                switch (category.Value)
+                {
+                    case EventCategory.Quest:
+                        if (!settings.showQuests) return true;
+                        break;
+                    case EventCategory.MapCondition:
+                        if (!settings.showMapConditions) return true;
+                        break;
+                    case EventCategory.Threat:
+                        if (!settings.showThreats) return true;
+                        break;
+                    case EventCategory.SitePart:
+                        if (!settings.showSiteParts) return true;
+                        break;
+                }
+            }
+
+            // Filter by type (def name)
+            if (!string.IsNullOrEmpty(defName) && settings.IsEventDefDisabled(defName))
+                return true;
+
+            // Filter by instance ID (per-colony)
+            if (!string.IsNullOrEmpty(instanceID))
+            {
+                var worldInfo = Find.World?.info;
+                string colonyId = worldInfo != null ? $"{worldInfo.seedString}_{worldInfo.persistentRandomValue}" : null;
+
+                if (!string.IsNullOrEmpty(colonyId) && settings.IsEventInstanceDisabled(colonyId, instanceID))
+                    return true;
+            }
+
+            return false;
+        }
+
+        // Get a small list of "ongoing" situations on this map right now.
+        // Stateless: reads QuestManager + archive each time.
+        //
+        // Priority order:
+        // - Threat letter: at most one most-recent red threat letter, only if isInDanger == true.
+        // - Game conditions: all active GameConditions on this map (solar flare, psychic drone, etc.).
+        // - Quests: QuestManager-based, only quests that are ongoing and affect this map.
         public static List<OngoingEventSnapshot> GetOngoingEventsNow(
             Map map,
             bool isInDanger,
@@ -57,8 +100,8 @@ namespace RimTalkEventPlus
             return result;
         }
 
-        /// For non-home maps attached to a Site, add a compact description of the
-        /// current location based on the SitePartDefs (e.g. bandit camp, ancient ruins).
+        // For non-home maps attached to a Site, add a compact description of the
+        // current location based on the SitePartDefs (e.g. bandit camp, ancient ruins).
         private static void TryAddSitePartEvents(Map map, List<OngoingEventSnapshot> result, int maxEvents)
         {
             if (map == null || result == null)
@@ -89,6 +132,10 @@ namespace RimTalkEventPlus
 
                 var def = part.def;
 
+                // Check new filtering system using helper method
+                if (IsEventFiltered(def.defName, null, EventCategory.SitePart, RimTalkEventPlus.Settings))
+                    continue;
+
                 string label = def.LabelCap;
                 if (label.NullOrEmpty())
                 {
@@ -112,7 +159,7 @@ namespace RimTalkEventPlus
         }
 
 
-        /// Quest side: use QuestManager, no letters.
+        // Quest side: use QuestManager, no letters.
         private static void TryAddOngoingQuestsForMap(Map map, List<OngoingEventSnapshot> result, int maxEvents)
         {
             if (Find.QuestManager == null)
@@ -127,7 +174,10 @@ namespace RimTalkEventPlus
                 if (quest == null)
                     continue;
 
-                if (QuestBlacklist.IsBlacklisted(quest))
+                // Check new filtering system using helper method
+                string questDefName = quest.root?.defName;
+                string questInstanceID = quest.id.ToString();
+                if (IsEventFiltered(questDefName, questInstanceID, EventCategory.Quest, RimTalkEventPlus.Settings))
                     continue;
 
                 if (QuestLinkUtil.IsQuestHidden(quest))
@@ -176,8 +226,8 @@ namespace RimTalkEventPlus
             }
         }
 
-        /// Game conditions side: all active GameConditions on this map.
-        /// These are the same things shown in the top-right UI bar above the speed buttons.
+        // Game conditions side: all active GameConditions on this map.
+        // These are the same things shown in the top-right UI bar above the speed buttons.
         private static void TryAddActiveGameConditionsForMap(
             Map map,
             List<OngoingEventSnapshot> result,
@@ -208,6 +258,10 @@ namespace RimTalkEventPlus
                 if (!cond.def.displayOnUI)
                     continue;
 
+                // Check new filtering system using helper method
+                if (IsEventFiltered(cond.def.defName, null, EventCategory.MapCondition, RimTalkEventPlus.Settings))
+                    continue;
+
                 // Use the def's LabelCap/description so we don't depend on newer GameCondition APIs.
                 string label = cond.def.LabelCap;
                 string body = cond.def.description ?? string.Empty;
@@ -226,9 +280,9 @@ namespace RimTalkEventPlus
             }
         }
 
-        /// Threat side: at most one most-recent red threat letter,
-        /// only if isInDanger == true, and only if it's not too old
-        /// (currently within 3 in-game hours).
+        // Threat side: at most one most-recent red threat letter,
+        // only if isInDanger == true, and only if it's not too old
+        // (currently within 3 in-game hours).
         private static void TryAddMostRecentThreatLetter(
             List<OngoingEventSnapshot> result,
             int maxEvents,
@@ -261,6 +315,10 @@ namespace RimTalkEventPlus
                 var def = letter.def;
                 bool isThreatLetter = def == LetterDefOf.ThreatBig || def == LetterDefOf.ThreatSmall;
                 if (!isThreatLetter)
+                    continue;
+
+                // Check new filtering system using helper method
+                if (IsEventFiltered(def.defName, null, EventCategory.Threat, RimTalkEventPlus.Settings))
                     continue;
 
                 // Age filter: skip (and stop) if the newest threat is already too old.

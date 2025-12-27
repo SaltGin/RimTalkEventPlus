@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>Optimointiasetukset</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>Ota tapahtumatekstin pakkaus käyttöön</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>Ota tapahtumatekstin pakkaus käyttöön (WIP - tulossa pian, kytkin ei tee tällä hetkellä mitään)</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>Käytä pakattua tapahtumatekstiä vähentääksesi tokenien käyttöä, kun lähettää tehtäviä ja tapahtumia RimTalkille.</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@ Esimerkki (pakolaisten majoitustehtävä):
 - Jälkeen: Lyhyt yhteenveto, esimerkiksi: "Siirtokunta otti pakolaiset vastaan. He pakenivat, koska [reason], viipyvät X päivää levätäkseen ja järjestäytyäkseen uudelleen, ja työskentelevät sekä taistelevat tuona aikana ilmaiseksi."
 
 Kun asetus on pois käytöstä, Event+ lähettää aina tapahtuman alkuperäisen täydellisen tekstin.</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>Tapahtumasuodatus</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>Kategoriasuodattimet</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>Ota käyttöön tai pois käytöstä kokonaiset tapahtumakategoriat. Pois käytöstä olevat kategoriat piilotetaan kokonaan tekoälyltä ja ohittavat kaikki alla olevat asetukset.</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>TYYPPIEN PERUSTEELLA SUODATUS</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>Piilota kaikki valittujen tyyppien tapahtumat maailmanlaajuisesti kaikissa tallennuksissa</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>INSTANSSIKOHTAINEN SUODATUS</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Piilota tietyt aktiiviset tapahtumat tässä tallennuksessa. Käytettävissä vain kun tallennustiedosto on ladattu.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>Saatavilla olevat tyypit</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>Pois käytöstä olevat tyypit</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>Nykyiset instanssit</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>Piilotetut instanssit</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>Näytä vain nykyiset tapahtumat</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>Näytä kaikki tapahtumatyypit</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>Näyttää vain parhaillaan pelissäsi aktiiviset tapahtumat. Käytettävissä vain kun tallennustiedosto on ladattu.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>Näyttää kaikki mahdolliset tapahtumatyypit ladatuista modeista. Voi sisältää tapahtumatyyppejä, jotka on jo suljettu pois RimTalk-keskusteluista, vaikka ne olisivat aktiivisia pelissäsi (esim. tausta-ajastimet, diplomaattiset tehtävät).</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>globaalisti poistettu käytöstä</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>Tehtävät</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>Karttaolosuhteet</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>Uhat</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>Maailmankohteet (rosvojoukkojen leirit, esineiden kätkenpaikat jne.)</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>Nollaa kaikki tyyppisuodattimet</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>Nollaa kaikki instanssisuodattimet</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>Tyhjennetty {0} tyyppisuodatinta.</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>Tyhjennetty {0} instanssisuodatinta kaikista tallennuksista.</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

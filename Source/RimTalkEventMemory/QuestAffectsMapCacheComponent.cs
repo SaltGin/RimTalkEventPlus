@@ -23,7 +23,7 @@ namespace RimTalkEventPlus
             return ((long)questId << 32) | (uint)mapUniqueId;
         }
 
-        public bool TryGet(int questId, int mapUniqueId, int nowTick, out bool affects)
+        public bool TryGet(int questId, int mapUniqueId, out bool affects)
         {
             affects = false;
 
@@ -36,7 +36,7 @@ namespace RimTalkEventPlus
             return true;
         }
 
-        public void Store(int questId, int mapUniqueId, int nowTick, bool affects)
+        public void Store(int questId, int mapUniqueId, bool affects)
         {
             long key = MakeKey(questId, mapUniqueId);
             _cache[key] = new Entry

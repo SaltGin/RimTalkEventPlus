@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>Ustawienia optymalizacji</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>Włącz kompresję tekstu zdarzeń</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>Włącz kompresję tekstu zdarzeń (WIP - wkrótce dostępne, przełącznik obecnie nic nie robi)</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>Używaj skompresowanego tekstu zdarzeń, aby zmniejszyć zużycie tokenów przy wysyłaniu zadań i zdarzeń do RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@ Przykład (zadanie z uchodźcami):
 - Po: Krótkie podsumowanie, np.: "Kolonia przyjęła uchodźców. Uciekli z powodu [reason], zostaną przez X dni, aby odpocząć i się zorganizować, i w tym czasie będą pracować oraz walczyć za darmo."
 
 Gdy opcja jest wyłączona, Event+ zawsze wysyła pełny, oryginalny tekst zdarzenia.</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>Filtrowanie zdarzeń</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>Filtry kategorii</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>Włącz lub wyłącz całe kategorie zdarzeń. Wyłączone kategorie są całkowicie ukryte przed SI i nadpisują wszystkie poniższe ustawienia.</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>FILTROWANIE WG TYPU</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>Ukryj wszystkie zdarzenia wybranych typów globalnie, we wszystkich zapisach</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>FILTROWANIE WG INSTANCJI</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ukryj konkretne aktywne zdarzenia w tym zapisie. Dostępne tylko po załadowaniu zapisu.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>Dostępne typy</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>Wyłączone typy</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>Bieżące instancje</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>Ukryte instancje</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>Pokaż tylko bieżące zdarzenia</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>Pokaż wszystkie typy zdarzeń</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>Pokazuje tylko zdarzenia aktualnie aktywne w twojej grze. Dostępne tylko po załadowaniu zapisu.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>Pokazuje wszystkie możliwe typy zdarzeń z załadowanych modów. Może zawierać typy zdarzeń, które są już wykluczone z rozmów RimTalk, nawet jeśli są aktywne w twojej grze (np. liczniki czasu w tle, misje dyplomatyczne).</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>globalnie wyłączone</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>Zadania</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>Warunki mapy</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>Zagrożenia</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>Lokacje światowe (obozy bandytów, skrytki z przedmiotami itp.)</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>Resetuj wszystkie filtry typów</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>Resetuj wszystkie filtry instancji</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>Wyczyszczono {0} filtrów typów.</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>Wyczyszczono {0} filtrów instancji we wszystkich zapisach.</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

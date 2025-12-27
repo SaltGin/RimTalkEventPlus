@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>Налаштування оптимізації</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>Увімкнути стиснення тексту подій</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>Увімкнути стиснення тексту подій (WIP - незабаром, перемикач наразі нічого не робить)</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>Використовувати стиснений текст подій, щоб зменшити витрати токенів під час надсилання квестів і подій до RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@
 - Після: Короткий підсумок на кшталт: "Колонія прийняла біженців. Вони втекли через [reason], залишаться на X днів, щоб відпочити й оговтатися, і весь цей час безкоштовно працюватимуть та воюватимуть."
 
 Якщо опцію вимкнено, Event+ завжди надсилає повний оригінальний текст події.</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>Фільтрація подій</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>Фільтри категорій</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>Увімкніть або вимкніть цілі категорії подій. Вимкнені категорії повністю приховані від ШІ й перекривають усі налаштування нижче.</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>ФІЛЬТРАЦІЯ ЗА ТИПОМ</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>Приховати всі події обраних типів глобально, у всіх збережених іграх</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>ФІЛЬТРАЦІЯ ЗА ЕКЗЕМПЛЯРАМИ</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Приховати конкретні активні події в цьому збереженні. Доступно лише при завантаженому збереженні.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>Доступні типи</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>Вимкнені типи</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>Поточні екземпляри</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>Приховані екземпляри</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>Показувати лише поточні події</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>Показувати всі типи подій</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>Показує лише події, які наразі активні у вашій грі. Доступно лише при завантаженому збереженні.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>Показує всі можливі типи подій із завантажених модів. Може містити типи подій, які вже виключено з розмов RimTalk, навіть якщо вони активні у вашій грі (наприклад, фонові таймери, дипломатичні завдання).</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>вимкнено глобально</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>Завдання</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>Умови карти</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>Загрози</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>Світові локації (табори бандитів, схованки предметів тощо)</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>Скинути всі фільтри типів</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>Скинути всі фільтри екземплярів</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>Очищено {0} фільтрів типів.</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>Очищено {0} фільтрів екземплярів у всіх збереженнях.</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

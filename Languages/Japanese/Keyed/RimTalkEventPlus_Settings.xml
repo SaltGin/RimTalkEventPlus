@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>最適化設定</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>イベントテキストの圧縮を有効にする</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>イベントテキストの圧縮を有効にする（WIP - 近日公開、トグルは現在何もしません）</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>クエストやイベントを RimTalk に送信するとき、圧縮されたイベントテキストを使ってトークン消費を抑えます。</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@
 - 圧縮後: 「コロニーは難民を受け入れた。[reason] のために逃れてきており、休息と立て直しのために X 日間滞在し、その間は無料で働き戦う。」といった短い要約になります。
 
 無効の場合、Event+ は常に元のイベントテキスト全文を送信します。</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>イベントフィルター</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>カテゴリーフィルター</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>イベントカテゴリ全体を有効または無効にします。無効にしたカテゴリはAIから完全に隠され、以下の設定をすべて上書きします。</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>タイプ別フィルター</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>選択したタイプのすべてのイベントをグローバルに、すべてのセーブファイルで非表示にする</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>インスタンス別フィルター</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>このセーブファイル内の特定のアクティブなイベントを非表示にします。セーブファイルがロードされている場合のみ利用可能です。</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>利用可能なタイプ</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>無効なタイプ</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>現在のインスタンス</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>非表示のインスタンス</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>現在のイベントのみ表示</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>すべてのイベントタイプを表示</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>ゲーム内で現在アクティブなイベントのみを表示します。セーブファイルがロードされている場合のみ利用可能です。</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>ロードされたMODからの可能なすべてのイベントタイプを表示します。ゲームでアクティブであっても、RimTalk会話から既に除外されているイベントタイプが含まれる場合があります（例：バックグラウンドタイマー、外交クエスト）。</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>全体で無効</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>クエスト</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>マップコンディション</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>脅威</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>世界サイト（盗賊キャンプ、アイテム隠し場所など）</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>すべてのタイプフィルターをリセット</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>すべてのインスタンスフィルターをリセット</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>{0}個のタイプフィルターをクリアしました。</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>すべてのセーブで{0}個のインスタンスフィルターをクリアしました。</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

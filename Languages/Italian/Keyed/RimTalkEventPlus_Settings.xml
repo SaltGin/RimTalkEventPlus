@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>Impostazioni di ottimizzazione</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>Abilita compressione del testo degli eventi</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>Abilita compressione del testo degli eventi (WIP - in arrivo, l'interruttore attualmente non fa nulla)</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>Usa testo degli eventi compresso per ridurre il consumo di token quando invii missioni ed eventi a RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@ Esempio (missione di ospitalità per rifugiati):
 - Dopo: Un breve riassunto del tipo: "La colonia ha accettato i rifugiati. Sono fuggiti a causa di [reason], rimarranno per X giorni per riposare e riorganizzarsi e lavoreranno e combatteranno gratuitamente per tutto questo tempo."
 
 Se è disabilitata, Event+ invia sempre il testo completo originale dell’evento.</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>Filtraggio degli eventi</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>Filtri per categoria</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>Abilita o disabilita intere categorie di eventi. Le categorie disabilitate sono completamente nascoste all'IA, sovrascrivendo tutte le impostazioni sottostanti.</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>FILTRAGGIO PER TIPO</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>Nascondi tutti gli eventi dei tipi selezionati globalmente, in tutti i salvataggi</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>FILTRAGGIO PER ISTANZA</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Nascondi eventi attivi specifici in questo salvataggio. Disponibile solo quando un salvataggio è caricato.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>Tipi disponibili</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>Tipi disabilitati</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>Istanze attuali</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>Istanze nascoste</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>Mostra solo eventi attuali</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>Mostra tutti i tipi di eventi</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>Mostra solo gli eventi attualmente attivi nel tuo gioco. Disponibile solo quando un salvataggio è caricato.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>Mostra tutti i possibili tipi di eventi dalle mod caricate. Può includere tipi di eventi che sono già esclusi dalle conversazioni RimTalk, anche se attivi nel tuo gioco (es. timer in background, missioni diplomatiche).</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>disabilitato globalmente</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>Missioni</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>Condizioni della mappa</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>Minacce</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>Siti del mondo (accampamenti di banditi, nascondigli di oggetti, ecc.)</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>Reimposta tutti i filtri per tipo</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>Reimposta tutti i filtri per istanza</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>Cancellati {0} filtri per tipo.</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>Cancellati {0} filtri per istanza in tutti i salvataggi.</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

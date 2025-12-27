@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>Optimalizációs beállítások</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>Eseményszöveg tömörítésének engedélyezése</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>Eseményszöveg tömörítésének engedélyezése (WIP - hamarosan, a kapcsoló jelenleg nem csinál semmit)</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>Használj tömörített eseményszöveget, hogy csökkentsd a tokenhasználatot, amikor küldetéseket és eseményeket küldesz a RimTalknak.</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@ Példa (menekültekről szóló küldetés):
 - Utána: Rövid összefoglaló, például: "A kolónia befogadta a menekülteket. [reason] miatt menekültek el, X napig maradnak, hogy pihenjenek és újraszerveződjenek, és ez idő alatt ingyen fognak dolgozni és harcolni."
 
 Ha a beállítás ki van kapcsolva, az Event+ mindig az esemény teljes, eredeti szövegét küldi.</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>Eseményszűrés</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>Kategóriaszűrők</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>Teljes eseménykategóriák engedélyezése vagy letiltása. A letiltott kategóriák teljesen rejtve vannak a MI elől, és felülírják az alábbi beállításokat.</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>TÍPUSALAPÚ SZŰRÉS</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>Kijelölt típusú összes esemény elrejtése globálisan, minden mentés között</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>PÉLDÁNYALAPÚ SZŰRÉS</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Adott aktív események elrejtése ebben a mentésben. Csak betöltött mentés esetén elérhető.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>Elérhető típusok</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>Letiltott típusok</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>Jelenlegi példányok</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>Rejtett példányok</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>Csak aktuális események megjelenítése</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>Összes eseménytípus megjelenítése</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>Csak a játékodban jelenleg aktív eseményeket mutatja. Csak betöltött mentés esetén elérhető.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>A betöltött modokból származó összes lehetséges eseménytípust mutatja. Tartalmazhat olyan eseménytípusokat, amelyek már ki vannak zárva a RimTalk beszélgetésekből, még akkor is, ha aktívak a játékodban (pl. háttér időzítők, diplomáciai küldetések).</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>globálisan letiltva</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>Küldetések</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>Térképfeltételek</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>Fenyegetések</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>Világhelyszínek (banditatáborok, tárgyrejtekhelyek stb.)</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>Minden típusszűrő alaphelyzetbe állítása</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>Minden példányszűrő alaphelyzetbe állítása</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>{0} típusszűrő törölve.</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>{0} példányszűrő törölve az összes mentésből.</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

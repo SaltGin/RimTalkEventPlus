@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>Ajustes de optimización</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>Activar compresión del texto de eventos</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>Activar compresión del texto de eventos (WIP - próximamente, el interruptor actualmente no hace nada)</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>Usa texto de evento comprimido para reducir el uso de tokens al enviar misiones y eventos a RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@ Ejemplo (misión de hospitalidad para refugiados):
 - Después: Un breve resumen como: "La colonia aceptó a los refugiados. Huyeron por [reason], se quedarán X días para descansar y reorganizarse, y trabajarán y lucharán gratis durante ese tiempo."
 
 Cuando está desactivada, Event+ siempre envía el texto original completo del evento.</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>Filtrado de eventos</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>Filtros por categoría</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>Activa o desactiva categorías completas de eventos. Las categorías desactivadas se ocultan por completo a la IA y anulan todas las configuraciones de abajo.</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>FILTRADO POR TIPO</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>Ocultar todos los eventos de los tipos seleccionados globalmente, en todas las partidas guardadas</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>FILTRADO POR INSTANCIA</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ocultar eventos activos específicos en esta partida guardada. Solo disponible cuando se carga una partida.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>Tipos disponibles</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>Tipos deshabilitados</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>Instancias actuales</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>Instancias ocultas</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>Mostrar solo eventos actuales</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>Mostrar todos los tipos de eventos</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>Muestra solo los eventos actualmente activos en tu juego. Solo disponible cuando se carga una partida.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>Muestra todos los tipos de eventos posibles de los mods cargados. Puede incluir tipos de eventos que ya están excluidos de las conversaciones de RimTalk, incluso si están activos en tu juego (ej., temporizadores de fondo, misiones diplomáticas).</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>deshabilitado globalmente</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>Misiones</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>Condiciones del mapa</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>Amenazas</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>Sitios del mundo (campamentos de bandidos, alijos de objetos, etc.)</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>Restablecer todos los filtros de tipo</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>Restablecer todos los filtros de instancia</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>{0} filtro(s) de tipo borrado(s).</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>{0} filtro(s) de instancia borrado(s) en todas las partidas.</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

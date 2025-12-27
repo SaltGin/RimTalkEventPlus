@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>最佳化設定</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>啟用事件文字壓縮</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>啟用事件文字壓縮（開發中 - 即將推出，開關目前無效）</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>在向 RimTalk 傳送任務與事件時，使用壓縮後的事件文字，以降低 token 消耗。</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@
 - 壓縮後：一段簡短摘要，例如：「殖民地已經接納了這些難民。他們因為 [reason] 而逃離，會在此停留 X 天以休息並重新整頓，在這段期間會免費為你工作與戰鬥。」
 
 當此選項關閉時，Event+ 一律傳送事件的完整原始文字。</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>事件篩選</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>分類篩選</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>啟用或停用整個事件分類。停用的分類會完全對 AI 隱藏，並覆蓋下方所有設定。</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>依類型篩選</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>全域隱藏所選類型的所有事件，適用於所有存檔</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>依實例篩選</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>隱藏此存檔中的特定活動事件。僅在載入存檔時可用。</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>可用類型</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>停用的類型</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>目前實例</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>隱藏的實例</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>僅顯示當前事件</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>顯示所有事件類型</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>僅顯示遊戲中當前活動的事件。僅在載入存檔時可用。</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>顯示已載入模組中所有可能的事件類型。可能包括即使在遊戲中處於活躍狀態也已被排除在RimTalk對話之外的事件類型（例如：後台計時器、外交任務）。</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>全域停用</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>任務</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>地圖狀態</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>威脅</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>世界地點（強盜營地、物品藏匿處等）</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>重設所有類型篩選器</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>重設所有實例篩選器</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>已清除 {0} 個類型篩選器。</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>已清除所有存檔中的 {0} 個實例篩選器。</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

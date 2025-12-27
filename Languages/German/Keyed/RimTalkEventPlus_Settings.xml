@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>Optimierungseinstellungen</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>Ereignistext-Komprimierung aktivieren</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>Ereignistext-Komprimierung aktivieren (WIP - demnächst verfügbar, Schalter funktioniert momentan nicht)</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>Komprimierte Ereignistexte verwenden, um den Tokenverbrauch zu reduzieren, wenn Quests und Ereignisse an RimTalk gesendet werden.</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@ Beispiel (Flüchtlings-Gastfreundschaftsquest):
 - Nachher: Eine kurze Zusammenfassung wie: "Die Kolonie hat die Flüchtlinge aufgenommen. Sie flohen wegen [reason], bleiben X Tage, um sich auszuruhen und neu zu ordnen, und werden in dieser Zeit kostenlos arbeiten und kämpfen."
 
 Wenn die Option deaktiviert ist, sendet Event+ immer den vollständigen ursprünglichen Ereignistext.</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>Ereignisfilterung</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>Kategoriefilter</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>Ganze Ereigniskategorien aktivieren oder deaktivieren. Deaktivierte Kategorien sind für die KI vollständig verborgen und überschreiben alle folgenden Einstellungen.</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>TYPBASIERTES FILTER</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>Alle Ereignisse ausgewählter Typen global in allen Speicherständen ausblenden</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>INSTANZBASIERTES FILTER</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Spezifische aktive Ereignisse in diesem Spielstand ausblenden. Nur verfügbar, wenn ein Spielstand geladen ist.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>Verfügbare Typen</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>Deaktivierte Typen</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>Aktuelle Instanzen</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>Versteckte Instanzen</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>Nur aktuelle Ereignisse anzeigen</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>Alle Ereignistypen anzeigen</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>Zeigt nur aktuell in Ihrem Spiel aktive Ereignisse. Nur verfügbar, wenn ein Spielstand geladen ist.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>Zeigt alle möglichen Ereignistypen aus geladenen Mods. Kann Ereignistypen enthalten, die bereits von RimTalk-Gesprächen ausgeschlossen sind, auch wenn sie in Ihrem Spiel aktiv sind (z. B. Hintergrund-Timer, Diplomatie-Quests).</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>global deaktiviert</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>Aufträge</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>Kartenbedingungen</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>Bedrohungen</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>Weltstandorte (Banditenlager, Vorratsverstecke usw.)</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>Alle Typfilter zurücksetzen</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>Alle Instanzfilter zurücksetzen</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>{0} Typfilter gelöscht.</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>{0} Instanzfilter über alle Spielstände gelöscht.</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

@@ -5,7 +5,7 @@
 
   <RimTalkEventPlus_OptimizationHeader>Optimeringsinställningar</RimTalkEventPlus_OptimizationHeader>
 
-  <RimTalkEventPlus_EnableCompression_Label>Aktivera komprimering av händelsetext</RimTalkEventPlus_EnableCompression_Label>
+  <RimTalkEventPlus_EnableCompression_Label>Aktivera komprimering av händelsetext (WIP - kommer snart, växeln gör för närvarande ingenting)</RimTalkEventPlus_EnableCompression_Label>
 
   <RimTalkEventPlus_EnableCompression_Tooltip>Använd komprimerad händelsetext för att minska antalet tokens när uppdrag och händelser skickas till RimTalk.</RimTalkEventPlus_EnableCompression_Tooltip>
 
@@ -16,5 +16,38 @@ Exempel (uppdrag med flyktingar):
 - Efter: En kort sammanfattning som: "Kolonin har tagit emot flyktingarna. De flydde på grund av [reason], stannar i X dagar för att vila och organisera sig, och kommer att arbeta och slåss gratis under den tiden."
 
 När detta är avaktiverat skickar Event+ alltid händelsens fullständiga originaltext.</RimTalkEventPlus_Compression_Description>
+
+  <!-- Event Filtering UI -->
+  <RimTalkEventPlus_FilteringHeader>Händelsefiltrering</RimTalkEventPlus_FilteringHeader>
+  <RimTalkEventPlus_CategoryFilters>Kategorifilter</RimTalkEventPlus_CategoryFilters>
+  <RimTalkEventPlus_CategoryFilters_Desc>Aktivera eller inaktivera hela händelsekategorier. Inaktiverade kategorier är helt dolda för AI:n och åsidosätter alla inställningar nedan.</RimTalkEventPlus_CategoryFilters_Desc>
+  <RimTalkEventPlus_TypeBasedFiltering>TYPBASERAD FILTRERING</RimTalkEventPlus_TypeBasedFiltering>
+  <RimTalkEventPlus_TypeBasedFiltering_Desc>Dölj alla händelser av valda typer globalt, över alla sparfiler</RimTalkEventPlus_TypeBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering>INSTANSBASERAD FILTRERING</RimTalkEventPlus_InstanceBasedFiltering>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Dölj specifika aktiva händelser i denna sparfil. Endast tillgänglig när en sparfil är laddad.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+
+  <RimTalkEventPlus_AvailableTypes>Tillgängliga typer</RimTalkEventPlus_AvailableTypes>
+  <RimTalkEventPlus_DisabledTypes>Inaktiverade typer</RimTalkEventPlus_DisabledTypes>
+  <RimTalkEventPlus_CurrentInstances>Nuvarande instanser</RimTalkEventPlus_CurrentInstances>
+  <RimTalkEventPlus_HiddenInstances>Dolda instanser</RimTalkEventPlus_HiddenInstances>
+
+  <RimTalkEventPlus_CurrentEventsOnly>Visa endast aktuella händelser</RimTalkEventPlus_CurrentEventsOnly>
+  <RimTalkEventPlus_AllEventTypes>Visa alla händelsetyper</RimTalkEventPlus_AllEventTypes>
+
+  <RimTalkEventPlus_CurrentEventsNote>Visar endast händelser som för närvarande är aktiva i ditt spel. Endast tillgänglig när en sparfil är laddad.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>Visar alla möjliga händelsetyper från laddade moddar. Kan inkludera händelsetyper som redan är uteslutna från RimTalk-konversationer, även om de är aktiva i ditt spel (t.ex. bakgrundstimers, diplomatiska uppdrag).</RimTalkEventPlus_AllEventTypesNote>
+
+  <RimTalkEventPlus_GloballyDisabled>globalt inaktiverad</RimTalkEventPlus_GloballyDisabled>
+
+  <RimTalkEventPlus_QuickFilter_Quests>Uppdrag</RimTalkEventPlus_QuickFilter_Quests>
+  <RimTalkEventPlus_QuickFilter_MapConditions>Kartförhållanden</RimTalkEventPlus_QuickFilter_MapConditions>
+  <RimTalkEventPlus_QuickFilter_Threats>Hot</RimTalkEventPlus_QuickFilter_Threats>
+  <RimTalkEventPlus_QuickFilter_Sites>Världsplatser (banditläger, föremålsgömmor, etc.)</RimTalkEventPlus_QuickFilter_Sites>
+
+  <RimTalkEventPlus_ResetTypeFilters>Återställ alla typfilter</RimTalkEventPlus_ResetTypeFilters>
+  <RimTalkEventPlus_ResetInstanceFilters>Återställ alla instansfilter</RimTalkEventPlus_ResetInstanceFilters>
+
+  <RimTalkEventPlus_TypeFiltersCleared>Rensade {0} typfilter.</RimTalkEventPlus_TypeFiltersCleared>
+  <RimTalkEventPlus_InstanceFiltersCleared>Rensade {0} instansfilter över alla sparfiler.</RimTalkEventPlus_InstanceFiltersCleared>
 
 </LanguageData>

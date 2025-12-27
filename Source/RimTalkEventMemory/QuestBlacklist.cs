@@ -4,6 +4,8 @@ using Verse;
 
 namespace RimTalkEventPlus
 {
+    // Legacy quest blacklist system.
+    [System.Obsolete("This blacklist system is deprecated. Use EventFilterSettings instead. Kept for backward compatibility during migration.")]
     public static class QuestBlacklist
     {
         private static bool _initialized;
