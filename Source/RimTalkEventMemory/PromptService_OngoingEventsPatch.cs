@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using RimTalk.Data;
 using RimTalk.Service;
@@ -9,11 +10,45 @@ using Verse;
 
 namespace RimTalkEventPlus
 {
-    /// Postfix that appends ongoing events to RimTalk's prompt.
-    /// NOTE: patched manually by PromptService_OngoingEventsPatcher.
+    // Postfix that appends ongoing events to RimTalk's context.
+    // NOTE: patched manually by PromptService_OngoingEventsPatcher.
     public static class PromptService_OngoingEventsPatch
     {
-        // Must match: void DecoratePrompt(TalkRequest talkRequest, List<Pawn> pawns, string status)
+        // Cached property accessor - resolved once at startup
+        private static PropertyInfo _contextProperty;
+        private static bool _contextPropertyResolved;
+
+        internal static void ResolveContextProperty()
+        {
+            if (_contextPropertyResolved)
+                return;
+
+            _contextPropertyResolved = true;
+
+            try
+            {
+                var talkRequestType = AccessTools.TypeByName("RimTalk.Data.TalkRequest");
+                if (talkRequestType != null)
+                {
+                    _contextProperty = AccessTools.Property(talkRequestType, "Context");
+
+                    if (_contextProperty != null && Prefs.DevMode)
+                    {
+                        Log.Message("[RimTalk Event+] Found TalkRequest.Context property - using Context injection.");
+                    }
+                    else if (Prefs.DevMode)
+                    {
+                        Log.Message("[RimTalk Event+] TalkRequest.Context not found - falling back to Prompt injection.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning($"[RimTalk Event+] Failed to resolve TalkRequest.Context: {ex.Message}");
+            }
+        }
+
+        // Must match:  void DecoratePrompt(TalkRequest talkRequest, List<Pawn> pawns, string status)
         public static void Postfix(TalkRequest talkRequest, List<Pawn> pawns, string status)
         {
             try
@@ -32,8 +67,6 @@ namespace RimTalkEventPlus
 
                 if (map.IsPlayerHome)
                 {
-                    // Recompute isInDanger in the same way RimTalk's TalkService does:
-                    // using GetPawnStatusFull on nearby pawns.
                     List<Pawn> nearbyPawns = PawnSelector.GetAllNearByPawns(initiator);
                     if (talkRequest.Recipient != null && talkRequest.Recipient.IsPlayer())
                     {
@@ -42,13 +75,12 @@ namespace RimTalkEventPlus
 
                     try
                     {
-                        // GetPawnStatusFull returns (string statusText, bool isInDanger)
                         var statusResult = initiator.GetPawnStatusFull(nearbyPawns);
                         isInDanger = statusResult.Item2;
                     }
                     catch (Exception ex)
                     {
-                        Log.Warning($"[RimTalk Event+] Failed to recompute danger flag: {ex}");
+                        Log.Warning($"[RimTalk Event+] Failed to recompute danger flag:  {ex}");
                     }
                 }
 
@@ -70,13 +102,32 @@ namespace RimTalkEventPlus
                 if (block.NullOrEmpty())
                     return;
 
-                if (talkRequest.Prompt.NullOrEmpty())
+                // Try to inject to Context (new RimTalk), fall back to Prompt (old RimTalk)
+                if (_contextProperty != null)
                 {
-                    talkRequest.Prompt = block;
+                    // New RimTalk:  inject to Context (System Instruction)
+                    string currentContext = _contextProperty.GetValue(talkRequest) as string ?? string.Empty;
+
+                    if (currentContext.NullOrEmpty())
+                    {
+                        _contextProperty.SetValue(talkRequest, block);
+                    }
+                    else
+                    {
+                        _contextProperty.SetValue(talkRequest, currentContext + "\n\n" + block);
+                    }
                 }
                 else
                 {
-                    talkRequest.Prompt += "\n\n" + block;
+                    // Old RimTalk: fall back to Prompt (User Message)
+                    if (talkRequest.Prompt.NullOrEmpty())
+                    {
+                        talkRequest.Prompt = block;
+                    }
+                    else
+                    {
+                        talkRequest.Prompt += "\n\n" + block;
+                    }
                 }
             }
             catch (Exception ex)
@@ -84,11 +135,10 @@ namespace RimTalkEventPlus
                 Log.Warning($"[RimTalk Event+] Error while appending ongoing events: {ex}");
             }
         }
-
     }
 
-    /// Manual patcher: attaches our postfix to PromptService.DecoratePrompt at startup,
-    /// avoiding early static initialization issues with RimTalk.Data.Constant.
+    // Manual patcher:  attaches our postfix to PromptService. DecoratePrompt at startup,
+    // avoiding early static initialization issues with RimTalk.Data. Constant.
     [StaticConstructorOnStartup]
     public static class PromptService_OngoingEventsPatcher
     {
@@ -96,6 +146,9 @@ namespace RimTalkEventPlus
         {
             try
             {
+                // Resolve Context property first
+                PromptService_OngoingEventsPatch.ResolveContextProperty();
+
                 var harmony = new Harmony("saltgin.rimtalkeventmemory.prompt");
 
                 var promptServiceType = AccessTools.TypeByName("RimTalk.Service.PromptService");
@@ -131,7 +184,7 @@ namespace RimTalkEventPlus
             }
             catch (Exception ex)
             {
-                Log.Error($"[RimTalk Event+] Failed to patch PromptService.DecoratePrompt: {ex}");
+                Log.Error($"[RimTalk Event+] Failed to patch PromptService.DecoratePrompt:  {ex}");
             }
         }
     }
