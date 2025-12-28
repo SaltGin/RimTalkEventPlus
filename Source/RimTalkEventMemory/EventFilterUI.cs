@@ -41,10 +41,9 @@ namespace RimTalkEventPlus
         // Self-correcting height measurement
         private static float _lastMeasuredTopSectionHeight = 250f;
 
-        // Threat detection constants
-        private const int MAX_THREAT_SCAN_LETTERS = 50;
-        private const int MAX_THREAT_SCAN_INSTANCES = 30;
-        private const int THREAT_TIMEOUT_TICKS = 7500; // 3 in-game hours
+        // Threat letter scan limits for current-type view
+        private const int MAX_THREAT_SCAN_LETTERS_FOR_TYPES = 50;
+        private const int THREAT_TIMEOUT_TICKS_FOR_TYPES = 7500; // 3 in-game hours
 
         // Helper method to ensure minimum content height for scrollbars to function
         private static float EnsureMinimumScrollHeight(float contentHeight, float scrollRectHeight)
@@ -768,55 +767,58 @@ namespace RimTalkEventPlus
             var events = new List<FilterableEvent>();
 
             if (currentOnly)
-{
-    // Derive types from actual appendable instances
-    var instances = GetCurrentEventInstances(settings);
-    
-        
-    // Extract unique types from appendable instances
-    var addedDefs = new HashSet<string>();
-    foreach (var inst in instances)
-    {
-        if (!addedDefs.Contains(inst.rootID))
-        {
-            addedDefs.Add(inst. rootID);
-            
-            // Try to get proper label from def database based on category
-            string displayName = inst.rootID;
-            switch (inst.category)
             {
-                case EventCategory.Quest:
-                    var questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(inst.rootID);
-                    if (questDef != null && ! questDef.LabelCap.NullOrEmpty())
-                        displayName = questDef.LabelCap;
-                    break;
-                case EventCategory.MapCondition:
-                    var condDef = DefDatabase<GameConditionDef>. GetNamedSilentFail(inst.rootID);
-                    if (condDef != null && !condDef. LabelCap. NullOrEmpty())
-                        displayName = condDef. LabelCap;
-                    break;
-                case EventCategory.SitePart:
-                    var siteDef = DefDatabase<SitePartDef>.GetNamedSilentFail(inst.rootID);
-                    if (siteDef != null && !siteDef.LabelCap.NullOrEmpty())
-                        displayName = siteDef.LabelCap;
-                    break;
-                case EventCategory. Threat:
-                    var incidentDef = DefDatabase<IncidentDef>. GetNamedSilentFail(inst.rootID);
-                    if (incidentDef != null && !incidentDef.LabelCap.NullOrEmpty())
-                        displayName = incidentDef.LabelCap;
-                    break;
+                // Derive types from actual appendable instances
+                var instances = GetCurrentEventInstances(settings);
+
+                // Extract unique types from appendable instances
+                var addedDefs = new HashSet<string>();
+                foreach (var inst in instances)
+                {
+                    if (!addedDefs.Contains(inst.rootID))
+                    {
+                        addedDefs.Add(inst.rootID);
+
+                        // Try to get proper label from def database based on category
+                        string displayName = inst.rootID;
+                        switch (inst.category)
+                        {
+                            case EventCategory.Quest:
+                                var questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(inst.rootID);
+                                if (questDef != null && !questDef.LabelCap.NullOrEmpty())
+                                    displayName = questDef.LabelCap;
+                                break;
+                            case EventCategory.MapCondition:
+                                var condDef = DefDatabase<GameConditionDef>.GetNamedSilentFail(inst.rootID);
+                                if (condDef != null && !condDef.LabelCap.NullOrEmpty())
+                                    displayName = condDef.LabelCap;
+                                break;
+                            case EventCategory.SitePart:
+                                var siteDef = DefDatabase<SitePartDef>.GetNamedSilentFail(inst.rootID);
+                                if (siteDef != null && !siteDef.LabelCap.NullOrEmpty())
+                                    displayName = siteDef.LabelCap;
+                                break;
+                            case EventCategory.Threat:
+                                var incidentDef = DefDatabase<IncidentDef>.GetNamedSilentFail(inst.rootID);
+                                if (incidentDef != null && !incidentDef.LabelCap.NullOrEmpty())
+                                    displayName = incidentDef.LabelCap;
+                                break;
+                        }
+
+                        events.Add(new FilterableEvent(
+                            inst.rootID,
+                            displayName,
+                            null,
+                            inst.category,
+                            inst.sourceDefName
+                        ));
+                    }
+                }
+
+                // Also pull in current threat letter types (ThreatBig/ThreatSmall) if recently present
+                AddCurrentThreatLetterTypes(events, addedDefs);
             }
             
-            events.Add(new FilterableEvent(
-                inst.rootID,
-                displayName,
-                null,
-                inst.category,
-                inst. sourceDefName
-            ));
-        }
-    }
-}
             else
             {
                 var questDefs = DefDatabase<QuestScriptDef>.AllDefsListForReading;
@@ -873,30 +875,69 @@ namespace RimTalkEventPlus
                     }
                 }
 
-                var incidentDefs = DefDatabase<IncidentDef>.AllDefsListForReading;
-                if (incidentDefs != null)
+                // Threat types: letters only (ThreatBig / ThreatSmall)
+                var threatLetters = new[] { LetterDefOf.ThreatBig, LetterDefOf.ThreatSmall };
+                foreach (var def in threatLetters)
                 {
-                    foreach (var def in incidentDefs)
+                    if (def?.defName != null)
                     {
-                        if (def?.defName != null)
-                        {
-                            if (def.category == IncidentCategoryDefOf.ThreatBig ||
-                                def.category == IncidentCategoryDefOf.ThreatSmall)
-                            {
-                                events.Add(new FilterableEvent(
-                                    def.defName,
-                                    (def.LabelCap.NullOrEmpty() ? def.defName : (string)def.LabelCap),
-                                    null,
-                                    EventCategory.Threat,
-                                    def.defName
-                                ));
-                            }
-                        }
+                        events.Add(new FilterableEvent(
+                            def.defName,
+                            (def.LabelCap.NullOrEmpty() ? def.defName : (string)def.LabelCap),
+                            null,
+                            EventCategory.Threat,
+                            def.defName
+                        ));
                     }
                 }
             }
 
             return events;
+        }
+
+        // Adds ThreatBig/ThreatSmall types to the current-only list if recent threat letters exist.
+        private static void AddCurrentThreatLetterTypes(List<FilterableEvent> events, HashSet<string> addedDefs)
+        {
+            if (Find.Archive == null)
+                return;
+
+            var list = Find.Archive.ArchivablesListForReading;
+            if (list == null)
+                return;
+
+            int nowTicks = Find.TickManager?.TicksGame ?? -1;
+            int scanned = 0;
+
+            for (int i = list.Count - 1; i >= 0 && scanned < MAX_THREAT_SCAN_LETTERS_FOR_TYPES; i--, scanned++)
+            {
+                if (list[i] is Letter letter && letter.def != null)
+                {
+                    bool isThreatLetter = letter.def == LetterDefOf.ThreatBig || letter.def == LetterDefOf.ThreatSmall;
+                    if (!isThreatLetter)
+                        continue;
+
+                    if (nowTicks >= 0 && THREAT_TIMEOUT_TICKS_FOR_TYPES > 0)
+                    {
+                        int ageTicks = nowTicks - (int)letter.arrivalTime;
+                        if (ageTicks > THREAT_TIMEOUT_TICKS_FOR_TYPES)
+                            continue;
+                    }
+
+                    string defName = letter.def.defName;
+                    if (!addedDefs.Add(defName))
+                        continue;
+
+                    string label = letter.def.LabelCap.NullOrEmpty() ? defName : (string)letter.def.LabelCap;
+
+                    events.Add(new FilterableEvent(
+                        defName,
+                        label,
+                        null,
+                        EventCategory.Threat,
+                        defName
+                    ));
+                }
+            }
         }
 
         // Gets all current event instances from the game state.
@@ -934,112 +975,6 @@ namespace RimTalkEventPlus
                     }
                 }
             }
-
-            var maps = Find.Maps;
-            if (maps != null)
-            {
-                foreach (var map in maps)
-                {
-                    if (map == null) continue;
-
-                    var gcm = map.gameConditionManager;
-                    if (gcm != null)
-                    {
-                        var conds = gcm.ActiveConditions;
-                        if (conds != null)
-                        {
-                            foreach (var cond in conds)
-                            {
-                                if (cond?.def?.defName == null || !cond.def.displayOnUI)
-                                    continue;
-
-                                string defName = cond.def.defName;
-                                string label = cond.def.LabelCap.NullOrEmpty() ? cond.def.defName : (string)cond.def.LabelCap;
-                                string instanceID = $"MapCondition_{defName}_{cond.GetHashCode()}";
-
-                                instances.Add(new FilterableEvent(
-                                    defName,
-                                    defName,
-                                    label,
-                                    EventCategory.MapCondition,
-                                    defName,
-                                    instanceID
-                                ));
-                            }
-                        }
-                    }
-
-                    if (!map.IsPlayerHome)
-                    {
-                        var parent = map.Parent;
-                        if (parent is Site site && site.parts != null)
-                        {
-                            foreach (var part in site.parts)
-                            {
-                                if (part?.def?.defName == null)
-                                    continue;
-
-                                string defName = part.def.defName;
-                                string label = part.def.LabelCap.NullOrEmpty() ? defName : (string)part.def.LabelCap;
-                                string instanceID = $"SitePart_{defName}_{site.ID}";
-
-                                instances.Add(new FilterableEvent(
-                                    defName,
-                                    defName,
-                                    label,
-                                    EventCategory.SitePart,
-                                    defName,
-                                    instanceID
-                                ));
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (Find.Archive != null)
-            {
-                var list = Find.Archive.ArchivablesListForReading;
-                if (list != null)
-                {
-                    int nowTicks = Find.TickManager?.TicksGame ?? -1;
-                    int scanned = 0;
-
-                    for (int i = list.Count - 1; i >= 0 && scanned < MAX_THREAT_SCAN_INSTANCES; i--, scanned++)
-                    {
-                        IArchivable a = list[i];
-                        if (a is Letter letter && letter.def != null)
-                        {
-                            var def = letter.def;
-                            bool isThreatLetter = def == LetterDefOf.ThreatBig || def == LetterDefOf.ThreatSmall;
-                            if (isThreatLetter)
-                            {
-                                if (nowTicks >= 0 && THREAT_TIMEOUT_TICKS > 0)
-                                {
-                                    int ageTicks = nowTicks - (int)letter.arrivalTime;
-                                    if (ageTicks > THREAT_TIMEOUT_TICKS)
-                                        continue;
-                                }
-
-                                string defName = def.defName;
-                                string label = !letter.Label.NullOrEmpty() ? letter.Label.ToString()
-                                    : (!string.IsNullOrEmpty(def.label) ? def.label : defName);
-                                string instanceID = $"Threat_{defName}_{letter.ID}";
-
-                                instances.Add(new FilterableEvent(
-                                    defName,
-                                    defName,
-                                    label,
-                                    EventCategory.Threat,
-                                    defName,
-                                    instanceID
-                                ));
-                            }
-                        }
-                    }
-                }
-            }
-
             return instances;
         }
 
@@ -1103,7 +1038,7 @@ namespace RimTalkEventPlus
             return $"{seed}_{persistentRandom}";
         }
 
-        // Helper struct for managing Text. Font state
+        // Helper struct for managing Text.Font state
         private struct TextBlock : IDisposable
         {
             private readonly GameFont _previousFont;
@@ -1129,7 +1064,7 @@ namespace RimTalkEventPlus
             }
         }
 
-        // Helper struct for managing GUI. color state
+        // Helper struct for managing GUI.color state
         private struct ColorBlock : IDisposable
         {
             private readonly Color _previousColor;
