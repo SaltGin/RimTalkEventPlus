@@ -712,7 +712,11 @@ namespace RimTalkEventPlus
                 if (!string.IsNullOrEmpty(colonyId))
                 {
                     var instanceSet = settings.GetInstanceSet(colonyId);
-                    instanceSet?.Remove(_selectedHiddenInstance);
+                    if (instanceSet != null)
+                    {
+                        instanceSet.Remove(_selectedHiddenInstance);
+                        PruneEmptyInstanceSet(settings, colonyId);
+                    }
                 }
                 _selectedHiddenInstance = null;
             }
@@ -993,7 +997,10 @@ namespace RimTalkEventPlus
 
             var instanceSet = settings.GetInstanceSet(colonyId);
             if (instanceSet == null || instanceSet.Count == 0)
+            {
+                PruneEmptyInstanceSet(settings, colonyId);
                 return;
+            }
 
             var activeInstanceIDs = new HashSet<string>();
 
@@ -1017,6 +1024,8 @@ namespace RimTalkEventPlus
             {
                 instanceSet.Remove(instanceID);
             }
+
+            PruneEmptyInstanceSet(settings, colonyId);
         }
 
         // Gets the current colony identifier for per-colony instance filtering.  
@@ -1036,6 +1045,21 @@ namespace RimTalkEventPlus
             string seed = worldInfo.seedString ?? "";
 
             return $"{seed}_{persistentRandom}";
+        }
+
+        // Helper to remove empty per-colony instance sets
+        private static void PruneEmptyInstanceSet(EventFilterSettings settings, string colonyId)
+        {
+            if (settings?.disabledEventInstances == null || string.IsNullOrEmpty(colonyId))
+                return;
+
+            if (settings.disabledEventInstances.TryGetValue(colonyId, out var set))
+            {
+                if (set == null || set.Count == 0)
+                {
+                    settings.disabledEventInstances.Remove(colonyId);
+                }
+            }
         }
 
         // Helper struct for managing Text.Font state
