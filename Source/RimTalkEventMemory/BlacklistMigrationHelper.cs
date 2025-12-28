@@ -11,14 +11,15 @@ namespace RimTalkEventPlus
         // Migrates blacklisted quests from XML definitions to EventFilterSettings.
         // Only runs once per settings file based on the questBlacklistMigrated flag.
         // Safe to call during mod initialization as DefDatabase is already populated.
-        public static void TryMigrateBlacklist(EventFilterSettings settings)
+        // Returns true if migration was performed, false if already migrated or skipped.
+        public static bool TryMigrateBlacklist(EventFilterSettings settings)
         {
             if (settings == null)
-                return;
+                return false;
 
             // Check if migration has already been completed
             if (settings.questBlacklistMigrated)
-                return;
+                return false;
 
             try
             {
@@ -84,12 +85,14 @@ namespace RimTalkEventPlus
                 {
                     Log.Message("[RimTalk Event+] Blacklist migration completed: No blacklist entries found.");
                 }
+                return true; // Migration was performed
             }
             catch (System.Exception ex)
             {
                 Log.Error($"[RimTalk Event+] Error during blacklist migration: {ex.Message}\n{ex.StackTrace}");
                 // Still mark as migrated to avoid repeated failures
                 settings.questBlacklistMigrated = true;
+                return true;
             }
         }
     }

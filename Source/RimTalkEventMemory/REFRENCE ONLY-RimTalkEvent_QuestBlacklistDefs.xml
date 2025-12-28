@@ -9,6 +9,10 @@
     <blacklistedQuestRoots>
       <!-- Since this quest never closes the loop properly and doesn’t expose progress cleanly -->
       <li>BFA_FallenAngel_Accept</li>
+	  <!-- Vanilla entries test -->
+	  <li>Hospitality_Animals</li>
+	  <!-- Bad entries test -->
+	  <li>Hospitality_Joine</li>
     </blacklistedQuestRoots>
   </RimTalkEventPlus.RimTalkQuestBlacklistDef>
 
