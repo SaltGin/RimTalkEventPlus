@@ -80,7 +80,7 @@ namespace RimTalkEventPlus
                     }
                     catch (Exception ex)
                     {
-                        Log.Warning($"[RimTalk Event+] Failed to recompute danger flag:  {ex}");
+                        Log.Warning($"[RimTalk Event+] Failed to recompute danger flag: {ex}");
                     }
                 }
 
@@ -137,8 +137,8 @@ namespace RimTalkEventPlus
         }
     }
 
-    // Manual patcher:  attaches our postfix to PromptService. DecoratePrompt at startup,
-    // avoiding early static initialization issues with RimTalk.Data. Constant.
+    // Manual patcher: attaches our postfix to PromptService.DecoratePrompt at startup,
+    // avoiding early static initialization issues with RimTalk.Data.Constant.
     [StaticConstructorOnStartup]
     public static class PromptService_OngoingEventsPatcher
     {
@@ -184,7 +184,7 @@ namespace RimTalkEventPlus
             }
             catch (Exception ex)
             {
-                Log.Error($"[RimTalk Event+] Failed to patch PromptService.DecoratePrompt:  {ex}");
+                Log.Error($"[RimTalk Event+] Failed to patch PromptService.DecoratePrompt: {ex}");
             }
         }
     }
