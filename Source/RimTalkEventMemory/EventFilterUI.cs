@@ -45,6 +45,9 @@ namespace RimTalkEventPlus
         private const int MAX_THREAT_SCAN_LETTERS_FOR_TYPES = 50;
         private const int THREAT_TIMEOUT_TICKS_FOR_TYPES = 7500; // 3 in-game hours
 
+        // Subtitles (examples) for type rows, keyed by rootID (quests & threats only)
+        private static readonly Dictionary<string, string> _typeSubtitles = new Dictionary<string, string>();
+
         // Helper method to ensure minimum content height for scrollbars to function
         private static float EnsureMinimumScrollHeight(float contentHeight, float scrollRectHeight)
         {
@@ -486,7 +489,16 @@ namespace RimTalkEventPlus
 
             var groupedEvents = filteredEvents.GroupBy(e => e.category).OrderBy(g => g.Key).ToList();
 
-            float contentHeight = groupedEvents.Sum(g => 25f + g.Count() * 25f) + categoryIndicatorHeight;
+            float contentHeight = groupedEvents.Sum(g =>
+            {
+                float perGroup = 25f;
+                foreach (var evt in g)
+                {
+                    bool hasSubtitle = evt.category == EventCategory.Quest || evt.category == EventCategory.Threat;
+                    perGroup += hasSubtitle ? 41f : 25f; // 25 base + 16 subtitle
+                }
+                return perGroup;
+            }) + categoryIndicatorHeight;
 
             Rect scrollRect = new Rect(rect.x, rect.y + 30f, rect.width, rect.height - 30f);
             contentHeight = EnsureMinimumScrollHeight(contentHeight, scrollRect.height);
@@ -511,13 +523,25 @@ namespace RimTalkEventPlus
                 foreach (var evt in group)
                 {
                     bool isSelected = isDisabled ? (_selectedDisabledType == evt.rootID) : (_selectedAvailableType == evt.rootID);
-                    yOffset += DrawSelectableItem(viewRect.width, yOffset, evt.displayName, isSelected, () =>
+                    string subtitle = null;
+                    if (evt.category == EventCategory.Quest || evt.category == EventCategory.Threat)
                     {
-                        if (isDisabled)
-                            _selectedDisabledType = evt.rootID;
-                        else
-                            _selectedAvailableType = evt.rootID;
-                    });
+                        _typeSubtitles.TryGetValue(evt.rootID, out subtitle);
+                    }
+
+                    yOffset += DrawSelectableItem(
+                        viewRect.width,
+                        yOffset,
+                        evt.displayName,
+                        subtitle,
+                        isSelected,
+                        () =>
+                        {
+                            if (isDisabled)
+                                _selectedDisabledType = evt.rootID;
+                            else
+                                _selectedAvailableType = evt.rootID;
+                        });
                 }
             }
 
@@ -575,13 +599,20 @@ namespace RimTalkEventPlus
                         ? evt.rootID
                         : $"{evt.instanceName} ({evt.rootID})";
 
-                    yOffset += DrawSelectableItem(viewRect.width, yOffset, displayText, isSelected && !isDisabled, () =>
-                    {
-                        if (isHidden)
-                            _selectedHiddenInstance = evt.instanceID;
-                        else
-                            _selectedCurrentInstance = evt.instanceID;
-                    }, isDisabled);
+                    yOffset += DrawSelectableItem(
+                        viewRect.width,
+                        yOffset,
+                        displayText,
+                        null,
+                        isSelected && !isDisabled,
+                        () =>
+                        {
+                            if (isHidden)
+                                _selectedHiddenInstance = evt.instanceID;
+                            else
+                                _selectedCurrentInstance = evt.instanceID;
+                        },
+                        isDisabled);
 
                     if (isDisabled)
                     {
@@ -625,9 +656,12 @@ namespace RimTalkEventPlus
         }
 
         // Helper to draw selectable item
-        private static float DrawSelectableItem(float width, float yPos, string label, bool isSelected, Action onSelect, bool isDisabled = false)
+        private static float DrawSelectableItem(float width, float yPos, string label, string subtitle, bool isSelected, Action onSelect, bool isDisabled = false)
         {
-            Rect itemRect = new Rect(10f, yPos, width - 10f, 25f);
+            float subtitleHeight = subtitle.NullOrEmpty() ? 0f : 16f;
+            float rowHeight = 25f + subtitleHeight;
+
+            Rect itemRect = new Rect(10f, yPos, width - 10f, rowHeight);
 
             if (isSelected)
                 Widgets.DrawHighlight(itemRect);
@@ -640,10 +674,22 @@ namespace RimTalkEventPlus
                 if (!isDisabled && Widgets.ButtonInvisible(itemRect))
                     onSelect();
 
-                Widgets.Label(itemRect, label);
+                Rect labelRect = new Rect(itemRect.x, itemRect.y, itemRect.width, 25f);
+                Widgets.Label(labelRect, label);
+
+                if (!subtitle.NullOrEmpty())
+                {
+                    using (new TextBlock(GameFont.Tiny))
+                    using (new ColorBlock(new Color(0.7f, 0.7f, 0.7f)))
+                    {
+                        Rect subRect = new Rect(itemRect.x, itemRect.y + 14f, itemRect.width, 16f);
+                        string subtitleText = $"(e.g. {subtitle})";
+                        Widgets.Label(subRect, subtitleText);
+                    }
+                }
             }
 
-            return 25f;
+            return rowHeight;
         }
 
         // Helper to draw "globally disabled" note
@@ -769,66 +815,51 @@ namespace RimTalkEventPlus
         private static List<FilterableEvent> GetAvailableEventTypes(bool currentOnly, EventFilterSettings settings)
         {
             var events = new List<FilterableEvent>();
+            _typeSubtitles.Clear();
 
             if (currentOnly)
             {
                 // Derive types from actual appendable instances
                 var instances = GetCurrentEventInstances(settings);
-
-                // Extract unique types from appendable instances
                 var addedDefs = new HashSet<string>();
+
+                // Quest types from current instances, capture example instance names
                 foreach (var inst in instances)
                 {
-                    if (!addedDefs.Contains(inst.rootID))
-                    {
-                        addedDefs.Add(inst.rootID);
+                    if (!addedDefs.Add(inst.rootID))
+                        continue;
 
                         // Try to get proper label from def database based on category
-                        string displayName = inst.rootID;
-                        switch (inst.category)
-                        {
-                            case EventCategory.Quest:
-                                var questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(inst.rootID);
-                                if (questDef != null && !questDef.LabelCap.NullOrEmpty())
-                                    displayName = questDef.LabelCap;
-                                break;
-                            case EventCategory.MapCondition:
-                                var condDef = DefDatabase<GameConditionDef>.GetNamedSilentFail(inst.rootID);
-                                if (condDef != null && !condDef.LabelCap.NullOrEmpty())
-                                    displayName = condDef.LabelCap;
-                                break;
-                            case EventCategory.SitePart:
-                                var siteDef = DefDatabase<SitePartDef>.GetNamedSilentFail(inst.rootID);
-                                if (siteDef != null && !siteDef.LabelCap.NullOrEmpty())
-                                    displayName = siteDef.LabelCap;
-                                break;
-                            case EventCategory.Threat:
-                                var incidentDef = DefDatabase<IncidentDef>.GetNamedSilentFail(inst.rootID);
-                                if (incidentDef != null && !incidentDef.LabelCap.NullOrEmpty())
-                                    displayName = incidentDef.LabelCap;
-                                break;
-                        }
+                    string displayName = inst.rootID;
+                    if (inst.category == EventCategory.Quest)
+                    {
+                        var questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(inst.rootID);
+                        if (questDef != null && !questDef.LabelCap.NullOrEmpty())
+                            displayName = questDef.LabelCap;
+                    }
 
-                        events.Add(new FilterableEvent(
-                            inst.rootID,
-                            displayName,
-                            null,
-                            inst.category,
-                            inst.sourceDefName
-                        ));
+                    events.Add(new FilterableEvent(
+                        inst.rootID,
+                        displayName,
+                        null,
+                        inst.category,
+                        inst.sourceDefName
+                    ));
+
+                    if (inst.category == EventCategory.Quest && !inst.instanceName.NullOrEmpty())
+                    {
+                        _typeSubtitles[inst.rootID] = inst.instanceName;
                     }
                 }
 
                 // Current map conditions (displayOnUI) add their defs as types
                 AddCurrentMapConditionTypes(events, addedDefs);
-
                 // Current site parts on non-home maps add their defs as types
                 AddCurrentSitePartTypes(events, addedDefs);
 
                 // Current threat letters (ThreatBig/ThreatSmall) if recently present
-                AddCurrentThreatLetterTypes(events, addedDefs);
+                AddCurrentThreatLetterTypes(events, addedDefs, _typeSubtitles);
             }
-            
             else
             {
                 var questDefs = DefDatabase<QuestScriptDef>.AllDefsListForReading;
@@ -906,8 +937,18 @@ namespace RimTalkEventPlus
         }
 
         // Adds ThreatBig/ThreatSmall types to the current-only list if recent threat letters exist.
-        private static void AddCurrentThreatLetterTypes(List<FilterableEvent> events, HashSet<string> addedDefs)
+        private static void AddCurrentThreatLetterTypes(List<FilterableEvent> events, HashSet<string> addedDefs, Dictionary<string, string> subtitles)
         {
+            bool anyMapInDanger = false;
+            var maps = Find.Maps;
+            if (maps != null)
+            {
+                anyMapInDanger = maps.Any(m => m != null && m.dangerWatcher != null && m.dangerWatcher.DangerRating != StoryDanger.None);
+            }
+
+            if (!anyMapInDanger)
+                return;
+
             if (Find.Archive == null)
                 return;
 
@@ -946,6 +987,14 @@ namespace RimTalkEventPlus
                         EventCategory.Threat,
                         defName
                     ));
+
+                    // Subtitle: example threat letter label
+                    var archivable = letter as IArchivable;
+                    string archivedLabel = GetArchivedLabelSafe(archivable);
+                    if (!archivedLabel.NullOrEmpty())
+                    {
+                        subtitles[defName] = archivedLabel;
+                    }
                 }
             }
         }
@@ -1143,6 +1192,13 @@ namespace RimTalkEventPlus
                     settings.disabledEventInstances.Remove(colonyId);
                 }
             }
+        }
+
+        private static string GetArchivedLabelSafe(IArchivable archivable)
+        {
+            if (archivable == null) return null;
+            try { return archivable.ArchivedLabel; }
+            catch { return null; }
         }
 
         // Helper struct for managing Text.Font state
