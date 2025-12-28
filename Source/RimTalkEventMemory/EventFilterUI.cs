@@ -819,7 +819,13 @@ namespace RimTalkEventPlus
                     }
                 }
 
-                // Also pull in current threat letter types (ThreatBig/ThreatSmall) if recently present
+                // Current map conditions (displayOnUI) add their defs as types
+                AddCurrentMapConditionTypes(events, addedDefs);
+
+                // Current site parts on non-home maps add their defs as types
+                AddCurrentSitePartTypes(events, addedDefs);
+
+                // Current threat letters (ThreatBig/ThreatSmall) if recently present
                 AddCurrentThreatLetterTypes(events, addedDefs);
             }
             
@@ -940,6 +946,83 @@ namespace RimTalkEventPlus
                         EventCategory.Threat,
                         defName
                     ));
+                }
+            }
+        }
+
+        // Adds currently active map condition defs (displayOnUI) to the current-only list.
+        private static void AddCurrentMapConditionTypes(List<FilterableEvent> events, HashSet<string> addedDefs)
+        {
+            var maps = Find.Maps;
+            if (maps == null)
+                return;
+
+            foreach (var map in maps)
+            {
+                if (map == null) continue;
+
+                var gcm = map.gameConditionManager;
+                if (gcm == null) continue;
+
+                var conds = gcm.ActiveConditions;
+                if (conds == null) continue;
+
+                foreach (var cond in conds)
+                {
+                    if (cond?.def?.defName == null || !cond.def.displayOnUI)
+                        continue;
+
+                    string defName = cond.def.defName;
+                    if (!addedDefs.Add(defName))
+                        continue;
+
+                    string label = cond.def.LabelCap.NullOrEmpty() ? defName : (string)cond.def.LabelCap;
+
+                    events.Add(new FilterableEvent(
+                        defName,
+                        label,
+                        null,
+                        EventCategory.MapCondition,
+                        defName
+                    ));
+                }
+            }
+        }
+
+        // Adds current site part defs (non-home site maps) to the current-only list.
+        private static void AddCurrentSitePartTypes(List<FilterableEvent> events, HashSet<string> addedDefs)
+        {
+            var maps = Find.Maps;
+            if (maps == null)
+                return;
+
+            foreach (var map in maps)
+            {
+                if (map == null) continue;
+                if (map.IsPlayerHome) continue;
+
+                var parent = map.Parent;
+                if (parent is Site site && site.parts != null)
+                {
+                    foreach (var part in site.parts)
+                    {
+                        if (part?.def?.defName == null)
+                            continue;
+
+                        string defName = part.def.defName;
+                        if (!addedDefs.Add(defName))
+                            continue;
+
+                        string label = part.def.LabelCap.NullOrEmpty() ? defName : (string)part.def.LabelCap;
+
+                        events.Add(new FilterableEvent(
+                            defName,
+                            label,
+                            null,
+                            EventCategory.SitePart,
+                            defName
+                        ));
+                    }
                 }
             }
         }
