@@ -24,7 +24,7 @@
   <RimTalkEventPlus_TypeBasedFiltering>유형별 필터링</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>선택한 유형의 모든 이벤트를 모든 저장 파일에서 전역적으로 숨기기</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>인스턴스별 필터링</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>이 저장 파일의 특정 활성 이벤트를 숨깁니다. 저장 파일이 로드된 경우에만 사용 가능합니다.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>이 저장 파일의 특정 활성 이벤트를 숨깁니다. 저장 파일이 로드된 경우에만 사용 가능합니다. 게임에서 활성화되어 있어도 RimTalk 대화에서 이미 제외된 이벤트 유형이 포함될 수 있습니다.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>사용 가능한 유형</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>비활성화된 유형</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@
   <RimTalkEventPlus_CurrentEventsOnly>현재 이벤트만 표시</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>모든 이벤트 유형 표시</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>게임에서 현재 활성화된 이벤트만 표시합니다. 저장 파일이 로드된 경우에만 사용 가능합니다.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>게임에서 현재 활성화된 이벤트만 표시합니다. 저장 파일이 로드된 경우에만 사용 가능합니다. 게임에서 활성화되어 있어도 RimTalk 대화에서 이미 제외된 이벤트 유형이 포함될 수 있습니다.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>로드된 모드의 모든 가능한 이벤트 유형을 표시합니다. 게임에서 활성화되어 있어도 RimTalk 대화에서 이미 제외된 이벤트 유형이 포함될 수 있습니다(예: 백그라운드 타이머, 외교 퀘스트).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>전역 비활성화</RimTalkEventPlus_GloballyDisabled>

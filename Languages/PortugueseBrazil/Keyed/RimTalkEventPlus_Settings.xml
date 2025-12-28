@@ -24,7 +24,7 @@ Quando está desativada, o Event+ sempre envia o texto original completo do even
   <RimTalkEventPlus_TypeBasedFiltering>FILTRAGEM POR TIPO</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Ocultar todos os eventos dos tipos selecionados globalmente, em todos os saves</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>FILTRAGEM POR INSTÂNCIA</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ocultar eventos ativos específicos neste save. Disponível apenas quando um save está carregado.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ocultar eventos ativos específicos neste save. Disponível apenas quando um save está carregado. Pode incluir tipos de eventos que já estão excluídos das conversas RimTalk.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Tipos disponíveis</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Tipos desativados</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Quando está desativada, o Event+ sempre envia o texto original completo do even
   <RimTalkEventPlus_CurrentEventsOnly>Mostrar apenas eventos atuais</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Mostrar todos os tipos de eventos</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Mostra apenas eventos atualmente ativos no seu jogo. Disponível apenas quando um save está carregado.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Mostra apenas eventos atualmente ativos no seu jogo. Disponível apenas quando um save está carregado. Pode incluir tipos de eventos que já estão excluídos das conversas RimTalk.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Mostra todos os tipos de eventos possíveis de mods carregados. Pode incluir tipos de eventos que já estão excluídos das conversas RimTalk, mesmo que estejam ativos no seu jogo (por exemplo, temporizadores em segundo plano, missões diplomáticas).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>desativado globalmente</RimTalkEventPlus_GloballyDisabled>

@@ -24,7 +24,7 @@ Ha a beállítás ki van kapcsolva, az Event+ mindig az esemény teljes, eredeti
   <RimTalkEventPlus_TypeBasedFiltering>TÍPUSALAPÚ SZŰRÉS</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Kijelölt típusú összes esemény elrejtése globálisan, minden mentés között</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>PÉLDÁNYALAPÚ SZŰRÉS</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Adott aktív események elrejtése ebben a mentésben. Csak betöltött mentés esetén elérhető.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Adott aktív események elrejtése ebben a mentésben. Csak betöltött mentés esetén elérhető. Tartalmazhat olyan eseménytípusokat, amelyek már ki vannak zárva a RimTalk beszélgetésekből.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Elérhető típusok</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Letiltott típusok</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Ha a beállítás ki van kapcsolva, az Event+ mindig az esemény teljes, eredeti
   <RimTalkEventPlus_CurrentEventsOnly>Csak aktuális események megjelenítése</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Összes eseménytípus megjelenítése</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Csak a játékodban jelenleg aktív eseményeket mutatja. Csak betöltött mentés esetén elérhető.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Csak a játékodban jelenleg aktív eseményeket mutatja. Csak betöltött mentés esetén elérhető. Tartalmazhat olyan eseménytípusokat, amelyek már ki vannak zárva a RimTalk beszélgetésekből.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>A betöltött modokból származó összes lehetséges eseménytípust mutatja. Tartalmazhat olyan eseménytípusokat, amelyek már ki vannak zárva a RimTalk beszélgetésekből, még akkor is, ha aktívak a játékodban (pl. háttér időzítők, diplomáciai küldetések).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>globálisan letiltva</RimTalkEventPlus_GloballyDisabled>

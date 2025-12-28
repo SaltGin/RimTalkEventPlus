@@ -24,7 +24,7 @@ Wenn die Option deaktiviert ist, sendet Event+ immer den vollständigen ursprün
   <RimTalkEventPlus_TypeBasedFiltering>TYPBASIERTES FILTER</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Alle Ereignisse ausgewählter Typen global in allen Speicherständen ausblenden</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>INSTANZBASIERTES FILTER</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Spezifische aktive Ereignisse in diesem Spielstand ausblenden. Nur verfügbar, wenn ein Spielstand geladen ist.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Spezifische aktive Ereignisse in diesem Spielstand ausblenden. Nur verfügbar, wenn ein Spielstand geladen ist. Kann Ereignistypen enthalten, die bereits von RimTalk-Gesprächen ausgeschlossen sind.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Verfügbare Typen</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Deaktivierte Typen</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Wenn die Option deaktiviert ist, sendet Event+ immer den vollständigen ursprün
   <RimTalkEventPlus_CurrentEventsOnly>Nur aktuelle Ereignisse anzeigen</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Alle Ereignistypen anzeigen</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Zeigt nur aktuell in Ihrem Spiel aktive Ereignisse. Nur verfügbar, wenn ein Spielstand geladen ist.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Zeigt nur aktuell in Ihrem Spiel aktive Ereignisse. Nur verfügbar, wenn ein Spielstand geladen ist. Kann Ereignistypen enthalten, die bereits von RimTalk-Gesprächen ausgeschlossen sind.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Zeigt alle möglichen Ereignistypen aus geladenen Mods. Kann Ereignistypen enthalten, die bereits von RimTalk-Gesprächen ausgeschlossen sind, auch wenn sie in Ihrem Spiel aktiv sind (z. B. Hintergrund-Timer, Diplomatie-Quests).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>global deaktiviert</RimTalkEventPlus_GloballyDisabled>

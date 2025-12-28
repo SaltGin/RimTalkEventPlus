@@ -24,7 +24,7 @@
   <RimTalkEventPlus_TypeBasedFiltering>タイプ別フィルター</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>選択したタイプのすべてのイベントをグローバルに、すべてのセーブファイルで非表示にする</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>インスタンス別フィルター</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>このセーブファイル内の特定のアクティブなイベントを非表示にします。セーブファイルがロードされている場合のみ利用可能です。</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>このセーブファイル内の特定のアクティブなイベントを非表示にします。セーブファイルがロードされている場合のみ利用可能です。ゲームでアクティブであっても、RimTalk会話から既に除外されているイベントタイプが含まれる場合があります。</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>利用可能なタイプ</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>無効なタイプ</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@
   <RimTalkEventPlus_CurrentEventsOnly>現在のイベントのみ表示</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>すべてのイベントタイプを表示</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>ゲーム内で現在アクティブなイベントのみを表示します。セーブファイルがロードされている場合のみ利用可能です。</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>ゲーム内で現在アクティブなイベントのみを表示します。セーブファイルがロードされている場合のみ利用可能です。ゲームでアクティブであっても、RimTalk会話から既に除外されているイベントタイプが含まれる場合があります。</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>ロードされたMODからの可能なすべてのイベントタイプを表示します。ゲームでアクティブであっても、RimTalk会話から既に除外されているイベントタイプが含まれる場合があります（例：バックグラウンドタイマー、外交クエスト）。</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>全体で無効</RimTalkEventPlus_GloballyDisabled>

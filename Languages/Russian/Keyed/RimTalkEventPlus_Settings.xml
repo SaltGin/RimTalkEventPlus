@@ -24,7 +24,7 @@
   <RimTalkEventPlus_TypeBasedFiltering>ФИЛЬТРАЦИЯ ПО ТИПУ</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Скрыть все события выбранных типов глобально, во всех сохранениях</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>ФИЛЬТРАЦИЯ ПО ЭКЗЕМПЛЯРАМ</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Скрыть определённые активные события в этом сохранении. Доступно только при загруженном сохранении.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Скрыть определённые активные события в этом сохранении. Доступно только при загруженном сохранении. Может включать типы событий, которые уже исключены из разговоров RimTalk.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Доступные типы</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Отключённые типы</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@
   <RimTalkEventPlus_CurrentEventsOnly>Показать только текущие события</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Показать все типы событий</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Показывает только события, активные в вашей игре в данный момент. Доступно только при загруженном сохранении.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Показывает только события, активные в вашей игре в данный момент. Доступно только при загруженном сохранении. Может включать типы событий, которые уже исключены из разговоров RimTalk.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Показывает все возможные типы событий из загруженных модов. Может включать типы событий, которые уже исключены из разговоров RimTalk, даже если они активны в вашей игре (например, фоновые таймеры, дипломатические задания).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>отключено глобально</RimTalkEventPlus_GloballyDisabled>

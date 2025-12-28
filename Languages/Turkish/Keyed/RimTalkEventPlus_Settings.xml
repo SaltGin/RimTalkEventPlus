@@ -24,7 +24,7 @@ Devre dışı bırakıldığında Event+, her zaman olayın tam orijinal metnini
   <RimTalkEventPlus_TypeBasedFiltering>TÜR BAZLI FİLTRELEME</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Seçili türlerdeki tüm olayları tüm kayıtlarda küresel olarak gizle</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>ÖRNEK BAZLI FİLTRELEME</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Bu kayıttaki belirli aktif olayları gizle. Yalnızca bir kayıt yüklendiğinde kullanılabilir.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Bu kayıttaki belirli aktif olayları gizle. Yalnızca bir kayıt yüklendiğinde kullanılabilir. Oyununuzda aktif olsalar bile RimTalk konuşmalarından zaten hariç tutulan olay türlerini içerebilir.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Kullanılabilir türler</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Devre dışı türler</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Devre dışı bırakıldığında Event+, her zaman olayın tam orijinal metnini
   <RimTalkEventPlus_CurrentEventsOnly>Yalnızca mevcut olayları göster</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Tüm olay türlerini göster</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Yalnızca oyununuzda şu anda aktif olan olayları gösterir. Yalnızca bir kayıt yüklendiğinde kullanılabilir.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Yalnızca oyununuzda şu anda aktif olan olayları gösterir. Yalnızca bir kayıt yüklendiğinde kullanılabilir. Oyununuzda aktif olsalar bile RimTalk konuşmalarından zaten hariç tutulan olay türlerini içerebilir.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Yüklü modlardan tüm olası olay türlerini gösterir. Oyununuzda aktif olsalar bile RimTalk konuşmalarından zaten hariç tutulan olay türlerini içerebilir (örn. arka plan zamanlayıcıları, diplomasi görevleri).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>global olarak devre dışı</RimTalkEventPlus_GloballyDisabled>

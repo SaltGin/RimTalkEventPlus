@@ -24,7 +24,7 @@ Gdy opcja jest wyłączona, Event+ zawsze wysyła pełny, oryginalny tekst zdarz
   <RimTalkEventPlus_TypeBasedFiltering>FILTROWANIE WG TYPU</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Ukryj wszystkie zdarzenia wybranych typów globalnie, we wszystkich zapisach</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>FILTROWANIE WG INSTANCJI</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ukryj konkretne aktywne zdarzenia w tym zapisie. Dostępne tylko po załadowaniu zapisu.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ukryj konkretne aktywne zdarzenia w tym zapisie. Dostępne tylko po załadowaniu zapisu. Może zawierać typy zdarzeń, które są już wykluczone z rozmów RimTalk.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Dostępne typy</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Wyłączone typy</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Gdy opcja jest wyłączona, Event+ zawsze wysyła pełny, oryginalny tekst zdarz
   <RimTalkEventPlus_CurrentEventsOnly>Pokaż tylko bieżące zdarzenia</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Pokaż wszystkie typy zdarzeń</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Pokazuje tylko zdarzenia aktualnie aktywne w twojej grze. Dostępne tylko po załadowaniu zapisu.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Pokazuje tylko zdarzenia aktualnie aktywne w twojej grze. Dostępne tylko po załadowaniu zapisu. Może zawierać typy zdarzeń, które są już wykluczone z rozmów RimTalk.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Pokazuje wszystkie możliwe typy zdarzeń z załadowanych modów. Może zawierać typy zdarzeń, które są już wykluczone z rozmów RimTalk, nawet jeśli są aktywne w twojej grze (np. liczniki czasu w tle, misje dyplomatyczne).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>globalnie wyłączone</RimTalkEventPlus_GloballyDisabled>
