@@ -174,6 +174,10 @@ namespace RimTalkEventPlus
                 if (quest == null)
                     continue;
 
+                // Skip global, not map-specific quests.
+                if (quest.root != null && quest.root.isRootSpecial)
+                    continue;
+
                 // Check new filtering system using helper method
                 string questDefName = quest.root?.defName;
                 string questInstanceID = quest.id.ToString();
@@ -280,6 +284,20 @@ namespace RimTalkEventPlus
             }
         }
 
+        // Gets the current colony identifier for per-colony instance filtering. 
+        // Shared between OngoingEventsUtil and EventFilterUI.
+        public static string GetCurrentColonyId()
+        {
+            if (Current.Game == null)
+                return null;
+
+            var worldInfo = Find.World?.info;
+            if (worldInfo == null)
+                return null;
+
+            return $"{worldInfo.seedString ?? ""}_{worldInfo.persistentRandomValue}";
+        }
+
         // Threat side: at most one most-recent red threat letter,
         // only if isInDanger == true, and only if it's not too old
         // (currently within 3 in-game hours).
@@ -368,6 +386,7 @@ namespace RimTalkEventPlus
                 break; // only one threat event
 
             }
+
         }
     }
 }

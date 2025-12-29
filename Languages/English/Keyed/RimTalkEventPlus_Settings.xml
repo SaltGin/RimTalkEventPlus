@@ -24,7 +24,7 @@ When disabled, Event+ always sends the full original event text.</RimTalkEventPl
   <RimTalkEventPlus_TypeBasedFiltering>TYPE-BASED FILTERING</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Hide all events of selected types globally, across all saves</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>INSTANCE-BASED FILTERING</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Hide specific active events in this save. Only available when a save is loaded. May include event types that are already excluded from RimTalk conversations.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Hide specific active events in this save. Only available when a save is loaded.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Available Types</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Disabled Types</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ When disabled, Event+ always sends the full original event text.</RimTalkEventPl
   <RimTalkEventPlus_CurrentEventsOnly>Show Current Events Only</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Show All Event Types</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Shows only events currently active in your game. Only available when a save is loaded. May include event types that are already excluded from RimTalk conversations.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Shows only events currently active in your game. Only available when a save is loaded.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Shows all possible event types from loaded mods. May include event types that are already excluded from RimTalk conversations, even if active in your game (e.g., background timers, diplomacy quests).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>globally disabled</RimTalkEventPlus_GloballyDisabled>

@@ -24,7 +24,7 @@ När detta är avaktiverat skickar Event+ alltid händelsens fullständiga origi
   <RimTalkEventPlus_TypeBasedFiltering>TYPBASERAD FILTRERING</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Dölj alla händelser av valda typer globalt, över alla sparfiler</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>INSTANSBASERAD FILTRERING</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Dölj specifika aktiva händelser i denna sparfil. Endast tillgänglig när en sparfil är laddad. Kan inkludera händelsetyper som redan är uteslutna från RimTalk-konversationer.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Dölj specifika aktiva händelser i denna sparfil. Endast tillgänglig när en sparfil är laddad.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Tillgängliga typer</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Inaktiverade typer</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ När detta är avaktiverat skickar Event+ alltid händelsens fullständiga origi
   <RimTalkEventPlus_CurrentEventsOnly>Visa endast aktuella händelser</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Visa alla händelsetyper</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Visar endast händelser som för närvarande är aktiva i ditt spel. Endast tillgänglig när en sparfil är laddad. Kan inkludera händelsetyper som redan är uteslutna från RimTalk-konversationer.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Visar endast händelser som för närvarande är aktiva i ditt spel. Endast tillgänglig när en sparfil är laddad.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Visar alla möjliga händelsetyper från laddade moddar. Kan inkludera händelsetyper som redan är uteslutna från RimTalk-konversationer, även om de är aktiva i ditt spel (t.ex. bakgrundstimers, diplomatiska uppdrag).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>globalt inaktiverad</RimTalkEventPlus_GloballyDisabled>

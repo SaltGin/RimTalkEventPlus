@@ -24,7 +24,7 @@ Als de optie is uitgeschakeld, stuurt Event+ altijd de volledige oorspronkelijke
   <RimTalkEventPlus_TypeBasedFiltering>TYPEGEBASEERDE FILTERING</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Verberg alle gebeurtenissen van geselecteerde typen wereldwijd, in alle opgeslagen spellen</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>INSTANTIEGEBASEERDE FILTERING</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Verberg specifieke actieve gebeurtenissen in deze opgeslagen game. Alleen beschikbaar als een opgeslagen spel is geladen. Kan gebeurtenistypen bevatten die al zijn uitgesloten van RimTalk-gesprekken.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Verberg specifieke actieve gebeurtenissen in deze opgeslagen game. Alleen beschikbaar als een opgeslagen spel is geladen.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Beschikbare types</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Uitgeschakelde types</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Als de optie is uitgeschakeld, stuurt Event+ altijd de volledige oorspronkelijke
   <RimTalkEventPlus_CurrentEventsOnly>Alleen huidige evenementen tonen</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Alle evenementtypes tonen</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Toont alleen gebeurtenissen die momenteel actief zijn in je spel. Alleen beschikbaar als een opgeslagen spel is geladen. Kan gebeurtenistypen bevatten die al zijn uitgesloten van RimTalk-gesprekken.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Toont alleen gebeurtenissen die momenteel actief zijn in je spel. Alleen beschikbaar als een opgeslagen spel is geladen.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Toont alle mogelijke gebeurtenistypen van geladen mods. Kan gebeurtenistypen bevatten die al zijn uitgesloten van RimTalk-gesprekken, zelfs als ze actief zijn in je spel (bijv. achtergrondtimers, diplomatieke quests).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>globaal uitgeschakeld</RimTalkEventPlus_GloballyDisabled>

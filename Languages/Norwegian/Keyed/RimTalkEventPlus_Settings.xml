@@ -24,7 +24,7 @@ Når det er deaktivert, sender Event+ alltid den opprinnelige, fullstendige hend
   <RimTalkEventPlus_TypeBasedFiltering>TYPEBASERT FILTRERING</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Skjul alle hendelser av valgte typer globalt, på tvers av alle lagringer</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>INSTANSBASERT FILTRERING</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Skjul spesifikke aktive hendelser i denne lagringen. Kun tilgjengelig når en lagring er lastet. Kan inkludere hendelsestyper som allerede er ekskludert fra RimTalk-samtaler.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Skjul spesifikke aktive hendelser i denne lagringen. Kun tilgjengelig når en lagring er lastet.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Tilgjengelige typer</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Deaktiverte typer</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Når det er deaktivert, sender Event+ alltid den opprinnelige, fullstendige hend
   <RimTalkEventPlus_CurrentEventsOnly>Vis kun nåværende hendelser</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Vis alle hendelsestyper</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Viser bare hendelser som er aktive i spillet ditt. Kun tilgjengelig når en lagring er lastet. Kan inkludere hendelsestyper som allerede er ekskludert fra RimTalk-samtaler.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Viser bare hendelser som er aktive i spillet ditt. Kun tilgjengelig når en lagring er lastet.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Viser alle mulige hendelsestyper fra innlastede modifikasjoner. Kan inkludere hendelsestyper som allerede er ekskludert fra RimTalk-samtaler, selv om de er aktive i spillet ditt (f.eks. bakgrunnstimere, diplomatioppdrag).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>globalt deaktivert</RimTalkEventPlus_GloballyDisabled>

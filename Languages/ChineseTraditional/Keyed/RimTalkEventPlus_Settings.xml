@@ -24,7 +24,7 @@
   <RimTalkEventPlus_TypeBasedFiltering>依類型篩選</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>全域隱藏所選類型的所有事件，適用於所有存檔</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>依實例篩選</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>隱藏此存檔中的特定活動事件。僅在載入存檔時可用。可能包括即使在遊戲中處於活躍狀態也已被排除在RimTalk對話之外的事件類型。</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>隱藏此存檔中的特定活動事件。僅在載入存檔時可用。</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>可用類型</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>停用的類型</RimTalkEventPlus_DisabledTypes>
@@ -34,8 +34,8 @@
   <RimTalkEventPlus_CurrentEventsOnly>僅顯示當前事件</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>顯示所有事件類型</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>僅顯示遊戲中當前活動的事件。僅在載入存檔時可用。可能包括即使處於活躍狀態也已被排除在RimTalk對話之外的事件類型。</RimTalkEventPlus_CurrentEventsNote>
-  <RimTalkEventPlus_AllEventTypesNote>顯示已載入模組中所有可能的事件類型。可能包括即使處於活躍狀態也已被排除在RimTalk對話之外的事件類型（例如：後台計時器、外交任務）。</RimTalkEventPlus_AllEventTypesNote>
+  <RimTalkEventPlus_CurrentEventsNote>僅顯示遊戲中當前活動的事件。僅在載入存檔時可用。</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_AllEventTypesNote>顯示已載入模組中所有可能的事件類型。可能包括即使在遊戲中處於活躍狀態也已被排除在RimTalk對話之外的事件類型（例如：後台計時器、外交任務）。</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>全域停用</RimTalkEventPlus_GloballyDisabled>
 

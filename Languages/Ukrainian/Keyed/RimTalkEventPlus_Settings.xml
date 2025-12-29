@@ -24,7 +24,7 @@
   <RimTalkEventPlus_TypeBasedFiltering>ФІЛЬТРАЦІЯ ЗА ТИПОМ</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Приховати всі події обраних типів глобально, у всіх збережених іграх</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>ФІЛЬТРАЦІЯ ЗА ЕКЗЕМПЛЯРАМИ</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Приховати конкретні активні події в цьому збереженні. Доступно лише при завантаженому збереженні. Може містити типи подій, які вже виключено з розмов RimTalk.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Приховати конкретні активні події в цьому збереженні. Доступно лише при завантаженому збереженні.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Доступні типи</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Вимкнені типи</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@
   <RimTalkEventPlus_CurrentEventsOnly>Показувати лише поточні події</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Показувати всі типи подій</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Показує лише події, які наразі активні у вашій грі. Доступно лише при завантаженому збереженні. Може містити типи подій, які вже виключено з розмов RimTalk.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Показує лише події, які наразі активні у вашій грі. Доступно лише при завантаженому збереженні.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Показує всі можливі типи подій із завантажених модів. Може містити типи подій, які вже виключено з розмов RimTalk, навіть якщо вони активні у вашій грі (наприклад, фонові таймери, дипломатичні завдання).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>вимкнено глобально</RimTalkEventPlus_GloballyDisabled>

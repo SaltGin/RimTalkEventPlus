@@ -24,7 +24,7 @@ Kun asetus on pois käytöstä, Event+ lähettää aina tapahtuman alkuperäisen
   <RimTalkEventPlus_TypeBasedFiltering>TYYPPIEN PERUSTEELLA SUODATUS</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Piilota kaikki valittujen tyyppien tapahtumat maailmanlaajuisesti kaikissa tallennuksissa</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>INSTANSSIKOHTAINEN SUODATUS</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Piilota tietyt aktiiviset tapahtumat tässä tallennuksessa. Käytettävissä vain kun tallennustiedosto on ladattu. Voi sisältää tapahtumatyyppejä, jotka on jo suljettu pois RimTalk-keskusteluista.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Piilota tietyt aktiiviset tapahtumat tässä tallennuksessa. Käytettävissä vain kun tallennustiedosto on ladattu.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Saatavilla olevat tyypit</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Pois käytöstä olevat tyypit</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Kun asetus on pois käytöstä, Event+ lähettää aina tapahtuman alkuperäisen
   <RimTalkEventPlus_CurrentEventsOnly>Näytä vain nykyiset tapahtumat</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Näytä kaikki tapahtumatyypit</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Näyttää vain parhaillaan pelissäsi aktiiviset tapahtumat. Käytettävissä vain kun tallennustiedosto on ladattu. Voi sisältää tapahtumatyyppejä, jotka on jo suljettu pois RimTalk-keskusteluista.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Näyttää vain parhaillaan pelissäsi aktiiviset tapahtumat. Käytettävissä vain kun tallennustiedosto on ladattu.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Näyttää kaikki mahdolliset tapahtumatyypit ladatuista modeista. Voi sisältää tapahtumatyyppejä, jotka on jo suljettu pois RimTalk-keskusteluista, vaikka ne olisivat aktiivisia pelissäsi (esim. tausta-ajastimet, diplomaattiset tehtävät).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>globaalisti poistettu käytöstä</RimTalkEventPlus_GloballyDisabled>

@@ -24,7 +24,7 @@ Když je volba vypnutá, Event+ vždy odešle původní úplný text události.<
   <RimTalkEventPlus_TypeBasedFiltering>FILTROVÁNÍ PODLE TYPU</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Skrýt všechny události vybraných typů globálně, napříč všemi uloženými hrami</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>FILTROVÁNÍ PODLE INSTANCÍ</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Skrýt konkrétní aktivní události v této uložené hře. Dostupné pouze při načtené hře. Může zahrnovat typy událostí, které jsou již vyloučeny z konverzací RimTalk.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Skrýt konkrétní aktivní události v této uložené hře. Dostupné pouze při načtené hře.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Dostupné typy</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Zakázané typy</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Když je volba vypnutá, Event+ vždy odešle původní úplný text události.<
   <RimTalkEventPlus_CurrentEventsOnly>Zobrazit pouze aktuální události</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Zobrazit všechny typy událostí</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Zobrazuje pouze události aktuálně aktivní ve hře. Dostupné pouze při načtené hře. Může zahrnovat typy událostí, které jsou již vyloučeny z konverzací RimTalk.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Zobrazuje pouze události aktuálně aktivní ve hře. Dostupné pouze při načtené hře.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Zobrazuje všechny možné typy událostí z načtených modů. Může zahrnovat typy událostí, které jsou již vyloučeny z konverzací RimTalk, i když jsou ve hře aktivní (např. časovače na pozadí, diplomatické mise).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>globálně zakázáno</RimTalkEventPlus_GloballyDisabled>

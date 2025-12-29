@@ -24,7 +24,7 @@ Se è disabilitata, Event+ invia sempre il testo completo originale dell’event
   <RimTalkEventPlus_TypeBasedFiltering>FILTRAGGIO PER TIPO</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Nascondi tutti gli eventi dei tipi selezionati globalmente, in tutti i salvataggi</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>FILTRAGGIO PER ISTANZA</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Nascondi eventi attivi specifici in questo salvataggio. Disponibile solo quando un salvataggio è caricato. Può includere tipi di eventi che sono già esclusi dalle conversazioni RimTalk.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Nascondi eventi attivi specifici in questo salvataggio. Disponibile solo quando un salvataggio è caricato.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Tipi disponibili</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Tipi disabilitati</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Se è disabilitata, Event+ invia sempre il testo completo originale dell’event
   <RimTalkEventPlus_CurrentEventsOnly>Mostra solo eventi attuali</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Mostra tutti i tipi di eventi</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Mostra solo gli eventi attualmente attivi nel tuo gioco. Disponibile solo quando un salvataggio è caricato. Può includere tipi di eventi che sono già esclusi dalle conversazioni RimTalk.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Mostra solo gli eventi attualmente attivi nel tuo gioco. Disponibile solo quando un salvataggio è caricato.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Mostra tutti i possibili tipi di eventi dalle mod caricate. Può includere tipi di eventi che sono già esclusi dalle conversazioni RimTalk, anche se attivi nel tuo gioco (es. timer in background, missioni diplomatiche).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>disabilitato globalmente</RimTalkEventPlus_GloballyDisabled>

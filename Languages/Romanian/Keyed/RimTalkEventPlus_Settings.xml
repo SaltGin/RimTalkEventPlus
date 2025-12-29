@@ -24,7 +24,7 @@ Când opțiunea este dezactivată, Event+ trimite întotdeauna textul complet or
   <RimTalkEventPlus_TypeBasedFiltering>FILTRARE DUPĂ TIP</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Ascunde toate evenimentele tipurilor selectate global, în toate salvările</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>FILTRARE DUPĂ INSTANȚĂ</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ascunde evenimente active specifice în această salvare. Disponibil doar când o salvare este încărcată. Poate include tipuri de evenimente care sunt deja excluse din conversațiile RimTalk.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ascunde evenimente active specifice în această salvare. Disponibil doar când o salvare este încărcată.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Tipuri disponibile</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Tipuri dezactivate</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Când opțiunea este dezactivată, Event+ trimite întotdeauna textul complet or
   <RimTalkEventPlus_CurrentEventsOnly>Afișează doar evenimentele curente</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Afișează toate tipurile de evenimente</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Afișează doar evenimentele active în prezent în jocul tău. Disponibil doar când o salvare este încărcată. Poate include tipuri de evenimente care sunt deja excluse din conversațiile RimTalk.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Afișează doar evenimentele active în prezent în jocul tău. Disponibil doar când o salvare este încărcată.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Afișează toate tipurile de evenimente posibile din mod-urile încărcate. Poate include tipuri de evenimente care sunt deja excluse din conversațiile RimTalk, chiar dacă sunt active în jocul tău (de ex., cronometre în fundal, misiuni diplomatice).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>dezactivat global</RimTalkEventPlus_GloballyDisabled>

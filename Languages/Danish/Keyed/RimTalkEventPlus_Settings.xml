@@ -24,7 +24,7 @@ Når dette er deaktiveret, sender Event+ altid den fulde originale tekst for hæ
   <RimTalkEventPlus_TypeBasedFiltering>TYPEBASERET FILTRERING</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Skjul alle hændelser af valgte typer globalt, på tværs af alle gemmer</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>INSTANSBASERET FILTRERING</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Skjul specifikke aktive hændelser i dette gem. Kun tilgængelig når et gem er indlæst. Kan omfatte hændelsestyper, der allerede er udelukket fra RimTalk-samtaler.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Skjul specifikke aktive hændelser i dette gem. Kun tilgængelig når et gem er indlæst.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Tilgængelige typer</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Deaktiverede typer</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Når dette er deaktiveret, sender Event+ altid den fulde originale tekst for hæ
   <RimTalkEventPlus_CurrentEventsOnly>Vis kun nuværende begivenheder</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Vis alle begivenhedstyper</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Viser kun hændelser, der i øjeblikket er aktive i dit spil. Kun tilgængelig når et gem er indlæst. Kan omfatte hændelsestyper, der allerede er udelukket fra RimTalk-samtaler.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Viser kun hændelser, der i øjeblikket er aktive i dit spil. Kun tilgængelig når et gem er indlæst.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Viser alle mulige hændelsestyper fra indlæste mods. Kan omfatte hændelsestyper, der allerede er udelukket fra RimTalk-samtaler, selv hvis de er aktive i dit spil (f.eks. baggrundstimere, diplomatiquests).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>globalt deaktiveret</RimTalkEventPlus_GloballyDisabled>

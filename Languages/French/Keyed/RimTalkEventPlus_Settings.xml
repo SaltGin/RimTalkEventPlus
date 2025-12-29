@@ -24,7 +24,7 @@ Quand l’option est désactivée, Event+ envoie toujours le texte original comp
   <RimTalkEventPlus_TypeBasedFiltering>FILTRAGE PAR TYPE</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Masquer tous les événements des types sélectionnés globalement, dans toutes les sauvegardes</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>FILTRAGE PAR INSTANCE</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Masquer des événements actifs spécifiques dans cette sauvegarde. Disponible uniquement lorsqu'une sauvegarde est chargée. Peut inclure des types d'événements qui sont déjà exclus des conversations RimTalk.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Masquer des événements actifs spécifiques dans cette sauvegarde. Disponible uniquement lorsqu'une sauvegarde est chargée.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Types disponibles</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Types désactivés</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Quand l’option est désactivée, Event+ envoie toujours le texte original comp
   <RimTalkEventPlus_CurrentEventsOnly>Afficher les événements actuels uniquement</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Afficher tous les types d'événements</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Affiche uniquement les événements actuellement actifs dans votre jeu. Disponible uniquement lorsqu'une sauvegarde est chargée. Peut inclure des types d'événements qui sont déjà exclus des conversations RimTalk.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Affiche uniquement les événements actuellement actifs dans votre jeu. Disponible uniquement lorsqu'une sauvegarde est chargée.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Affiche tous les types d'événements possibles des mods chargés. Peut inclure des types d'événements qui sont déjà exclus des conversations RimTalk, même s'ils sont actifs dans votre jeu (par ex., minuteurs d'arrière-plan, quêtes diplomatiques).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>désactivé globalement</RimTalkEventPlus_GloballyDisabled>

@@ -24,7 +24,7 @@ Cuando está desactivada, Event+ siempre envía el texto original completo del e
   <RimTalkEventPlus_TypeBasedFiltering>FILTRADO POR TIPO</RimTalkEventPlus_TypeBasedFiltering>
   <RimTalkEventPlus_TypeBasedFiltering_Desc>Ocultar todos los eventos de los tipos seleccionados globalmente, en todas las partidas guardadas</RimTalkEventPlus_TypeBasedFiltering_Desc>
   <RimTalkEventPlus_InstanceBasedFiltering>FILTRADO POR INSTANCIA</RimTalkEventPlus_InstanceBasedFiltering>
-  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ocultar eventos activos específicos en esta partida guardada. Solo disponible cuando se carga una partida. Puede incluir tipos de eventos que ya están excluidos de las conversaciones de RimTalk.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
+  <RimTalkEventPlus_InstanceBasedFiltering_Desc>Ocultar eventos activos específicos en esta partida guardada. Solo disponible cuando se carga una partida.</RimTalkEventPlus_InstanceBasedFiltering_Desc>
 
   <RimTalkEventPlus_AvailableTypes>Tipos disponibles</RimTalkEventPlus_AvailableTypes>
   <RimTalkEventPlus_DisabledTypes>Tipos deshabilitados</RimTalkEventPlus_DisabledTypes>
@@ -34,7 +34,7 @@ Cuando está desactivada, Event+ siempre envía el texto original completo del e
   <RimTalkEventPlus_CurrentEventsOnly>Mostrar solo eventos actuales</RimTalkEventPlus_CurrentEventsOnly>
   <RimTalkEventPlus_AllEventTypes>Mostrar todos los tipos de eventos</RimTalkEventPlus_AllEventTypes>
 
-  <RimTalkEventPlus_CurrentEventsNote>Muestra solo los eventos actualmente activos en tu juego. Solo disponible cuando se carga una partida. Puede incluir tipos de eventos que ya están excluidos de las conversaciones de RimTalk.</RimTalkEventPlus_CurrentEventsNote>
+  <RimTalkEventPlus_CurrentEventsNote>Muestra solo los eventos actualmente activos en tu juego. Solo disponible cuando se carga una partida.</RimTalkEventPlus_CurrentEventsNote>
   <RimTalkEventPlus_AllEventTypesNote>Muestra todos los tipos de eventos posibles de los mods cargados. Puede incluir tipos de eventos que ya están excluidos de las conversaciones de RimTalk, incluso si están activos en tu juego (ej., temporizadores de fondo, misiones diplomáticas).</RimTalkEventPlus_AllEventTypesNote>
 
   <RimTalkEventPlus_GloballyDisabled>deshabilitado globalmente</RimTalkEventPlus_GloballyDisabled>
