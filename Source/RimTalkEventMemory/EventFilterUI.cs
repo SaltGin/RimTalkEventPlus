@@ -866,6 +866,66 @@ namespace RimTalkEventPlus
                         _typeSubtitles[inst.rootID] = inst.instanceName;
                     }
                 }
+
+                // Also include disabled types that are not currently active,
+                // so they still appear in the disabled column
+                foreach (var disabledDefName in settings.disabledEventDefNames)
+                {
+                    if (addedDefs.Contains(disabledDefName))
+                        continue;
+
+                    // Try to find the def and determine its category
+                    string displayName = disabledDefName;
+                    EventCategory category = EventCategory.Quest; // Default fallback
+
+                    var questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(disabledDefName);
+                    if (questDef != null)
+                    {
+                        if (!questDef.LabelCap.NullOrEmpty())
+                            displayName = questDef.LabelCap;
+                        category = EventCategory.Quest;
+                    }
+                    else
+                    {
+                        var condDef = DefDatabase<GameConditionDef>.GetNamedSilentFail(disabledDefName);
+                        if (condDef != null)
+                        {
+                            if (!condDef.LabelCap.NullOrEmpty())
+                                displayName = condDef.LabelCap;
+                            category = EventCategory.MapCondition;
+                        }
+                        else
+                        {
+                            var siteDef = DefDatabase<SitePartDef>.GetNamedSilentFail(disabledDefName);
+                            if (siteDef != null)
+                            {
+                                if (!siteDef.LabelCap.NullOrEmpty())
+                                    displayName = siteDef.LabelCap;
+                                category = EventCategory.SitePart;
+                            }
+                            else
+                            {
+                                var letterDef = DefDatabase<LetterDef>.GetNamedSilentFail(disabledDefName);
+                                if (letterDef != null)
+                                {
+                                    if (!letterDef.LabelCap.NullOrEmpty())
+                                        displayName = letterDef.LabelCap;
+                                    category = EventCategory.Threat;
+                                }
+                            }
+                        }
+                    }
+
+                    events.Add(new FilterableEvent(
+                        disabledDefName,
+                        displayName,
+                        null,
+                        category,
+                        disabledDefName
+                    ));
+
+                    addedDefs.Add(disabledDefName);
+                }
             }
             else
             {
