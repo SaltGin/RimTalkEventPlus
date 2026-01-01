@@ -347,7 +347,10 @@ namespace RimTalkEventPlus
             MapParent mapParent = map.info?.parent;
             int mapTile = map.Tile;
 
-            // 1. Check quest-level LookTargets
+            // Check if this quest has a dedicated remote site (different tile from this map)
+            bool questHasRemoteSite = false;
+
+            // 1. Check quest-level LookTargets (also detect remote site)
             try
             {
                 var questLookTargets = quest.QuestLookTargets;
@@ -355,6 +358,16 @@ namespace RimTalkEventPlus
                 {
                     foreach (var target in questLookTargets)
                     {
+                        // Detect remote site
+                        if (!questHasRemoteSite && target.HasWorldObject)
+                        {
+                            var wo = target.WorldObject;
+                            if (wo is Site && wo.Tile != mapTile)
+                            {
+                                questHasRemoteSite = true;
+                            }
+                        }
+
                         // Check if target has a map and it matches our map
                         if (target.IsMapTarget && target.Map == map)
                             return true;
@@ -395,7 +408,10 @@ namespace RimTalkEventPlus
                     // Skip parts that don't indicate actual quest location
                     string partTypeName = part.GetType().Name;
                     if (partTypeName == "QuestPart_DropPods" ||
-                        partTypeName == "QuestPart_RequirementsToAcceptPlanetLayer")
+                        partTypeName == "QuestPart_RequirementsToAcceptPlanetLayer" ||
+                        partTypeName == "QuestPart_GiveRewards" ||
+                        partTypeName == "QuestPart_Letter" ||
+                        partTypeName == "QuestPart_Notify_PlayerRaidedSomeone")
                     {
                         continue;
                     }
@@ -502,6 +518,16 @@ namespace RimTalkEventPlus
                             if (string.Equals(field.Name, "useMapParentThreatPoints", StringComparison.OrdinalIgnoreCase))
                                 continue;
 
+                            // Only skip auxiliary map references if quest has a remote site
+                            // This prevents false negatives for quests that actually happen at home map
+                            if (questHasRemoteSite)
+                            {
+                                if (string.Equals(field.Name, "map", StringComparison.OrdinalIgnoreCase) ||
+                                    string.Equals(field.Name, "homeMap", StringComparison.OrdinalIgnoreCase) ||
+                                    string.Equals(field.Name, "sourceMap", StringComparison.OrdinalIgnoreCase))
+                                    continue;
+                            }
+
                             Type fType = field.FieldType;
                             object value = null;
                             try
@@ -558,6 +584,16 @@ namespace RimTalkEventPlus
                             // Skip difficulty reference
                             if (string.Equals(prop.Name, "useMapParentThreatPoints", StringComparison.OrdinalIgnoreCase))
                                 continue;
+
+                            // Only skip auxiliary map references if quest has a remote site
+                            // This prevents false negatives for quests that actually happen at home map
+                            if (questHasRemoteSite)
+                            {
+                                if (string.Equals(prop.Name, "Map", StringComparison.OrdinalIgnoreCase) ||
+                                    string.Equals(prop.Name, "HomeMap", StringComparison.OrdinalIgnoreCase) ||
+                                    string.Equals(prop.Name, "SourceMap", StringComparison.OrdinalIgnoreCase))
+                                    continue;
+                            }
 
                             Type pType = prop.PropertyType;
                             object value = null;
