@@ -174,8 +174,9 @@ namespace RimTalkEventPlus
                 if (quest == null)
                     continue;
 
-                // Skip global, not map-specific quests.
-                if (quest.root != null && quest.root.isRootSpecial)
+                // Skip endgame quests
+                string rootDefName = quest.root?.defName;
+                if (rootDefName != null && rootDefName.StartsWith("EndGame_"))
                     continue;
 
                 // Check new filtering system using helper method
@@ -211,9 +212,6 @@ namespace RimTalkEventPlus
                 }
 
                 string desc = QuestLinkUtil.TryGetQuestDescription(quest);
-
-                // Quest root defName for compression templates
-                string rootDefName = quest.root != null ? quest.root.defName : null;
 
                 result.Add(new OngoingEventSnapshot
                 {

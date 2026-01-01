@@ -346,57 +346,127 @@ namespace RimTalkEventPlus
 
             MapParent mapParent = map.info?.parent;
             int mapTile = map.Tile;
+            int mapParentID = mapParent?.ID ?? -1;
+
+            var parts = quest.PartsListForReading;
 
             // Check if this quest has a dedicated remote site (different tile from this map)
             bool questHasRemoteSite = false;
 
-            // 1. Check quest-level LookTargets (also detect remote site)
-            try
+            // 1. Check QuestLookTargets from filtered parts (not quest. QuestLookTargets which includes all parts)
+            if (parts != null)
             {
-                var questLookTargets = quest.QuestLookTargets;
-                if (questLookTargets != null)
+                foreach (var part in parts)
                 {
-                    foreach (var target in questLookTargets)
+                    if (part == null) continue;
+
+                    // Skip auxiliary parts that don't indicate quest location
+                    if (ShouldSkipQuestPart(part))
+                        continue;
+
+                    try
                     {
-                        // Detect remote site
-                        if (!questHasRemoteSite && target.HasWorldObject)
+                        var partLookTargets = part.QuestLookTargets;
+                        if (partLookTargets != null)
                         {
-                            var wo = target.WorldObject;
-                            if (wo is Site && wo.Tile != mapTile)
+                            foreach (var target in partLookTargets)
                             {
-                                questHasRemoteSite = true;
+                                // Detect remote site
+                                if (!questHasRemoteSite && target.HasWorldObject)
+                                {
+                                    var wo = target.WorldObject;
+                                    if (wo is Site && wo.Tile != mapTile)
+                                    {
+                                        questHasRemoteSite = true;
+                                    }
+                                }
+
+                                // Check if target has a map and it matches our map
+                                if (target.IsMapTarget && target.Map == map)
+                                    return true;
+
+                                // Check if target WorldObject is this map's parent
+                                if (target.HasWorldObject && mapParent != null)
+                                {
+                                    var targetParent = target.WorldObject as MapParent;
+                                    if (targetParent != null && targetParent == mapParent)
+                                        return true;
+                                }
+
+                                // Check tile match
+                                int targetTile = target.Tile;
+                                if (targetTile >= 0 && targetTile == mapTile)
+                                    return true;
                             }
                         }
-
-                        // Check if target has a map and it matches our map
-                        if (target.IsMapTarget && target.Map == map)
-                            return true;
-
-                        // Check if target WorldObject is this map's parent
-                        if (target.HasWorldObject && mapParent != null)
-                        {
-                            var targetParent = target.WorldObject as MapParent;
-                            if (targetParent != null && targetParent == mapParent)
-                                return true;
-                        }
-
-                        // Check tile match
-                        var targetTile = target.Tile;
-                        if (targetTile.Valid && targetTile == mapTile)
-                            return true;
+                    }
+                    catch
+                    {
+                        // Silently skip - QuestLookTargets enumeration can throw during map generation
                     }
                 }
             }
-            catch
+
+            // 2. Check QuestParts for worldObject/site fields that may reference this map
+            if (parts != null)
             {
-                // Silently skip - QuestLookTargets enumeration can throw during map generation
+                foreach (var part in parts)
+                {
+                    if (part == null) continue;
+
+                    // Skip auxiliary parts that don't indicate quest location
+                    if (ShouldSkipQuestPart(part))
+                        continue;
+
+                    var partTrav = Traverse.Create(part);
+
+                    // Check "worldObject" field
+                    try
+                    {
+                        var wo = partTrav.Field("worldObject").GetValue<WorldObject>();
+                        if (wo is MapParent mp)
+                        {
+                            if (mp == mapParent)
+                                return true;
+                            try
+                            {
+                                if (mp.HasMap && mp.Map == map)
+                                    return true;
+                            }
+                            catch { }
+
+                            if (!questHasRemoteSite && wo is Site && wo.Tile != mapTile)
+                                questHasRemoteSite = true;
+                        }
+                    }
+                    catch { }
+
+                    // Check "site" field (used by QuestPart_DistressCallAmbush, etc.)
+                    try
+                    {
+                        var site = partTrav.Field("site").GetValue<MapParent>();
+                        if (site != null)
+                        {
+                            if (site == mapParent)
+                                return true;
+                            try
+                            {
+                                if (site.HasMap && site.Map == map)
+                                    return true;
+                            }
+                            catch { }
+
+                            if (!questHasRemoteSite && site is Site && site.Tile != mapTile)
+                                questHasRemoteSite = true;
+                        }
+                    }
+                    catch { }
+                }
             }
 
-            // 2. Check individual quest parts
+            // 3. Check individual quest parts
             if (mapParent == null)
                 return false;
-
-            var parts = quest.PartsListForReading;
 
             if (parts != null && parts.Count > 0)
             {
@@ -405,38 +475,8 @@ namespace RimTalkEventPlus
                     if (part == null)
                         continue;
 
-                    // Skip parts that don't indicate actual quest location
-                    string partTypeName = part.GetType().Name;
-                    if (partTypeName == "QuestPart_DropPods" ||
-                        partTypeName == "QuestPart_RequirementsToAcceptPlanetLayer" ||
-                        partTypeName == "QuestPart_GiveRewards" ||
-                        partTypeName == "QuestPart_Letter" ||
-                        partTypeName == "QuestPart_Notify_PlayerRaidedSomeone")
-                    {
+                    if (ShouldSkipQuestPart(part))
                         continue;
-                    }
-
-                    // Check part's QuestLookTargets
-                    try
-                    {
-                        var partLookTargets = part.QuestLookTargets;
-                        if (partLookTargets != null)
-                        {
-                            foreach (var target in partLookTargets)
-                            {
-                                if (target.IsMapTarget && target.Map == map)
-                                    return true;
-
-                                if (target.HasWorldObject && mapParent != null)
-                                {
-                                    var targetParent = target.WorldObject as MapParent;
-                                    if (targetParent != null && targetParent == mapParent)
-                                        return true;
-                                }
-                            }
-                        }
-                    }
-                    catch { }
 
                     // Check part's QuestSelectTargets
                     try
@@ -498,144 +538,26 @@ namespace RimTalkEventPlus
                             // MapParent not fully initialized, skip
                         }
                     }
-
-                    // More generic scan: look for any MapParent / Map fields or properties on this part. 
-                    Type partType = part.GetType();
-
-                    // Fields
-                    FieldInfo[] fields = null;
-                    try
-                    {
-                        fields = partType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                    }
-                    catch { }
-
-                    if (fields != null)
-                    {
-                        foreach (var field in fields)
-                        {
-                            // Skip threat-scaling-only reference
-                            if (string.Equals(field.Name, "useMapParentThreatPoints", StringComparison.OrdinalIgnoreCase))
-                                continue;
-
-                            // Only skip auxiliary map references if quest has a remote site
-                            // This prevents false negatives for quests that actually happen at home map
-                            if (questHasRemoteSite)
-                            {
-                                if (string.Equals(field.Name, "map", StringComparison.OrdinalIgnoreCase) ||
-                                    string.Equals(field.Name, "homeMap", StringComparison.OrdinalIgnoreCase) ||
-                                    string.Equals(field.Name, "sourceMap", StringComparison.OrdinalIgnoreCase))
-                                    continue;
-                            }
-
-                            Type fType = field.FieldType;
-                            object value = null;
-                            try
-                            {
-                                value = field.GetValue(part);
-                            }
-                            catch { continue; }
-
-                            if (value == null)
-                                continue;
-
-                            // Any MapParent-like field
-                            if (typeof(MapParent).IsAssignableFrom(fType))
-                            {
-                                var mp = value as MapParent;
-                                if (mp != null)
-                                {
-                                    if (mp == mapParent)
-                                        return true;
-
-                                    try
-                                    {
-                                        if (mp.HasMap && mp.Map == map)
-                                            return true;
-                                    }
-                                    catch { }
-                                }
-                            }
-                            else if (typeof(Map).IsAssignableFrom(fType))
-                            {
-                                var m = value as Map;
-                                if (m == map)
-                                    return true;
-                            }
-                        }
-                    }
-
-                    // Properties
-                    PropertyInfo[] props = null;
-                    try
-                    {
-                        props = partType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                    }
-                    catch { }
-
-                    if (props != null)
-                    {
-                        foreach (var prop in props)
-                        {
-                            // Skip indexers
-                            if (prop.GetIndexParameters().Length != 0)
-                                continue;
-
-                            // Skip difficulty reference
-                            if (string.Equals(prop.Name, "useMapParentThreatPoints", StringComparison.OrdinalIgnoreCase))
-                                continue;
-
-                            // Only skip auxiliary map references if quest has a remote site
-                            // This prevents false negatives for quests that actually happen at home map
-                            if (questHasRemoteSite)
-                            {
-                                if (string.Equals(prop.Name, "Map", StringComparison.OrdinalIgnoreCase) ||
-                                    string.Equals(prop.Name, "HomeMap", StringComparison.OrdinalIgnoreCase) ||
-                                    string.Equals(prop.Name, "SourceMap", StringComparison.OrdinalIgnoreCase))
-                                    continue;
-                            }
-
-                            Type pType = prop.PropertyType;
-                            object value = null;
-                            try
-                            {
-                                if (!prop.CanRead)
-                                    continue;
-                                value = prop.GetValue(part, null);
-                            }
-                            catch { continue; }
-
-                            if (value == null)
-                                continue;
-
-                            if (typeof(MapParent).IsAssignableFrom(pType))
-                            {
-                                var mp = value as MapParent;
-                                if (mp != null)
-                                {
-                                    if (mp == mapParent)
-                                        return true;
-
-                                    try
-                                    {
-                                        if (mp.HasMap && mp.Map == map)
-                                            return true;
-                                    }
-                                    catch { }
-                                }
-                            }
-                            else if (typeof(Map).IsAssignableFrom(pType))
-                            {
-                                var m = value as Map;
-                                if (m == map)
-                                    return true;
-                            }
-                        }
-                    }
                 }
             }
 
             return false;
+        }
+        private static bool ShouldSkipQuestPart(QuestPart part)
+        {
+            if (part == null) return true;
+
+            string partTypeName = part.GetType().Name;
+
+            // Skip parts that don't indicate actual quest location
+            // These are auxiliary parts for rewards, notifications, or requirements
+            return partTypeName == "QuestPart_DropPods" ||
+                   partTypeName == "QuestPart_RequirementsToAcceptPlanetLayer" ||
+                   partTypeName == "QuestPart_RequirementsToAccept" ||
+                   partTypeName == "QuestPart_GiveRewards" ||
+                   partTypeName == "QuestPart_Letter" ||
+                   partTypeName == "QuestPart_Notify_PlayerRaidedSomeone" ||
+                   partTypeName == "QuestPart_Choice";
         }
     }
 }
