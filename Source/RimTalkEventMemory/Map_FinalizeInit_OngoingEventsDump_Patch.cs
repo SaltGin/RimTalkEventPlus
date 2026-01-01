@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System;
 using Verse;
 
 namespace RimTalkEventPlus
@@ -18,7 +19,17 @@ namespace RimTalkEventPlus
                 {
                     var q = quests[i];
                     if (q == null) continue;
-                    QuestLinkUtil.QuestAffectsMap(q, __instance);
+
+                    try
+                    {
+                        QuestLinkUtil.QuestAffectsMap(q, __instance);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log but don't propagate - this is optional caching, not critical
+                        if (Prefs.DevMode)
+                            Log.Warning($"[RimTalk Event+] Failed to cache quest {q?.name}:  {ex.Message}");
+                    }
                 }
             }
 

@@ -348,28 +348,35 @@ namespace RimTalkEventPlus
             int mapTile = map.Tile;
 
             // 1. Check quest-level LookTargets
-            var questLookTargets = quest.QuestLookTargets;
-            if (questLookTargets != null)
+            try
             {
-                foreach (var target in questLookTargets)
+                var questLookTargets = quest.QuestLookTargets;
+                if (questLookTargets != null)
                 {
-                    // Check if target has a map and it matches our map
-                    if (target.IsMapTarget && target.Map == map)
-                        return true;
-
-                    // Check if target WorldObject is this map's parent
-                    if (target.HasWorldObject && mapParent != null)
+                    foreach (var target in questLookTargets)
                     {
-                        var targetParent = target.WorldObject as MapParent;
-                        if (targetParent != null && targetParent == mapParent)
+                        // Check if target has a map and it matches our map
+                        if (target.IsMapTarget && target.Map == map)
+                            return true;
+
+                        // Check if target WorldObject is this map's parent
+                        if (target.HasWorldObject && mapParent != null)
+                        {
+                            var targetParent = target.WorldObject as MapParent;
+                            if (targetParent != null && targetParent == mapParent)
+                                return true;
+                        }
+
+                        // Check tile match
+                        var targetTile = target.Tile;
+                        if (targetTile.Valid && targetTile == mapTile)
                             return true;
                     }
-
-                    // Check tile match
-                    var targetTile = target.Tile;
-                    if (targetTile.Valid && targetTile == mapTile)
-                        return true;
                 }
+            }
+            catch
+            {
+                // Silently skip - QuestLookTargets enumeration can throw during map generation
             }
 
             // 2. Check individual quest parts
@@ -394,40 +401,48 @@ namespace RimTalkEventPlus
                     }
 
                     // Check part's QuestLookTargets
-                    var partLookTargets = part.QuestLookTargets;
-                    if (partLookTargets != null)
+                    try
                     {
-                        foreach (var target in partLookTargets)
+                        var partLookTargets = part.QuestLookTargets;
+                        if (partLookTargets != null)
                         {
-                            if (target.IsMapTarget && target.Map == map)
-                                return true;
-
-                            if (target.HasWorldObject && mapParent != null)
+                            foreach (var target in partLookTargets)
                             {
-                                var targetParent = target.WorldObject as MapParent;
-                                if (targetParent != null && targetParent == mapParent)
+                                if (target.IsMapTarget && target.Map == map)
                                     return true;
+
+                                if (target.HasWorldObject && mapParent != null)
+                                {
+                                    var targetParent = target.WorldObject as MapParent;
+                                    if (targetParent != null && targetParent == mapParent)
+                                        return true;
+                                }
                             }
                         }
                     }
+                    catch { }
 
                     // Check part's QuestSelectTargets
-                    var partSelectTargets = part.QuestSelectTargets;
-                    if (partSelectTargets != null)
+                    try
                     {
-                        foreach (var target in partSelectTargets)
+                        var partSelectTargets = part.QuestSelectTargets;
+                        if (partSelectTargets != null)
                         {
-                            if (target.IsMapTarget && target.Map == map)
-                                return true;
-
-                            if (target.HasWorldObject && mapParent != null)
+                            foreach (var target in partSelectTargets)
                             {
-                                var targetParent = target.WorldObject as MapParent;
-                                if (targetParent != null && targetParent == mapParent)
+                                if (target.IsMapTarget && target.Map == map)
                                     return true;
+
+                                if (target.HasWorldObject && mapParent != null)
+                                {
+                                    var targetParent = target.WorldObject as MapParent;
+                                    if (targetParent != null && targetParent == mapParent)
+                                        return true;
+                                }
                             }
                         }
                     }
+                    catch { }
 
                     // Still need reflection for private "mapParent" field/property
                     var partTrav = Traverse.Create(part);
@@ -456,11 +471,19 @@ namespace RimTalkEventPlus
                             return true;
 
                         // Check if MapParent has a map property pointing to our map
-                        if (partParent.HasMap && partParent.Map == map)
-                            return true;
+                        // Wrap in try-catch as HasMap/Map can throw during map generation
+                        try
+                        {
+                            if (partParent.HasMap && partParent.Map == map)
+                                return true;
+                        }
+                        catch
+                        {
+                            // MapParent not fully initialized, skip
+                        }
                     }
 
-                    // More generic scan: look for any MapParent / Map fields or properties on this part.
+                    // More generic scan: look for any MapParent / Map fields or properties on this part. 
                     Type partType = part.GetType();
 
                     // Fields
@@ -499,8 +522,12 @@ namespace RimTalkEventPlus
                                     if (mp == mapParent)
                                         return true;
 
-                                    if (mp.HasMap && mp.Map == map)
-                                        return true;
+                                    try
+                                    {
+                                        if (mp.HasMap && mp.Map == map)
+                                            return true;
+                                    }
+                                    catch { }
                                 }
                             }
                             else if (typeof(Map).IsAssignableFrom(fType))
@@ -553,8 +580,12 @@ namespace RimTalkEventPlus
                                     if (mp == mapParent)
                                         return true;
 
-                                    if (mp.HasMap && mp.Map == map)
-                                        return true;
+                                    try
+                                    {
+                                        if (mp.HasMap && mp.Map == map)
+                                            return true;
+                                    }
+                                    catch { }
                                 }
                             }
                             else if (typeof(Map).IsAssignableFrom(pType))
