@@ -50,4 +50,7 @@ Ha a beállítás ki van kapcsolva, az Event+ mindig az esemény teljes, eredeti
   <RimTalkEventPlus_TypeFiltersCleared>{0} típusszűrő törölve.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>{0} példányszűrő törölve az összes mentésből.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt észlelve</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>A RimTalk - Enhanced Prompt "Auto Event Capture" funkciója engedélyezve van. Az átfedő funkciók letiltásra kerülnek, hogy kompatibilis legyen a RimTalk - Enhanced Prompt saját eseménykövető rendszerével.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

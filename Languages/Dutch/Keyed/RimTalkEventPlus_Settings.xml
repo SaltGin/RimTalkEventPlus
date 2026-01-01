@@ -50,4 +50,7 @@ Als de optie is uitgeschakeld, stuurt Event+ altijd de volledige oorspronkelijke
   <RimTalkEventPlus_TypeFiltersCleared>{0} typefilter(s) gewist.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>{0} instantiefilter(s) gewist in alle opgeslagen spellen.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt gedetecteerd</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>"Auto Event Capture" van RimTalk - Enhanced Prompt staat aan. Overlappende functies zijn uitgeschakeld om compatibiliteit met het eigen gebeurtenisvolgsysteem van RimTalk - Enhanced Prompt te garanderen.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

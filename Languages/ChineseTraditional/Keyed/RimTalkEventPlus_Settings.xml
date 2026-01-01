@@ -50,4 +50,7 @@
   <RimTalkEventPlus_TypeFiltersCleared>已清除 {0} 個類型篩選器。</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>已清除所有存檔中的 {0} 個實例篩選器。</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>偵測到 RimTalk - Enhanced Prompt</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompt 的「自動事件捕獲」已啟用。為確保與 RimTalk - Enhanced Prompt 自身的事件追蹤系統相容，重疊功能已被停用。</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

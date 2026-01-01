@@ -50,4 +50,7 @@
   <RimTalkEventPlus_TypeFiltersCleared>{0}個のタイプフィルターをクリアしました。</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>すべてのセーブで{0}個のインスタンスフィルターをクリアしました。</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt を検出しました</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompt の「Auto Event Capture」が有効になっています。RimTalk - Enhanced Prompt 独自のイベント追跡システムとの互換性を確保するため、重複する機能を無効化しました。</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

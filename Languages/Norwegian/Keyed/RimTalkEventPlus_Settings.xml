@@ -50,4 +50,7 @@ Når det er deaktivert, sender Event+ alltid den opprinnelige, fullstendige hend
   <RimTalkEventPlus_TypeFiltersCleared>Tømt {0} typefiltre.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>Tømt {0} instansfiltre på tvers av alle lagringer.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt oppdaget</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>"Auto Event Capture" fra RimTalk - Enhanced Prompt er aktivert. Overlappende funksjoner deaktiveres for å sikre kompatibilitet med RimTalk - Enhanced Prompt sitt eget hendelsessporingssystem.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

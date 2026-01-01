@@ -50,4 +50,7 @@ Wenn die Option deaktiviert ist, sendet Event+ immer den vollständigen ursprün
   <RimTalkEventPlus_TypeFiltersCleared>{0} Typfilter gelöscht.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>{0} Instanzfilter über alle Spielstände gelöscht.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt erkannt</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>„Auto Event Capture“ von RimTalk - Enhanced Prompt ist aktiviert. Überlappende Funktionen werden deaktiviert, um die Kompatibilität mit dem eigenen Ereignis-Tracking-System von RimTalk - Enhanced Prompt sicherzustellen.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

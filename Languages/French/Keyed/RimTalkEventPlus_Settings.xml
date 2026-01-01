@@ -50,4 +50,7 @@ Quand l’option est désactivée, Event+ envoie toujours le texte original comp
   <RimTalkEventPlus_TypeFiltersCleared>{0} filtre(s) de type effacé(s).</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>{0} filtre(s) d'instance effacé(s) dans toutes les sauvegardes.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt détecté</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>La fonction "Auto Event Capture" de RimTalk - Enhanced Prompt est activée. Les fonctionnalités qui se chevauchent sont désactivées pour garantir la compatibilité avec le système de suivi d'événements de RimTalk - Enhanced Prompt.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

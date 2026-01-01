@@ -50,4 +50,7 @@
   <RimTalkEventPlus_TypeFiltersCleared>Очищено {0} фильтров типов.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>Очищено {0} фильтров экземпляров во всех сохранениях.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>Обнаружен RimTalk - Enhanced Prompt</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>Функция «Auto Event Capture» из RimTalk - Enhanced Prompt включена. Перекрывающиеся функции отключены для обеспечения совместимости с собственной системой отслеживания событий RimTalk - Enhanced Prompt.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

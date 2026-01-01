@@ -50,4 +50,7 @@
   <RimTalkEventPlus_TypeFiltersCleared>{0}개의 유형 필터를 지웠습니다.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>모든 저장 파일에서 {0}개의 인스턴스 필터를 지웠습니다.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt 감지됨</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompt의 "Auto Event Capture"가 활성화되었습니다. RimTalk - Enhanced Prompt의 자체 이벤트 추적 시스템과의 호환성을 위해 중복 기능이 비활성화됩니다.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

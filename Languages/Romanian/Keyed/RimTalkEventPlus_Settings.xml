@@ -50,4 +50,7 @@ Când opțiunea este dezactivată, Event+ trimite întotdeauna textul complet or
   <RimTalkEventPlus_TypeFiltersCleared>Șterse {0} filtre de tip.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>Șterse {0} filtre de instanță în toate salvările.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt detectat</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>"Auto Event Capture" din RimTalk - Enhanced Prompt este activat. Funcțiile suprapuse sunt dezactivate pentru a asigura compatibilitatea cu propriul sistem de urmărire a evenimentelor al RimTalk - Enhanced Prompt.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

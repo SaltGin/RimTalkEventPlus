@@ -50,4 +50,7 @@ När detta är avaktiverat skickar Event+ alltid händelsens fullständiga origi
   <RimTalkEventPlus_TypeFiltersCleared>Rensade {0} typfilter.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>Rensade {0} instansfilter över alla sparfiler.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt upptäckt</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompts "Auto Event Capture" är aktiverad. Överlappande funktioner inaktiveras för att säkerställa kompatibilitet med RimTalk - Enhanced Prompts eget händelsespårningssystem.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

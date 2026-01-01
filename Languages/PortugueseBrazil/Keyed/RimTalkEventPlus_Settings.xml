@@ -50,4 +50,7 @@ Quando está desativada, o Event+ sempre envia o texto original completo do even
   <RimTalkEventPlus_TypeFiltersCleared>{0} filtro(s) de tipo limpo(s).</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>{0} filtro(s) de instância limpo(s) em todos os saves.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt detectado</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>O "Auto Event Capture" do RimTalk - Enhanced Prompt está ativado. As funcionalidades sobrepostas são desativadas para garantir compatibilidade com o sistema próprio de rastreamento de eventos do RimTalk - Enhanced Prompt.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

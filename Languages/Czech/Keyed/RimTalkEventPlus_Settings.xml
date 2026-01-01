@@ -50,4 +50,7 @@ Když je volba vypnutá, Event+ vždy odešle původní úplný text události.<
   <RimTalkEventPlus_TypeFiltersCleared>Vymazáno {0} filtrů typů.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>Vymazáno {0} filtrů instancí ve všech uložených hrách.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>Zjištěn RimTalk - Enhanced Prompt</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>Funkce „Auto Event Capture“ z RimTalk - Enhanced Prompt je zapnuta. Překrývající se funkce jsou vypnuty, aby byla zajištěna kompatibilita s vlastním systémem sledování událostí RimTalk - Enhanced Prompt.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

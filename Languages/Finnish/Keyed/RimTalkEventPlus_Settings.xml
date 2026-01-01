@@ -50,4 +50,7 @@ Kun asetus on pois käytöstä, Event+ lähettää aina tapahtuman alkuperäisen
   <RimTalkEventPlus_TypeFiltersCleared>Tyhjennetty {0} tyyppisuodatinta.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>Tyhjennetty {0} instanssisuodatinta kaikista tallennuksista.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt havaittu</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Promptin "Auto Event Capture" on käytössä. Päällekkäiset toiminnot poistetaan käytöstä, jotta yhteensopivuus RimTalk - Enhanced Promptin oman tapahtumien seurantajärjestelmän kanssa säilyy.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

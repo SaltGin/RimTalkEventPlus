@@ -50,4 +50,7 @@ Devre dışı bırakıldığında Event+, her zaman olayın tam orijinal metnini
   <RimTalkEventPlus_TypeFiltersCleared>{0} tür filtresi temizlendi.</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>Tüm kayıtlarda {0} örnek filtresi temizlendi.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt algılandı</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompt'un "Auto Event Capture" özelliği etkin. RimTalk - Enhanced Prompt'un kendi olay takip sistemiyle uyumluluk için çakışan özellikler devre dışı bırakıldı.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>
