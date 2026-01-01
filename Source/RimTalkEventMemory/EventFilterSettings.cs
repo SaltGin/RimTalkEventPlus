@@ -53,6 +53,12 @@ namespace RimTalkEventPlus
         public bool showThreats = true;
         public bool showSiteParts = true;
 
+        // Effective values (consider Enhanced Prompt conflict)
+        public bool ShowQuestsEffective => showQuests && ! EnhancedPromptDetector.IsAutoEventCaptureEnabled;
+        public bool ShowMapConditionsEffective => showMapConditions && !EnhancedPromptDetector.IsAutoEventCaptureEnabled;
+        public bool ShowThreatsEffective => showThreats && !EnhancedPromptDetector.IsAutoEventCaptureEnabled;
+        public bool ShowSitePartsEffective => showSiteParts;
+
         public EventFilterSettings()
         {
             if (disabledEventDefNames == null)

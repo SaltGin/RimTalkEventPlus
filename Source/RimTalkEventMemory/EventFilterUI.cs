@@ -41,6 +41,9 @@ namespace RimTalkEventPlus
         // Self-correcting height measurement
         private static float _lastMeasuredTopSectionHeight = 250f;
 
+        // Banner height for conflict notification headers
+        private const float BANNER_HEIGHT = 80f;
+
         // Subtitles (examples) for type rows, keyed by rootID (quests & threats only)
         private static readonly Dictionary<string, string> _typeSubtitles = new Dictionary<string, string>();
 
@@ -76,6 +79,13 @@ namespace RimTalkEventPlus
             listing.GapLine();
             listing.Gap(10f);
 
+            bool enhancedPromptConflict = EnhancedPromptDetector.IsAutoEventCaptureEnabled;
+
+            if (enhancedPromptConflict)
+            {
+                DrawEnhancedPromptBanner(listing);
+            }
+
             using (new TextBlock(GameFont.Small))
             {
                 listing.Label("RimTalkEventPlus_CategoryFilters".Translate());
@@ -88,10 +98,46 @@ namespace RimTalkEventPlus
 
             listing.Gap(5f);
             Rect categoryRect = listing.GetRect(FILTER_CHECKBOX_HEIGHT * 2 + 4f);
-            DoQuickCategoryFilters(categoryRect, settings);
+            DoQuickCategoryFilters(categoryRect, settings, enhancedPromptConflict);
             listing.Gap(10f);
             listing.GapLine();
             listing.Gap(10f);
+        }
+
+        private static void DrawEnhancedPromptBanner(Listing_Standard listing)
+        {
+            Rect bannerRect = listing.GetRect(BANNER_HEIGHT);
+
+            // Background - warm orange/yellow tint
+            Color bgColor = new Color(0.30f, 0.24f, 0.10f, 0.95f);
+            Widgets.DrawBoxSolid(bannerRect, bgColor);
+
+            // Border
+            Color borderColor = new Color(0.7f, 0.55f, 0.2f, 1f);
+            using (new ColorBlock(borderColor))
+            {
+                Widgets.DrawBox(bannerRect, 2);
+            }
+
+            Rect contentRect = bannerRect.ContractedBy(8f);
+
+            // Title line
+            Rect titleRect = new Rect(contentRect.x, contentRect.y, contentRect.width, 20f);
+            using (new TextBlock(GameFont.Small))
+            using (new ColorBlock(new Color(1f, 0.9f, 0.5f)))
+            {
+                Widgets.Label(titleRect, "RimTalkEventPlus_EnhancedPromptDetected_Title".Translate());
+            }
+
+            // Description
+            Rect descRect = new Rect(contentRect.x, contentRect.y + 22f, contentRect.width, contentRect.height - 22f);
+            using (new TextBlock(GameFont.Tiny))
+            using (new ColorBlock(new Color(0.85f, 0.8f, 0.65f)))
+            {
+                Widgets.Label(descRect, "RimTalkEventPlus_EnhancedPromptDetected_Desc".Translate());
+            }
+
+            listing.Gap(8f);
         }
 
         // Renders the complete event filtering UI with both type-based and instance-based sections.
@@ -344,10 +390,10 @@ namespace RimTalkEventPlus
 
             // Helper to check if category is disabled
             Func<FilterableEvent, bool> isCategoryDisabled = e =>
-                (e.category == EventCategory.Quest && !settings.showQuests) ||
-                (e.category == EventCategory.MapCondition && !settings.showMapConditions) ||
-                (e.category == EventCategory.Threat && !settings.showThreats) ||
-                (e.category == EventCategory.SitePart && !settings.showSiteParts);
+                (e.category == EventCategory.Quest && !settings.ShowQuestsEffective) ||
+                (e.category == EventCategory.MapCondition && !settings.ShowMapConditionsEffective) ||
+                (e.category == EventCategory.Threat && !settings.ShowThreatsEffective) ||
+                (e.category == EventCategory.SitePart && !settings.ShowSitePartsEffective);
 
             var currentInstances = allInstances.Where(e =>
                 (instanceSet == null || !instanceSet.Contains(e.instanceID)) &&
@@ -377,7 +423,7 @@ namespace RimTalkEventPlus
         }
 
         // Draws quick category filter checkboxes in a 2x2 grid layout.
-        private static void DoQuickCategoryFilters(Rect rect, EventFilterSettings settings)
+        private static void DoQuickCategoryFilters(Rect rect, EventFilterSettings settings, bool enhancedPromptConflict = false)
         {
             float cellPadding = 4f;
             float cellWidth = (rect.width - cellPadding) / 2f;
@@ -388,8 +434,9 @@ namespace RimTalkEventPlus
             float checkboxLabelGap = 6f;
             Color boxColor = new Color(0.18f, 0.18f, 0.18f, 0.35f);
             Color borderColor = Color.gray;
+            Color disabledColor = new Color(0.5f, 0.5f, 0.5f, 0.7f);
 
-            void DrawCheckboxBox(Rect outerRect, string label, ref bool value)
+            void DrawCheckboxBox(Rect outerRect, string label, ref bool value, bool disabled = false)
             {
                 // Draw box background and border
                 Widgets.DrawBoxSolid(outerRect, boxColor);
@@ -417,12 +464,13 @@ namespace RimTalkEventPlus
                 );
 
                 using (new TextBlock(GameFont.Small, TextAnchor.MiddleLeft))
+                using (new ColorBlock(disabled ? disabledColor : Color.white))
                 {
                     Widgets.Label(labelRect, label);
                 }
 
                 // Handle click on entire box area
-                if (Widgets.ButtonInvisible(outerRect))
+                if (!disabled && Widgets.ButtonInvisible(outerRect))
                 {
                     value = !value;
                     if (value)
@@ -432,28 +480,36 @@ namespace RimTalkEventPlus
                 }
 
                 // Draw checkbox visual only (no click handling)
-                Widgets.CheckboxDraw(innerRect.x, checkboxY, value, false, checkboxSize);
+                bool displayValue = disabled ? false : value;
+                using (new ColorBlock(disabled ? disabledColor : Color.white))
+                {
+                    Widgets.CheckboxDraw(innerRect.x, checkboxY, displayValue, disabled, checkboxSize);
+                }
             }
 
             DrawCheckboxBox(
                 new Rect(rect.x, rect.y, cellWidth, cellHeight),
                 "RimTalkEventPlus_QuickFilter_Quests".Translate(),
-                ref settings.showQuests
+                ref settings.showQuests,
+                disabled: enhancedPromptConflict
             );
             DrawCheckboxBox(
                 new Rect(rect.x + cellWidth + cellPadding, rect.y, cellWidth, cellHeight),
                 "RimTalkEventPlus_QuickFilter_MapConditions".Translate(),
-                ref settings.showMapConditions
+                ref settings.showMapConditions,
+                disabled: enhancedPromptConflict
             );
             DrawCheckboxBox(
                 new Rect(rect.x, rect.y + cellHeight + cellPadding, cellWidth, cellHeight),
                 "RimTalkEventPlus_QuickFilter_Threats".Translate(),
-                ref settings.showThreats
+                ref settings.showThreats,
+                disabled: enhancedPromptConflict
             );
             DrawCheckboxBox(
                 new Rect(rect.x + cellWidth + cellPadding, rect.y + cellHeight + cellPadding, cellWidth, cellHeight),
                 "RimTalkEventPlus_QuickFilter_Sites".Translate(),
-                ref settings.showSiteParts
+                ref settings.showSiteParts,
+                disabled: false  // Site Parts is Event+ exclusive, never override by Enhanced Prompt's settings
             );
         }
 
@@ -469,18 +525,18 @@ namespace RimTalkEventPlus
             }
 
             var hiddenCategories = new List<EventCategory>();
-            if (!settings.showQuests) hiddenCategories.Add(EventCategory.Quest);
-            if (!settings.showMapConditions) hiddenCategories.Add(EventCategory.MapCondition);
-            if (!settings.showThreats) hiddenCategories.Add(EventCategory.Threat);
-            if (!settings.showSiteParts) hiddenCategories.Add(EventCategory.SitePart);
+            if (!settings.ShowQuestsEffective) hiddenCategories.Add(EventCategory.Quest);
+            if (!settings.ShowMapConditionsEffective) hiddenCategories.Add(EventCategory.MapCondition);
+            if (!settings.ShowThreatsEffective) hiddenCategories.Add(EventCategory.Threat);
+            if (!settings.ShowSitePartsEffective) hiddenCategories.Add(EventCategory.SitePart);
 
             float categoryIndicatorHeight = (isDisabled && hiddenCategories.Count > 0) ? hiddenCategories.Count * 30f : 0f;
 
             var filteredEvents = events.Where(e =>
-                (e.category == EventCategory.Quest && settings.showQuests) ||
-                (e.category == EventCategory.MapCondition && settings.showMapConditions) ||
-                (e.category == EventCategory.Threat && settings.showThreats) ||
-                (e.category == EventCategory.SitePart && settings.showSiteParts)
+                (e.category == EventCategory.Quest && settings.ShowQuestsEffective) ||
+                (e.category == EventCategory.MapCondition && settings.ShowMapConditionsEffective) ||
+                (e.category == EventCategory.Threat && settings.ShowThreatsEffective) ||
+                (e.category == EventCategory.SitePart && settings.ShowSitePartsEffective)
             ).ToList();
 
             var groupedEvents = filteredEvents.GroupBy(e => e.category).OrderBy(g => g.Key).ToList();
@@ -584,10 +640,10 @@ namespace RimTalkEventPlus
                 {
                     bool isGloballyDisabled = settings.disabledEventDefNames.Contains(evt.rootID);
                     bool isCategoryDisabled =
-                        (evt.category == EventCategory.Quest && !settings.showQuests) ||
-                        (evt.category == EventCategory.MapCondition && !settings.showMapConditions) ||
-                        (evt.category == EventCategory.Threat && !settings.showThreats) ||
-                        (evt.category == EventCategory.SitePart && !settings.showSiteParts);
+                        (evt.category == EventCategory.Quest && !settings.ShowQuestsEffective) ||
+                        (evt.category == EventCategory.MapCondition && !settings.ShowMapConditionsEffective) ||
+                        (evt.category == EventCategory.Threat && !settings.ShowThreatsEffective) ||
+                        (evt.category == EventCategory.SitePart && !settings.ShowSitePartsEffective);
                     bool isDisabled = isGloballyDisabled || isCategoryDisabled;
                     bool isSelected = isHidden ? (_selectedHiddenInstance == evt.instanceID) : (_selectedCurrentInstance == evt.instanceID);
 

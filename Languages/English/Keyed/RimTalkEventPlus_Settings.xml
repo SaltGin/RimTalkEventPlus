@@ -50,4 +50,7 @@ When disabled, Event+ always sends the full original event text.</RimTalkEventPl
   <RimTalkEventPlus_TypeFiltersCleared>Cleared {0} type filter(s).</RimTalkEventPlus_TypeFiltersCleared>
   <RimTalkEventPlus_InstanceFiltersCleared>Cleared {0} instance filter(s) across all saves.</RimTalkEventPlus_InstanceFiltersCleared>
 
+  <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk Enhanced Prompt Detected</RimTalkEventPlus_EnhancedPromptDetected_Title>
+  <RimTalkEventPlus_EnhancedPromptDetected_Desc>Enhanced Prompt's "Auto Event Capture" is enabled. Overlapping features are disabled to ensure compatibility with Enhanced Prompt's own event tracking system.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
+
 </LanguageData>

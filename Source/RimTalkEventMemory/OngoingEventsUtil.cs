@@ -23,16 +23,16 @@ namespace RimTalkEventPlus
                 switch (category.Value)
                 {
                     case EventCategory.Quest:
-                        if (!settings.showQuests) return true;
+                        if (!settings.ShowQuestsEffective) return true;
                         break;
                     case EventCategory.MapCondition:
-                        if (!settings.showMapConditions) return true;
+                        if (!settings.ShowMapConditionsEffective) return true;
                         break;
                     case EventCategory.Threat:
-                        if (!settings.showThreats) return true;
+                        if (!settings.ShowThreatsEffective) return true;
                         break;
                     case EventCategory.SitePart:
-                        if (!settings.showSiteParts) return true;
+                        if (!settings.ShowSitePartsEffective) return true;
                         break;
                 }
             }
