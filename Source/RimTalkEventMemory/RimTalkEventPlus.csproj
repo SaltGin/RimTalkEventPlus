@@ -74,7 +74,7 @@
     <Compile Include="EventFilterUI.cs" />
     <Compile Include="FilterableEvent.cs" />
     <Compile Include="Map_FinalizeInit_OngoingEventsDump_Patch.cs" />
-    <Compile Include="QuestAffectsMapCacheComponent.cs" />
+    <Compile Include="QuestCacheComponent.cs" />
     <Compile Include="RimTalkEventPlus.cs" />
     <Compile Include="OngoingEventsFormatter.cs" />
     <Compile Include="OngoingEventSnapshot.cs" />

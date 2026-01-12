@@ -1,110 +1,46 @@
-﻿using HarmonyLib;
-using RimWorld;
+﻿using RimWorld;
 using RimWorld.Planet;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Verse;
 
 namespace RimTalkEventPlus
 {
+    // Utility class for accessing Quest data and determining quest-map relationships.
     public static class QuestLinkUtil
     {
-        private static bool TryGetQuestId(Quest quest, out int questId)
+        private const BindingFlags FallbackBindingFlags =
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+
+        #region Cache Access
+
+        private static QuestCacheComponent GetCache()
         {
-            questId = -1;
-            if (quest == null) return false;
-
-            var trav = Traverse.Create(quest);
-
-            try
-            {
-                questId = trav.Field("id").GetValue<int>();
-                if (questId >= 0) return true;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            try
-            {
-                questId = trav.Property("Id").GetValue<int>();
-                if (questId >= 0) return true;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            return false;
+            return Current.Game?.GetComponent<QuestCacheComponent>();
         }
 
-        /// Try to read description from a Quest.
+        #endregion
+
+        #region Quest Field Access (Direct - Public Fields in RimWorld 1.6)
+
         public static string TryGetQuestDescription(Quest quest)
         {
             if (quest == null)
                 return string.Empty;
 
-            var trav = Traverse.Create(quest);
-            object descObj = null;
-
-            try
-            {
-                descObj = trav.Field("description").GetValue<object>();
-            }
-            catch
-            {
-                // ignore
-            }
-
-            if (descObj == null)
-            {
-                try
-                {
-                    descObj = trav.Property("Description").GetValue<object>();
-                }
-                catch
-                {
-                    // ignore
-                }
-            }
-
-            return descObj?.ToString() ?? string.Empty;
+            string result = quest.description;
+            return result ?? string.Empty;
         }
 
-        /// Try to get a short label/title for a Quest.
         public static string TryGetQuestLabel(Quest quest)
         {
             if (quest == null)
                 return string.Empty;
 
-            var trav = Traverse.Create(quest);
+            if (!quest.name.NullOrEmpty())
+                return quest.name;
 
-            try
-            {
-                string nameField = trav.Field("name").GetValue<string>();
-                if (!nameField.NullOrEmpty())
-                    return nameField;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            try
-            {
-                string nameProp = trav.Property("Name").GetValue<string>();
-                if (!nameProp.NullOrEmpty())
-                    return nameProp;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            // Fallback: first line of description
             string desc = TryGetQuestDescription(quest);
             if (!desc.NullOrEmpty())
             {
@@ -115,51 +51,29 @@ namespace RimTalkEventPlus
             return "Quest";
         }
 
-        /// True if this quest is flagged as hidden (e.g. <hidden>True</hidden> in the save).
         public static bool IsQuestHidden(Quest quest)
         {
             if (quest == null)
                 return false;
 
-            var trav = Traverse.Create(quest);
-
-            // Try backing field
-            try
-            {
-                if (trav.Field("hidden").GetValue<bool>())
-                    return true;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            // Try property, if RimWorld exposes it that way
-            try
-            {
-                if (trav.Property("Hidden").GetValue<bool>())
-                    return true;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            return false;
+            return quest.hidden;
         }
 
-
-        /// True if this quest is in the "Ongoing" state and not ended.
         public static bool IsQuestOngoing(Quest quest)
         {
-            // Direct enum comparison
             return quest?.State == QuestState.Ongoing;
         }
 
-        /// Returns a short marker like "accepted ~1.3 days ago" or "accepted ~5 hours ago"
-        /// based on acceptanceTick vs current game ticks. Empty string if not accepted.
+        #endregion
+
+        #region Quest Accepted Age
+
+        // Returns a short marker like "accepted ~1.3 days ago" based on acceptanceTick.
         public static string GetQuestAcceptedAgeMarker(Quest quest)
         {
+            if (quest == null)
+                return string.Empty;
+
             int acceptanceTick = quest.acceptanceTick;
 
             if (acceptanceTick <= 0)
@@ -170,7 +84,7 @@ namespace RimTalkEventPlus
             if (diff <= 0)
                 return "accepted just now";
 
-            // RimWorld uses 60,000 ticks per in-game day.
+            // RimWorld uses 60,000 ticks per in-game day. 
             double days = diff / 60000.0;
 
             if (days >= 1.0)
@@ -191,34 +105,43 @@ namespace RimTalkEventPlus
             }
         }
 
-        /// Extract short names of pawns directly referenced by this quest's parts (pawn / pawns fields).
-        /// Returns a comma-separated list, or empty string if none.
+        #endregion
+
+        #region Quest Key Pawns
+
+        // Extract short names of pawns directly referenced by this quest's parts (pawn/pawns fields).
+        // Returns a comma-separated list, or empty string if none.
+        // Uses cached FieldInfo lookups for QuestPart subclass fields.
         public static string GetQuestKeyPawnNames(Quest quest)
         {
             if (quest == null)
                 return string.Empty;
 
             var parts = quest.PartsListForReading;
-
             if (parts == null || parts.Count == 0)
                 return string.Empty;
 
             var pawns = new List<Pawn>();
+            var cache = GetCache();
 
             foreach (var partObj in parts)
             {
                 if (partObj == null)
                     continue;
 
-                var partTrav = Traverse.Create(partObj);
+                Type partType = partObj.GetType();
 
-                // 1) Single pawn field: "pawn"
+                // 1) Single pawn field:  "pawn"
                 try
                 {
-                    Pawn pawn = partTrav.Field("pawn").GetValue<Pawn>();
-                    if (pawn != null && !pawns.Contains(pawn))
+                    var pawnField = cache?.GetField(partType, "pawn")
+                        ?? partType.GetField("pawn", FallbackBindingFlags);
+
+                    if (pawnField != null)
                     {
-                        pawns.Add(pawn);
+                        Pawn pawn = pawnField.GetValue(partObj) as Pawn;
+                        if (pawn != null && !pawns.Contains(pawn))
+                            pawns.Add(pawn);
                     }
                 }
                 catch
@@ -229,14 +152,18 @@ namespace RimTalkEventPlus
                 // 2) List field: "pawns"
                 try
                 {
-                    var pawnListObj = partTrav.Field("pawns").GetValue<IList>();
-                    if (pawnListObj != null)
+                    var pawnsField = cache?.GetField(partType, "pawns")
+                        ?? partType.GetField("pawns", FallbackBindingFlags);
+
+                    if (pawnsField != null)
                     {
-                        foreach (object o in pawnListObj)
+                        var pawnListObj = pawnsField.GetValue(partObj) as System.Collections.IList;
+                        if (pawnListObj != null)
                         {
-                            if (o is Pawn p && !pawns.Contains(p))
+                            foreach (object o in pawnListObj)
                             {
-                                pawns.Add(p);
+                                if (o is Pawn p && !pawns.Contains(p))
+                                    pawns.Add(p);
                             }
                         }
                     }
@@ -280,9 +207,7 @@ namespace RimTalkEventPlus
                 }
 
                 if (!name.NullOrEmpty())
-                {
                     names.Add(name);
-                }
             }
 
             if (names.Count == 0)
@@ -291,51 +216,42 @@ namespace RimTalkEventPlus
             return string.Join(", ", names);
         }
 
-        /// True if this quest should be considered as affecting the given map.
-        ///
-        ///  1) LookTargets first:
-        ///     - If any target has HasMap && Map == this map, or references this map's parent/site/tile -> true.
-        ///  2) Quest parts:
-        ///     - If any part holds a MapParent/Map pointing to this map's parent or this map -> true.
-        ///
-        ///  - We deliberately ignore some "auxiliary" references that don't mean the quest really
-        ///    "happens" on that map, e.g. threat-scaling fields like useMapParentThreatPoints.
-        ///  - We also skip parts like QuestPart_DropPods that just use a map as a drop location.
+        #endregion
+
+        #region Quest Affects Map
+
+        // True if this quest should be considered as affecting the given map.
+        // Results are cached for performance since this is called repeatedly.
         public static bool QuestAffectsMap(Quest quest, Map map)
         {
             if (quest == null || map == null)
                 return false;
 
-            // Cache only works when a game is running and ticks are available.
+            // Cache only works when a game is running
             var game = Current.Game;
             var tickManager = Find.TickManager;
 
             if (game != null && tickManager != null)
             {
-                int questId;
-                if (TryGetQuestId(quest, out questId) && questId >= 0)
+                int questId = quest.id;
+                if (questId >= 0)
                 {
                     int mapUid = map.uniqueID;
 
-                    var comp = game.GetComponent<QuestAffectsMapCacheComponent>();
-                    if (comp != null)
+                    var cache = GetCache();
+                    if (cache != null)
                     {
-                        if (comp.TryGet(questId, mapUid, out bool cached))
-                        {
-                            //Log.Message($"[RimTalkEventPlus] QuestAffectsMap cache HIT: questId={questId}, mapUid={mapUid}, affects={cached}");
+                        if (cache.TryGetQuestAffectsMap(questId, mapUid, out bool cached))
                             return cached;
-                        }
 
-                        //Log.Message($"[RimTalkEventPlus] QuestAffectsMap cache MISS: questId={questId}, mapUid={mapUid} -> recompute");
                         bool computed = QuestAffectsMap_Uncached(quest, map);
-                        comp.Store(questId, mapUid, computed);
-                        //Log.Message($"[RimTalkEventPlus] QuestAffectsMap cache STORED: questId={questId}, mapUid={mapUid}, affects={computed}");
+                        cache.StoreQuestAffectsMap(questId, mapUid, computed);
                         return computed;
                     }
                 }
             }
 
-            // Fallback: original logic without caching.
+            // Fallback:  compute without caching
             return QuestAffectsMap_Uncached(quest, map);
         }
 
@@ -346,14 +262,11 @@ namespace RimTalkEventPlus
 
             MapParent mapParent = map.info?.parent;
             int mapTile = map.Tile;
-            int mapParentID = mapParent?.ID ?? -1;
 
             var parts = quest.PartsListForReading;
+            var cache = GetCache();
 
-            // Check if this quest has a dedicated remote site (different tile from this map)
-            bool questHasRemoteSite = false;
-
-            // 1. Check QuestLookTargets from filtered parts (not quest. QuestLookTargets which includes all parts)
+            // 1. Check QuestLookTargets from filtered parts
             if (parts != null)
             {
                 foreach (var part in parts)
@@ -371,16 +284,6 @@ namespace RimTalkEventPlus
                         {
                             foreach (var target in partLookTargets)
                             {
-                                // Detect remote site
-                                if (!questHasRemoteSite && target.HasWorldObject)
-                                {
-                                    var wo = target.WorldObject;
-                                    if (wo is Site && wo.Tile != mapTile)
-                                    {
-                                        questHasRemoteSite = true;
-                                    }
-                                }
-
                                 // Check if target has a map and it matches our map
                                 if (target.IsMapTarget && target.Map == map)
                                     return true;
@@ -418,25 +321,28 @@ namespace RimTalkEventPlus
                     if (ShouldSkipQuestPart(part))
                         continue;
 
-                    var partTrav = Traverse.Create(part);
+                    Type partType = part.GetType();
 
                     // Check "worldObject" field
                     try
                     {
-                        var wo = partTrav.Field("worldObject").GetValue<WorldObject>();
-                        if (wo is MapParent mp)
-                        {
-                            if (mp == mapParent)
-                                return true;
-                            try
-                            {
-                                if (mp.HasMap && mp.Map == map)
-                                    return true;
-                            }
-                            catch { }
+                        FieldInfo worldObjectField = cache?.GetField(partType, "worldObject")
+                            ?? partType.GetField("worldObject", FallbackBindingFlags);
 
-                            if (!questHasRemoteSite && wo is Site && wo.Tile != mapTile)
-                                questHasRemoteSite = true;
+                        if (worldObjectField != null)
+                        {
+                            var wo = worldObjectField.GetValue(part) as WorldObject;
+                            if (wo is MapParent mp)
+                            {
+                                if (mp == mapParent)
+                                    return true;
+                                try
+                                {
+                                    if (mp.HasMap && mp.Map == map)
+                                        return true;
+                                }
+                                catch { }
+                            }
                         }
                     }
                     catch { }
@@ -444,27 +350,30 @@ namespace RimTalkEventPlus
                     // Check "site" field (used by QuestPart_DistressCallAmbush, etc.)
                     try
                     {
-                        var site = partTrav.Field("site").GetValue<MapParent>();
-                        if (site != null)
-                        {
-                            if (site == mapParent)
-                                return true;
-                            try
-                            {
-                                if (site.HasMap && site.Map == map)
-                                    return true;
-                            }
-                            catch { }
+                        FieldInfo siteField = cache?.GetField(partType, "site")
+                            ?? partType.GetField("site", FallbackBindingFlags);
 
-                            if (!questHasRemoteSite && site is Site && site.Tile != mapTile)
-                                questHasRemoteSite = true;
+                        if (siteField != null)
+                        {
+                            var site = siteField.GetValue(part) as MapParent;
+                            if (site != null)
+                            {
+                                if (site == mapParent)
+                                    return true;
+                                try
+                                {
+                                    if (site.HasMap && site.Map == map)
+                                        return true;
+                                }
+                                catch { }
+                            }
                         }
                     }
                     catch { }
                 }
             }
 
-            // 3. Check individual quest parts
+            // 3. Check individual quest parts for mapParent field/property
             if (mapParent == null)
                 return false;
 
@@ -500,23 +409,28 @@ namespace RimTalkEventPlus
                     }
                     catch { }
 
-                    // Still need reflection for private "mapParent" field/property
-                    var partTrav = Traverse.Create(part);
+                    Type partType = part.GetType();
                     MapParent partParent = null;
 
                     // Try field "mapParent"
                     try
                     {
-                        partParent = partTrav.Field("mapParent").GetValue<MapParent>();
+                        FieldInfo mapParentField = cache?.GetField(partType, "mapParent")
+                            ?? partType.GetField("mapParent", FallbackBindingFlags);
+
+                        if (mapParentField != null)
+                            partParent = mapParentField.GetValue(part) as MapParent;
                     }
                     catch { }
 
-                    // Try property "MapParent"
+                    // Try property "MapParent" if field not found
                     if (partParent == null)
                     {
                         try
                         {
-                            partParent = partTrav.Property("MapParent").GetValue<MapParent>();
+                            var mapParentProp = partType.GetProperty("MapParent", FallbackBindingFlags);
+                            if (mapParentProp != null)
+                                partParent = mapParentProp.GetValue(part) as MapParent;
                         }
                         catch { }
                     }
@@ -527,7 +441,6 @@ namespace RimTalkEventPlus
                             return true;
 
                         // Check if MapParent has a map property pointing to our map
-                        // Wrap in try-catch as HasMap/Map can throw during map generation
                         try
                         {
                             if (partParent.HasMap && partParent.Map == map)
@@ -543,6 +456,7 @@ namespace RimTalkEventPlus
 
             return false;
         }
+
         private static bool ShouldSkipQuestPart(QuestPart part)
         {
             if (part == null) return true;
@@ -559,5 +473,7 @@ namespace RimTalkEventPlus
                    partTypeName == "QuestPart_Notify_PlayerRaidedSomeone" ||
                    partTypeName == "QuestPart_Choice";
         }
+
+        #endregion
     }
 }
