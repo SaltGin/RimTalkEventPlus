@@ -63,26 +63,8 @@ namespace RimTalkEventPlus
                 Map map = initiator.Map;
 
                 // Only compute danger/threat state on player home maps.
-                bool isInDanger = false;
-
-                if (map.IsPlayerHome)
-                {
-                    List<Pawn> nearbyPawns = PawnSelector.GetAllNearByPawns(initiator);
-                    if (talkRequest.Recipient != null && talkRequest.Recipient.IsPlayer())
-                    {
-                        nearbyPawns.Insert(0, talkRequest.Recipient);
-                    }
-
-                    try
-                    {
-                        var statusResult = initiator.GetPawnStatusFull(nearbyPawns);
-                        isInDanger = statusResult.Item2;
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Warning($"[RimTalk Event+] Failed to recompute danger flag: {ex}");
-                    }
-                }
+                bool isInDanger = map.IsPlayerHome &&
+                    map.dangerWatcher?.DangerRating != StoryDanger.None;
 
                 var ongoingEvents = OngoingEventsUtil.GetOngoingEventsNow(
                     map,
