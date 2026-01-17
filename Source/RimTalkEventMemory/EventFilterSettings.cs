@@ -61,7 +61,7 @@ namespace RimTalkEventPlus
 
         // When enabled, only append events involving pawns in the conversation context.
         // Threats, map conditions, and site parts are always included.
-        public bool EnableContextFiltering = true;
+        public bool EnableContextFiltering = false;
 
         public EventFilterSettings()
         {
@@ -127,7 +127,7 @@ namespace RimTalkEventPlus
             Scribe_Values.Look(
                 ref EnableContextFiltering,
                 "EnableContextFiltering",
-                true
+                false
             );
 
             // Ensure collections are initialized after loading
