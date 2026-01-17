@@ -55,6 +55,5 @@ When disabled, Event+ always sends the full original event text.</RimTalkEventPl
 
   <RimTalkEventPlus_EnableContextFiltering>Filter events by conversation context</RimTalkEventPlus_EnableContextFiltering>
   <RimTalkEventPlus_EnableContextFilteringTooltip>Only append quest events that involve pawns in the current conversation (nearby pawns, speaker, recipient). Threats, map conditions, and site parts are always included.  Saves tokens and (might) improves LLM focus.</RimTalkEventPlus_EnableContextFilteringTooltip>
-  <RimTalkEventPlus_ContextFiltering_Description>When enabled, quests that don't involve any pawns in the current conversation (nearby pawns, speaker, recipient) will be skipped. This reduces token usage and (might) helps the LLM focus on relevant events.</RimTalkEventPlus_ContextFiltering_Description>
-
+  <RimTalkEventPlus_ContextFiltering_Description>When enabled, quests that don't involve any pawns in the current conversation (nearby pawns, speaker, recipient) will be skipped. This reduces token usage and might help the LLM focus on relevant events. However, when enabled, pawns will never talk about such quests if the related pawns are not nearby.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>
