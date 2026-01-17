@@ -76,6 +76,23 @@ namespace RimTalkEventPlus
                 if (ongoingEvents == null || ongoingEvents.Count == 0)
                     return;
 
+                // Apply context filtering if enabled
+                var settings = RimTalkEventPlus.Settings;
+                if (settings != null && settings.EnableContextFiltering)
+                {
+                    var contextPawnIds = ContextPawnMatcher.CollectContextPawnIds(
+                        pawns,
+                        initiator,
+                        talkRequest.Recipient);
+
+                    ongoingEvents = ContextPawnMatcher.FilterEventsByContext(
+                        ongoingEvents,
+                        contextPawnIds);
+
+                    if (ongoingEvents == null || ongoingEvents.Count == 0)
+                        return;
+                }
+
                 string block = OngoingEventsFormatter.FormatOngoingEventsBlock(
                     ongoingEvents,
                     maxChars: 1200

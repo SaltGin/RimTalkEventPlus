@@ -109,19 +109,44 @@ namespace RimTalkEventPlus
 
         #region Quest Key Pawns
 
-        // Extract short names of pawns directly referenced by this quest's parts (pawn/pawns fields).
-        // Returns a comma-separated list, or empty string if none.
-        // Uses cached FieldInfo lookups for QuestPart subclass fields.
-        public static string GetQuestKeyPawnNames(Quest quest)
+        // Extract pawns directly referenced by this quest's parts (pawn/pawns fields).
+        // Returns cached result when available.  Uses thingIDNumber for deduplication.
+        public static List<Pawn> GetQuestKeyPawns(Quest quest)
         {
             if (quest == null)
-                return string.Empty;
+                return new List<Pawn>();
 
+            int questId = quest.id;
+            var cache = GetCache();
+
+            // Try cache first
+            if (cache != null && questId >= 0)
+            {
+                if (cache.TryGetQuestPawns(questId, out var cachedPawns))
+                    return cachedPawns;
+            }
+
+            // Extract pawns from quest parts
+            var pawns = ExtractPawnsFromQuestParts(quest);
+
+            // Store in cache
+            if (cache != null && questId >= 0)
+            {
+                cache.StoreQuestPawns(questId, pawns);
+            }
+
+            return pawns;
+        }
+
+        // Internal method to extract pawns from quest parts via reflection.
+        private static List<Pawn> ExtractPawnsFromQuestParts(Quest quest)
+        {
             var parts = quest.PartsListForReading;
             if (parts == null || parts.Count == 0)
-                return string.Empty;
+                return new List<Pawn>();
 
             var pawns = new List<Pawn>();
+            var seenIds = new HashSet<int>();
             var cache = GetCache();
 
             foreach (var partObj in parts)
@@ -140,7 +165,7 @@ namespace RimTalkEventPlus
                     if (pawnField != null)
                     {
                         Pawn pawn = pawnField.GetValue(partObj) as Pawn;
-                        if (pawn != null && !pawns.Contains(pawn))
+                        if (pawn != null && seenIds.Add(pawn.thingIDNumber))
                             pawns.Add(pawn);
                     }
                 }
@@ -162,7 +187,7 @@ namespace RimTalkEventPlus
                         {
                             foreach (object o in pawnListObj)
                             {
-                                if (o is Pawn p && !pawns.Contains(p))
+                                if (o is Pawn p && seenIds.Add(p.thingIDNumber))
                                     pawns.Add(p);
                             }
                         }
@@ -173,6 +198,15 @@ namespace RimTalkEventPlus
                     // ignore
                 }
             }
+
+            return pawns;
+        }
+
+        // Get comma-separated short names of pawns involved in quest.
+        // Uses cached pawn list from GetQuestKeyPawns().
+        public static string GetQuestKeyPawnNames(Quest quest)
+        {
+            var pawns = GetQuestKeyPawns(quest);
 
             if (pawns.Count == 0)
                 return string.Empty;

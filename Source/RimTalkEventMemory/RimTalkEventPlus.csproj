@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="BlacklistMigrationHelper.cs" />
     <Compile Include="BlacklistMigrationStartup.cs" />
+    <Compile Include="ContextPawnMatcher.cs" />
     <Compile Include="EnhancedPromptDetector.cs" />
     <Compile Include="EventCategory.cs" />
     <Compile Include="EventFilterSettings.cs" />

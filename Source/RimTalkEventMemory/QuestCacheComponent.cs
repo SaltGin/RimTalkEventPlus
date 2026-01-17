@@ -8,6 +8,7 @@ namespace RimTalkEventPlus
     // Per-game cache for quest-related lookups:
     // 1. FieldInfo for QuestPart subclass fields (avoids repeated Type.GetField calls)
     // 2. Quest-Map affinity results (avoids expensive QuestAffectsMap recomputation)
+    // 3. Quest-Pawns extraction results (avoids repeated reflection on quest parts)
     public class QuestCacheComponent : GameComponent
     {
         // FieldInfo cache for QuestPart subclass fields
@@ -15,9 +16,12 @@ namespace RimTalkEventPlus
             new Dictionary<(Type, string), FieldInfo>();
 
         // Quest-Map affinity cache (key: questId << 32 | mapUniqueId)
-        // Equivalent to the deleted QuestAffectsMapCacheComponent functionality
         private readonly Dictionary<long, bool> _questAffectsMapCache =
             new Dictionary<long, bool>();
+
+        // Quest-Pawns cache (key: questId, value: list of pawns involved in quest)
+        private readonly Dictionary<int, List<Pawn>> _questPawnsCache =
+            new Dictionary<int, List<Pawn>>();
 
         private const BindingFlags AllInstanceFlags =
             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
@@ -62,6 +66,28 @@ namespace RimTalkEventPlus
         {
             long key = MakeQuestMapKey(questId, mapUniqueId);
             _questAffectsMapCache[key] = affects;
+        }
+
+        #endregion
+
+        #region Quest-Pawns Cache
+
+        // Try to get cached quest pawns list.
+        public bool TryGetQuestPawns(int questId, out List<Pawn> pawns)
+        {
+            return _questPawnsCache.TryGetValue(questId, out pawns);
+        }
+
+        // Store quest pawns list in cache.
+        public void StoreQuestPawns(int questId, List<Pawn> pawns)
+        {
+            _questPawnsCache[questId] = pawns;
+        }
+
+        // Clear cached pawns for a specific quest (call when quest state changes).
+        public void InvalidateQuestPawns(int questId)
+        {
+            _questPawnsCache.Remove(questId);
         }
 
         #endregion

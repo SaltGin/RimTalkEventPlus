@@ -59,6 +59,10 @@ namespace RimTalkEventPlus
         public bool ShowThreatsEffective => showThreats && !EnhancedPromptDetector.IsAutoEventCaptureEnabled;
         public bool ShowSitePartsEffective => showSiteParts;
 
+        // When enabled, only append events involving pawns in the conversation context.
+        // Threats, map conditions, and site parts are always included.
+        public bool EnableContextFiltering = true;
+
         public EventFilterSettings()
         {
             if (disabledEventDefNames == null)
@@ -117,6 +121,12 @@ namespace RimTalkEventPlus
             Scribe_Values.Look(
                 ref showSiteParts,
                 "showSiteParts",
+                true
+            );
+
+            Scribe_Values.Look(
+                ref EnableContextFiltering,
+                "EnableContextFiltering",
                 true
             );
 

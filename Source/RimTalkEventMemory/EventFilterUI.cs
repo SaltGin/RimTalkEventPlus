@@ -59,6 +59,8 @@ namespace RimTalkEventPlus
         {
             listing.Label("RimTalkEventPlus_OptimizationHeader".Translate());
             listing.GapLine();
+
+            // Event text compression toggle
             listing.CheckboxLabeled(
                 "RimTalkEventPlus_EnableCompression_Label".Translate(),
                 ref settings.enableEventTextCompression,
@@ -68,6 +70,20 @@ namespace RimTalkEventPlus
             using (new TextBlock(GameFont.Tiny))
             {
                 listing.Label("RimTalkEventPlus_Compression_Description".Translate());
+            }
+
+            listing.Gap(12f);
+
+            // Context-aware filtering toggle
+            listing.CheckboxLabeled(
+                "RimTalkEventPlus_EnableContextFiltering".Translate(),
+                ref settings.EnableContextFiltering,
+                "RimTalkEventPlus_EnableContextFilteringTooltip".Translate()
+            );
+
+            using (new TextBlock(GameFont.Tiny))
+            {
+                listing.Label("RimTalkEventPlus_ContextFiltering_Description".Translate());
             }
 
             listing.Gap(SECTION_SPACING);
