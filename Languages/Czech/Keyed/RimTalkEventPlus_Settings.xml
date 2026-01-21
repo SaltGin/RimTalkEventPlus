@@ -53,4 +53,7 @@ Když je volba vypnutá, Event+ vždy odešle původní úplný text události.<
   <RimTalkEventPlus_EnhancedPromptDetected_Title>Zjištěn RimTalk - Enhanced Prompt</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>Funkce „Auto Event Capture“ z RimTalk - Enhanced Prompt je zapnuta. Překrývající se funkce jsou vypnuty, aby byla zajištěna kompatibilita s vlastním systémem sledování událostí RimTalk - Enhanced Prompt.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Filtrovat události podle kontextu konverzace</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Připojit pouze události úkolů, které zahrnují postavy v aktuální konverzaci (okolní postavy, mluvčí, příjemce). Hrozby, podmínky mapy a události světových lokalit jsou vždy odesílány do AI. Šetří tokeny a (možná) zlepšuje zaměření LLM.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>Pokud je tato možnost povolena, úkoly, které nezahrnují žádné postavy v aktuální konverzaci (okolní postavy, mluvčí, příjemce), budou přeskočeny. Tím se sníží spotřeba tokenů a (možná) pomůže LLM zaměřit se na relevantní události. Avšak pokud je tato možnost povolena, postavy nikdy nebudou mluvit o takových úkolech, pokud související postavy nejsou poblíž.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

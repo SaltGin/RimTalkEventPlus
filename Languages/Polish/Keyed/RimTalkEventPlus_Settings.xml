@@ -53,4 +53,7 @@ Gdy opcja jest wyłączona, Event+ zawsze wysyła pełny, oryginalny tekst zdarz
   <RimTalkEventPlus_EnhancedPromptDetected_Title>Wykryto RimTalk - Enhanced Prompt</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>"Auto Event Capture" z RimTalk - Enhanced Prompt jest włączone. Nakładające się funkcje są wyłączone, aby zapewnić kompatybilność z własnym systemem śledzenia zdarzeń RimTalk - Enhanced Prompt.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Filtruj zdarzenia według kontekstu rozmowy</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Dodawaj tylko zdarzenia zadań dotyczące postaci w bieżącej rozmowie (pobliskie postacie, mówca, odbiorca). Zagrożenia, warunki mapy i zdarzenia lokacji świata są zawsze wysyłane do AI. Oszczędza tokeny i (być może) poprawia skupienie LLM.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>Po włączeniu zadania, które nie dotyczą żadnych postaci w bieżącej rozmowie (pobliskie postacie, mówca, odbiorca), będą pomijane. Zmniejsza to zużycie tokenów i (być może) pomaga LLM skupić się na istotnych zdarzeniach. Jednak gdy ta opcja jest włączona, postacie nigdy nie będą rozmawiać o takich zadaniach, jeśli powiązane postacie nie są w pobliżu.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

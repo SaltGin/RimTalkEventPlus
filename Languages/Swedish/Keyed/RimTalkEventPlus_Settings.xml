@@ -53,4 +53,7 @@ När detta är avaktiverat skickar Event+ alltid händelsens fullständiga origi
   <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt upptäckt</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompts "Auto Event Capture" är aktiverad. Överlappande funktioner inaktiveras för att säkerställa kompatibilitet med RimTalk - Enhanced Prompts eget händelsespårningssystem.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Filtrera händelser efter samtalskontext</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Lägg bara till uppdragshändelser som involverar personer i det aktuella samtalet (närliggande personer, talaren, mottagaren). Hot, kartförhållanden och världsplats-händelser skickas alltid till AI:n. Sparar tokens och förbättrar (kanske) LLM:s fokus.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>När aktiverat hoppas uppdrag över som inte involverar några personer i det aktuella samtalet (närliggande personer, talaren, mottagaren). Detta minskar tokenanvändningen och hjälper (kanske) LLM:en att fokusera på relevanta händelser. Men när aktiverat kommer personer aldrig att prata om sådana uppdrag om de relaterade personerna inte är i närheten.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

@@ -53,4 +53,7 @@ Cuando está desactivada, Event+ siempre envía el texto original completo del e
   <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt detectado</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>El "Auto Event Capture" de RimTalk - Enhanced Prompt está activado. Las funciones superpuestas se desactivan para garantizar la compatibilidad con el sistema propio de seguimiento de eventos de RimTalk - Enhanced Prompt.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Filtrar eventos por contexto de conversación</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Solo añadir eventos de misión que involucren a personajes en la conversación actual (personajes cercanos, hablante, destinatario). Las amenazas, condiciones del mapa y eventos de sitios del mundo siempre se envían a la IA. Ahorra tokens y (quizás) mejora el enfoque del LLM.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>Cuando está activado, se omitirán las misiones que no involucren a ningún personaje en la conversación actual (personajes cercanos, hablante, destinatario). Esto reduce el uso de tokens y (quizás) ayuda al LLM a centrarse en eventos relevantes. Sin embargo, cuando está activado, los personajes nunca hablarán sobre tales misiones si los personajes relacionados no están cerca.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

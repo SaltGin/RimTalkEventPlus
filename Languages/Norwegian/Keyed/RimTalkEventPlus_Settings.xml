@@ -53,4 +53,7 @@ Når det er deaktivert, sender Event+ alltid den opprinnelige, fullstendige hend
   <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt oppdaget</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>"Auto Event Capture" fra RimTalk - Enhanced Prompt er aktivert. Overlappende funksjoner deaktiveres for å sikre kompatibilitet med RimTalk - Enhanced Prompt sitt eget hendelsessporingssystem.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Filtrer hendelser etter samtalekontekst</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Legg bare til oppdragshendelser som involverer personer i den gjeldende samtalen (nærliggende personer, taleren, mottakeren). Trusler, kartforhold og verdens-sted-hendelser sendes alltid til AI-en. Sparer tokens og forbedrer (muligens) LLM-fokus.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>Når aktivert, hoppes oppdrag over som ikke involverer personer i den gjeldende samtalen (nærliggende personer, taleren, mottakeren). Dette reduserer token-bruken og hjelper (muligens) LLM-en med å fokusere på relevante hendelser. Men når aktivert, vil personer aldri snakke om slike oppdrag hvis de relaterte personene ikke er i nærheten.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

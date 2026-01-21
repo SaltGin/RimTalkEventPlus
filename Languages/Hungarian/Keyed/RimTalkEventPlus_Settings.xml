@@ -53,4 +53,7 @@ Ha a beállítás ki van kapcsolva, az Event+ mindig az esemény teljes, eredeti
   <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt észlelve</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>A RimTalk - Enhanced Prompt "Auto Event Capture" funkciója engedélyezve van. Az átfedő funkciók letiltásra kerülnek, hogy kompatibilis legyen a RimTalk - Enhanced Prompt saját eseménykövető rendszerével.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Események szűrése beszélgetés kontextusa alapján</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Csak olyan küldetés-eseményeket csatol, amelyek az aktuális beszélgetésben szereplő személyeket érintik (közeli személyek, beszélő, címzett). A fenyegetések, térképfeltételek és világhelyszín-események mindig elküldésre kerülnek az AI-nak. Tokent takarít meg, és (talán) javítja a LLM fókuszát.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>Ha engedélyezve van, a küldetéseket átugorja, amelyek nem érintenek személyeket az aktuális beszélgetésben (közeli személyek, beszélő, címzett). Ez csökkenti a tokenhasználatot, és (talán) segít a LLM-nek a releváns eseményekre koncentrálni. Ha azonban engedélyezve van, a személyek soha nem beszélnek az ilyen küldetésekről, ha az érintett személyek nincsenek a közelben.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

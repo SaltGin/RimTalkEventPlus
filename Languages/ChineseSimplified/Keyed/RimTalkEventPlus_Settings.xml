@@ -53,4 +53,7 @@
   <RimTalkEventPlus_EnhancedPromptDetected_Title>检测到 RimTalk - Enhanced Prompt</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompt 的“自动事件捕获”已启用。为确保与 RimTalk - Enhanced Prompt 自身的事件追踪系统兼容，重叠功能已被禁用。</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>根据对话上下文过滤事件</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>仅附加涉及当前对话中角色（附近的角色、说话者、接收者）的任务事件。威胁事件、地图状态以及世界地点事件则始终会发送给 AI。可节省 token 用量，并（可能）提升 LLM 的专注度。</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>启用后，不涉及当前对话中任何角色（附近的角色、说话者、接收者）的任务将不会发送给 AI。这可以减少 token 用量，并（可能）帮助 LLM 专注于相关事件。注意：启用后，如果相关角色不在附近，角色们将永远不会谈论这些任务。</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

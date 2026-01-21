@@ -53,4 +53,7 @@
   <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt を検出しました</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompt の「Auto Event Capture」が有効になっています。RimTalk - Enhanced Prompt 独自のイベント追跡システムとの互換性を確保するため、重複する機能を無効化しました。</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>会話のコンテキストでイベントをフィルター</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>現在の会話に関わるポーン（近くのポーン、話し手、受け手）を含むクエストイベントのみを追加します。脅威、マップコンディション、ワールドサイトイベントは常にAIに送信されます。トークンを節約し、（おそらく）LLMの集中力を向上させます。</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>有効にすると、現在の会話のどのポーン（近くのポーン、話し手、受け手）も関わらないクエストはスキップされます。これによりトークン使用量が減り、（おそらく）LLMが関連するイベントに集中しやすくなります。ただし、有効にすると、関連するポーンが近くにいない場合、ポーンはそのようなクエストについて話すことはありません。</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

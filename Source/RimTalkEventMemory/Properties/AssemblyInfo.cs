@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SaltGin")]
 [assembly: AssemblyProduct("RimTalkEventPlus")]
-[assembly: AssemblyCopyright("Copyright © SaltGin 2025")]
+[assembly: AssemblyCopyright("Copyright © SaltGin 2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

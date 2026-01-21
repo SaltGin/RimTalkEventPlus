@@ -53,4 +53,7 @@ Kun asetus on pois käytöstä, Event+ lähettää aina tapahtuman alkuperäisen
   <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt havaittu</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Promptin "Auto Event Capture" on käytössä. Päällekkäiset toiminnot poistetaan käytöstä, jotta yhteensopivuus RimTalk - Enhanced Promptin oman tapahtumien seurantajärjestelmän kanssa säilyy.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Suodata tapahtumat keskustelun kontekstin mukaan</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Lisää vain tehtävätapahtumat, jotka koskevat nykyisessä keskustelussa olevia hahmoja (lähellä olevat hahmot, puhuja, vastaanottaja). Uhat, karttaolosuhteet ja maailmanpaikkojen tapahtumat lähetetään aina tekoälylle. Säästää tokeneita ja (mahdollisesti) parantaa LLM:n keskittymistä.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>Kun tämä on käytössä, tehtävät, jotka eivät koske ketään nykyisessä keskustelussa olevaa hahmoa (lähellä olevat hahmot, puhuja, vastaanottaja), ohitetaan. Tämä vähentää tokenien käyttöä ja (mahdollisesti) auttaa LLM:ää keskittymään olennaisiin tapahtumiin. Kuitenkin, kun tämä on käytössä, hahmot eivät koskaan puhu tällaisista tehtävistä, jos asiaankuuluvat hahmot eivät ole lähellä.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

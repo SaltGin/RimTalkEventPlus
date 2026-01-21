@@ -53,4 +53,7 @@
   <RimTalkEventPlus_EnhancedPromptDetected_Title>Виявлено RimTalk - Enhanced Prompt</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>Функція «Auto Event Capture» з RimTalk - Enhanced Prompt увімкнена. Щоб забезпечити сумісність із власною системою відстеження подій RimTalk - Enhanced Prompt, перекривні функції вимкнено.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Фільтрувати події за контекстом розмови</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Додавати лише події квестів, пов'язаних із персонажами в поточній розмові (найближчі персонажі, мовець, отримувач). Загрози, умови карти та події світових локацій завжди надсилаються ШІ. Економить токени та (можливо) покращує фокус LLM.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>Коли увімкнено, квести, які не стосуються жодного персонажа в поточній розмові (найближчі персонажі, мовець, отримувач), будуть пропущені. Це зменшує використання токенів та (можливо) допомагає LLM зосередитися на відповідних подіях. Однак, коли увімкнено, персонажі ніколи не говоритимуть про такі квести, якщо пов'язані персонажі не знаходяться поблизу.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

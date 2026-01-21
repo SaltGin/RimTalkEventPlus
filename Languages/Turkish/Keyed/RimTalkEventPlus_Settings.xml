@@ -53,4 +53,7 @@ Devre dışı bırakıldığında Event+, her zaman olayın tam orijinal metnini
   <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt algılandı</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompt'un "Auto Event Capture" özelliği etkin. RimTalk - Enhanced Prompt'un kendi olay takip sistemiyle uyumluluk için çakışan özellikler devre dışı bırakıldı.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Olayları konuşma bağlamına göre filtrele</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Yalnızca mevcut konuşmadaki kişileri (yakındaki kişiler, konuşmacı, alıcı) içeren görev olaylarını ekle. Tehditler, harita koşulları ve dünya konumu olayları her zaman AI'ya gönderilir. Token tasarrufu sağlar ve (belki) LLM odağını iyileştirir.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>Etkinleştirildiğinde, mevcut konuşmadaki hiçbir kişiyi (yakındaki kişiler, konuşmacı, alıcı) içermeyen görevler atlanır. Bu, token kullanımını azaltır ve (belki) LLM'nin ilgili olaylara odaklanmasına yardımcı olur. Ancak etkinleştirildiğinde, ilgili kişiler yakında değilse kişiler bu tür görevler hakkında asla konuşmaz.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

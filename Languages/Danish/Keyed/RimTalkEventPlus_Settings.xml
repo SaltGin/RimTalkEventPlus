@@ -53,4 +53,7 @@ Når dette er deaktiveret, sender Event+ altid den fulde originale tekst for hæ
   <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt registreret</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompt's "Auto Event Capture" er aktiveret. Overlappende funktioner deaktiveres for at sikre kompatibilitet med RimTalk - Enhanced Prompt's eget begivenhedssporingssystem.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>Filtrer begivenheder efter samtalekontekst</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>Tilføj kun quest-begivenheder, der involverer personer i den aktuelle samtale (nærliggende personer, taleren, modtageren). Trusler, kortforhold og verdenssted-begivenheder sendes altid til AI'en. Sparer tokens og forbedrer (muligvis) LLM-fokus.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>Når aktiveret, springes quests over, der ikke involverer personer i den aktuelle samtale (nærliggende personer, taleren, modtageren). Dette reducerer tokenforbruget og hjælper (muligvis) LLM'en med at fokusere på relevante begivenheder. Men når aktiveret, vil personer aldrig tale om sådanne quests, hvis de relaterede personer ikke er i nærheden.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>

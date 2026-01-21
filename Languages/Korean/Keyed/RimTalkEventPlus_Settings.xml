@@ -53,4 +53,7 @@
   <RimTalkEventPlus_EnhancedPromptDetected_Title>RimTalk - Enhanced Prompt 감지됨</RimTalkEventPlus_EnhancedPromptDetected_Title>
   <RimTalkEventPlus_EnhancedPromptDetected_Desc>RimTalk - Enhanced Prompt의 "Auto Event Capture"가 활성화되었습니다. RimTalk - Enhanced Prompt의 자체 이벤트 추적 시스템과의 호환성을 위해 중복 기능이 비활성화됩니다.</RimTalkEventPlus_EnhancedPromptDetected_Desc>
 
+  <RimTalkEventPlus_EnableContextFiltering>대화 맥락에 따라 이벤트 필터링</RimTalkEventPlus_EnableContextFiltering>
+  <RimTalkEventPlus_EnableContextFilteringTooltip>현재 대화에 관련된 폰(근처 폰, 화자, 수신자)이 포함된 퀘스트 이벤트만 추가합니다. 위협, 맵 상태 및 월드 사이트 이벤트는 항상 AI에게 전송됩니다. 토큰을 절약하고 (아마도) LLM 집중력을 향상시킵니다.</RimTalkEventPlus_EnableContextFilteringTooltip>
+  <RimTalkEventPlus_ContextFiltering_Description>활성화하면 현재 대화에 관련된 폰(근처 폰, 화자, 수신자)이 없는 퀘스트는 건너뜁니다. 이렇게 하면 토큰 사용량이 줄어들고 (아마도) LLM이 관련 이벤트에 집중하는 데 도움이 됩니다. 그러나 활성화하면 관련 폰이 근처에 없는 경우 폰들은 그러한 퀘스트에 대해 절대 이야기하지 않습니다.</RimTalkEventPlus_ContextFiltering_Description>
 </LanguageData>
