@@ -10,8 +10,10 @@ namespace RimTalkEventPlus
     // Used to filter events and save tokens when appending to LLM prompts.
     public static class ContextPawnMatcher
     {
+        private const float NearbyAnimalRange = 20f;
+
         // Collect all context-relevant pawn IDs from the conversation.
-        // Includes:  pawns parameter (speaker/recipient) + nearby pawns from RimTalk's selector.
+        // Includes:  pawns parameter (speaker/recipient) + nearby pawns from RimTalk's selector + nearby animals.
         public static HashSet<int> CollectContextPawnIds(List<Pawn> pawns, Pawn initiator, Pawn recipient)
         {
             var pawnIds = new HashSet<int>();
@@ -44,7 +46,54 @@ namespace RimTalkEventPlus
                 // PawnSelector may not be available, ignore
             }
 
+            // Add nearby animals for quest context matching
+            // RimTalk's PawnSelector only returns talk-eligible (humanlike) pawns,
+            // but quests may involve animals stored in their pawn/pawns fields.
+            try
+            {
+                var nearbyAnimals = GetNearbyAnimals(initiator, recipient, NearbyAnimalRange);
+                if (nearbyAnimals != null)
+                {
+                    foreach (var animal in nearbyAnimals)
+                    {
+                        if (animal != null)
+                            pawnIds.Add(animal.thingIDNumber);
+                    }
+                }
+            }
+            catch { }
+
             return pawnIds;
+        }
+
+        // Get nearby animals within range of the conversation participants.
+        // This supplements RimTalk's PawnSelector which excludes non-humanlike pawns.
+        private static List<Pawn> GetNearbyAnimals(Pawn pawn1, Pawn pawn2 = null, float range = 20f)
+        {
+            var result = new List<Pawn>();
+
+            if (pawn1?.Map == null)
+                return result;
+
+            var map = pawn1.Map;
+
+            foreach (var pawn in map.mapPawns.AllPawnsSpawned)
+            {
+                if (pawn == null || pawn == pawn1 || pawn == pawn2)
+                    continue;
+
+                if (!pawn.RaceProps.Animal)
+                    continue;
+
+                // Check if animal is nearby pawn1 or pawn2
+                bool nearPawn1 = pawn.Position.InHorDistOf(pawn1.Position, range);
+                bool nearPawn2 = pawn2 != null && pawn.Position.InHorDistOf(pawn2.Position, range);
+
+                if (nearPawn1 || nearPawn2)
+                    result.Add(pawn);
+            }
+
+            return result;
         }
 
         // Filter events to only those relevant to the conversation context.
