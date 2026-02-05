@@ -56,4 +56,9 @@ When disabled, Event+ always sends the full original event text.</RimTalkEventPl
   <RimTalkEventPlus_EnableContextFiltering>Filter events by conversation context</RimTalkEventPlus_EnableContextFiltering>
   <RimTalkEventPlus_EnableContextFilteringTooltip>Only append quest events that involve pawns in the current conversation (nearby pawns, speaker, recipient). Threats, map conditions, and site parts are always included.  Saves tokens and (might) improves LLM focus.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>When enabled, quests that don't involve any pawns in the current conversation (nearby pawns, speaker, recipient) will be skipped. This reduces token usage and (might) help the LLM focus on relevant events. However, when enabled, pawns will never talk about such quests if the related pawns are not nearby.</RimTalkEventPlus_ContextFiltering_Description>
+
+  <RimTalkEventPlus_AdvancedModeHeader>Advanced Mode Settings</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AppendToContext>Append events to {{context}} automatically</RimTalkEventPlus_AppendToContext>
+  <RimTalkEventPlus_AppendToContext_Tooltip>When enabled, ongoing events are automatically appended to the {{context}} variable in RimTalk prompts.</RimTalkEventPlus_AppendToContext_Tooltip>
+  <RimTalkEventPlus_AppendToContext_Desc>Disable this if you prefer to use {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}}, or {{eventplus_location}} individually in your Advanced Mode templates.</RimTalkEventPlus_AppendToContext_Desc>
 </LanguageData>

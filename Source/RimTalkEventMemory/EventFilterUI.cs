@@ -87,6 +87,27 @@ namespace RimTalkEventPlus
             }
 
             listing.Gap(SECTION_SPACING);
+
+            RenderAdvancedModeSection(listing, settings);
+        }
+
+        private static void RenderAdvancedModeSection(Listing_Standard listing, EventFilterSettings settings)
+        {
+            listing.Label("RimTalkEventPlus_AdvancedModeHeader".Translate());
+            listing.GapLine();
+
+            listing.CheckboxLabeled(
+                "RimTalkEventPlus_AppendToContext".Translate(),
+                ref settings.AppendToContext,
+                "RimTalkEventPlus_AppendToContext_Tooltip".Translate()
+            );
+
+            using (new TextBlock(GameFont.Tiny))
+            {
+                listing.Label("RimTalkEventPlus_AppendToContext_Desc".Translate());
+            }
+
+            listing.Gap(SECTION_SPACING);
         }
 
         // Helper to render category filters section

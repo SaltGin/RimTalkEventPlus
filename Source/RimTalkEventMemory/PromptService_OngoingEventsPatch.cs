@@ -56,6 +56,9 @@ namespace RimTalkEventPlus
                 if (talkRequest == null)
                     return;
 
+                if (RimTalkEventPlus.Settings != null && !RimTalkEventPlus.Settings.AppendToContext)
+                    return;
+
                 Pawn initiator = talkRequest.Initiator;
                 if (initiator == null || initiator.Map == null)
                     return;

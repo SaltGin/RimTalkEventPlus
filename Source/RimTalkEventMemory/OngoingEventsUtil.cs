@@ -102,7 +102,7 @@ namespace RimTalkEventPlus
 
         // For non-home maps attached to a Site, add a compact description of the
         // current location based on the SitePartDefs (e.g. bandit camp, ancient ruins).
-        private static void TryAddSitePartEvents(Map map, List<OngoingEventSnapshot> result, int maxEvents)
+        public static void TryAddSitePartEvents(Map map, List<OngoingEventSnapshot> result, int maxEvents)
         {
             if (map == null || result == null)
                 return;
@@ -160,7 +160,7 @@ namespace RimTalkEventPlus
 
 
         // Quest side: use QuestManager, no letters.
-        private static void TryAddOngoingQuestsForMap(Map map, List<OngoingEventSnapshot> result, int maxEvents)
+        public static void TryAddOngoingQuestsForMap(Map map, List<OngoingEventSnapshot> result, int maxEvents)
         {
             if (Find.QuestManager == null)
                 return;
@@ -230,7 +230,7 @@ namespace RimTalkEventPlus
 
         // Game conditions side: all active GameConditions on this map.
         // These are the same things shown in the top-right UI bar above the speed buttons.
-        private static void TryAddActiveGameConditionsForMap(
+        public static void TryAddActiveGameConditionsForMap(
             Map map,
             List<OngoingEventSnapshot> result,
             int maxToAdd)
@@ -264,9 +264,9 @@ namespace RimTalkEventPlus
                 if (IsEventFiltered(cond.def.defName, null, EventCategory.MapCondition, RimTalkEventPlus.Settings))
                     continue;
 
-                // Use the def's LabelCap/description so we don't depend on newer GameCondition APIs.
-                string label = cond.def.LabelCap;
-                string body = cond.def.description ?? string.Empty;
+                // Use the instance's Label/Description
+                string label = cond.Label;
+                string body = cond.Description ?? string.Empty;
 
                 result.Add(new OngoingEventSnapshot
                 {
@@ -299,7 +299,7 @@ namespace RimTalkEventPlus
         // Threat side: at most one most-recent red threat letter,
         // only if isInDanger == true, and only if it's not too old
         // (currently within 3 in-game hours).
-        private static void TryAddMostRecentThreatLetter(
+        public static void TryAddMostRecentThreatLetter(
             List<OngoingEventSnapshot> result,
             int maxEvents,
             int maxThreatScanBack)

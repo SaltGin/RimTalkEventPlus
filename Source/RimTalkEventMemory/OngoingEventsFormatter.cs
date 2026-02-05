@@ -7,13 +7,16 @@ namespace RimTalkEventPlus
     {
         public static string FormatOngoingEventsBlock(
             System.Collections.Generic.List<OngoingEventSnapshot> events,
-            int maxChars = 2000)
+            int maxChars = 2000, bool includeWrapper = true)
         {
             if (events == null || events.Count == 0)
                 return string.Empty;
 
             var sb = new StringBuilder();
-            sb.AppendLine("[Ongoing events]");
+            if (includeWrapper)
+            {
+                sb.AppendLine("[Ongoing events]");
+            }
 
             int index = 1;
             foreach (var e in events)
@@ -57,8 +60,11 @@ namespace RimTalkEventPlus
                 index++;
             }
 
-            sb.AppendLine();
-            sb.AppendLine("[Event list end]");
+            if (includeWrapper)
+            {
+                sb.AppendLine();
+                sb.AppendLine("[Event list end]");
+            }
 
             return sb.ToString();
         }

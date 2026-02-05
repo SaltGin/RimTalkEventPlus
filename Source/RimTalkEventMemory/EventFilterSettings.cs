@@ -63,6 +63,9 @@ namespace RimTalkEventPlus
         // Threats, map conditions, and site parts are always included.
         public bool EnableContextFiltering = false;
 
+        // Advanced Mode Settings
+        public bool AppendToContext = true;
+
         public EventFilterSettings()
         {
             if (disabledEventDefNames == null)
@@ -128,6 +131,12 @@ namespace RimTalkEventPlus
                 ref EnableContextFiltering,
                 "EnableContextFiltering",
                 false
+            );
+
+            Scribe_Values.Look(
+                ref AppendToContext,
+                "AppendToContext",
+                true
             );
 
             // Ensure collections are initialized after loading
