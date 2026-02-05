@@ -56,4 +56,9 @@ Când opțiunea este dezactivată, Event+ trimite întotdeauna textul complet or
   <RimTalkEventPlus_EnableContextFiltering>Filtrează evenimentele după contextul conversației</RimTalkEventPlus_EnableContextFiltering>
   <RimTalkEventPlus_EnableContextFilteringTooltip>Adaugă doar evenimente de misiuni care implică personaje din conversația curentă (personaje apropiate, vorbitor, destinatar). Amenințările, condițiile hărții și evenimentele locațiilor din lume sunt întotdeauna trimise către AI. Economisește tokeni și (poate) îmbunătățește focalizarea LLM.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>Când este activat, misiunile care nu implică niciun personaj din conversația curentă (personaje apropiate, vorbitor, destinatar) vor fi omise. Acest lucru reduce utilizarea tokenilor și (poate) ajută LLM-ul să se concentreze pe evenimente relevante. Cu toate acestea, când este activat, personajele nu vor vorbi niciodată despre astfel de misiuni dacă personajele implicate nu sunt în apropiere.</RimTalkEventPlus_ContextFiltering_Description>
+
+  <RimTalkEventPlus_AdvancedModeHeader>Setări mod avansat</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AppendToContext>Adaugă evenimente la {{context}} automat</RimTalkEventPlus_AppendToContext>
+  <RimTalkEventPlus_AppendToContext_Tooltip>Când este activat, evenimentele în curs de desfășurare sunt adăugate automat la variabila {{context}} în prompturile RimTalk.</RimTalkEventPlus_AppendToContext_Tooltip>
+  <RimTalkEventPlus_AppendToContext_Desc>Dezactivează această opțiune dacă preferi să folosești {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}} sau {{eventplus_location}} individual în șabloanele tale de mod avansat.</RimTalkEventPlus_AppendToContext_Desc>
 </LanguageData>

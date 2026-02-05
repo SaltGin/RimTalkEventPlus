@@ -56,4 +56,9 @@
   <RimTalkEventPlus_EnableContextFiltering>Фильтровать события по контексту разговора</RimTalkEventPlus_EnableContextFiltering>
   <RimTalkEventPlus_EnableContextFilteringTooltip>Добавлять только события квестов, связанных с персонажами в текущем разговоре (ближайшие персонажи, говорящий, получатель). Угрозы, условия карты и события мировых локаций всегда отправляются ИИ. Экономит токены и (возможно) улучшает фокус LLM.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>При включении квесты, не связанные ни с одним персонажем в текущем разговоре (ближайшие персонажи, говорящий, получатель), будут пропущены. Это снижает расход токенов и (возможно) помогает LLM сосредоточиться на релевантных событиях. Однако при включении персонажи никогда не будут говорить о таких квестах, если связанные персонажи не находятся рядом.</RimTalkEventPlus_ContextFiltering_Description>
+
+  <RimTalkEventPlus_AdvancedModeHeader>Настройки расширенного режима</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AppendToContext>Автоматически добавлять события в {{context}}</RimTalkEventPlus_AppendToContext>
+  <RimTalkEventPlus_AppendToContext_Tooltip>При включении текущие события автоматически добавляются в переменную {{context}} в промптах RimTalk.</RimTalkEventPlus_AppendToContext_Tooltip>
+  <RimTalkEventPlus_AppendToContext_Desc>Отключите эту опцию, если предпочитаете использовать {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}} или {{eventplus_location}} по отдельности в шаблонах расширенного режима.</RimTalkEventPlus_AppendToContext_Desc>
 </LanguageData>

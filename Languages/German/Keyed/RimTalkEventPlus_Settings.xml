@@ -56,4 +56,9 @@ Wenn die Option deaktiviert ist, sendet Event+ immer den vollständigen ursprün
   <RimTalkEventPlus_EnableContextFiltering>Ereignisse nach Gesprächskontext filtern</RimTalkEventPlus_EnableContextFiltering>
   <RimTalkEventPlus_EnableContextFilteringTooltip>Nur Quest-Ereignisse hinzufügen, die Personen im aktuellen Gespräch betreffen (Personen in der Nähe, Sprecher, Empfänger). Bedrohungen, Kartenbedingungen und Weltort-Ereignisse werden immer an die KI gesendet. Spart Tokens und verbessert (möglicherweise) den Fokus des LLM.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>Wenn aktiviert, werden Quests übersprungen, die keine Personen im aktuellen Gespräch betreffen (Personen in der Nähe, Sprecher, Empfänger). Dies reduziert den Token-Verbrauch und hilft (möglicherweise) dem LLM, sich auf relevante Ereignisse zu konzentrieren. Wenn diese Option jedoch aktiviert ist, werden Personen niemals über solche Quests sprechen, wenn die betreffenden Personen nicht in der Nähe sind.</RimTalkEventPlus_ContextFiltering_Description>
+
+  <RimTalkEventPlus_AdvancedModeHeader>Erweiterte Modus-Einstellungen</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AppendToContext>Ereignisse automatisch zu {{context}} hinzufügen</RimTalkEventPlus_AppendToContext>
+  <RimTalkEventPlus_AppendToContext_Tooltip>Wenn aktiviert, werden laufende Ereignisse automatisch an die {{context}}-Variable in RimTalk-Prompts angehängt.</RimTalkEventPlus_AppendToContext_Tooltip>
+  <RimTalkEventPlus_AppendToContext_Desc>Deaktivieren Sie dies, wenn Sie {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}} oder {{eventplus_location}} einzeln in Ihren Vorlagen für den erweiterten Modus verwenden möchten.</RimTalkEventPlus_AppendToContext_Desc>
 </LanguageData>

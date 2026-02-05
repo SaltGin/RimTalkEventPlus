@@ -56,4 +56,9 @@ Als de optie is uitgeschakeld, stuurt Event+ altijd de volledige oorspronkelijke
   <RimTalkEventPlus_EnableContextFiltering>Gebeurtenissen filteren op gesprekscontext</RimTalkEventPlus_EnableContextFiltering>
   <RimTalkEventPlus_EnableContextFilteringTooltip>Voeg alleen questgebeurtenissen toe die betrekking hebben op personen in het huidige gesprek (nabije personen, spreker, ontvanger). Bedreigingen, kaartcondities en wereldlocatie-gebeurtenissen worden altijd naar de AI gestuurd. Bespaart tokens en verbetert (mogelijk) de focus van de LLM.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>Wanneer ingeschakeld worden quests overgeslagen die geen betrekking hebben op personen in het huidige gesprek (nabije personen, spreker, ontvanger). Dit vermindert het tokengebruik en helpt (mogelijk) de LLM om te focussen op relevante gebeurtenissen. Echter, wanneer ingeschakeld zullen personen nooit over dergelijke quests praten als de gerelateerde personen niet in de buurt zijn.</RimTalkEventPlus_ContextFiltering_Description>
+
+  <RimTalkEventPlus_AdvancedModeHeader>Geavanceerde modus-instellingen</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AppendToContext>Gebeurtenissen automatisch toevoegen aan {{context}}</RimTalkEventPlus_AppendToContext>
+  <RimTalkEventPlus_AppendToContext_Tooltip>Wanneer ingeschakeld, worden lopende gebeurtenissen automatisch toegevoegd aan de {{context}}-variabele in RimTalk-prompts.</RimTalkEventPlus_AppendToContext_Tooltip>
+  <RimTalkEventPlus_AppendToContext_Desc>Schakel dit uit als je liever {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}} of {{eventplus_location}} individueel wilt gebruiken in je geavanceerde modus-sjablonen.</RimTalkEventPlus_AppendToContext_Desc>
 </LanguageData>

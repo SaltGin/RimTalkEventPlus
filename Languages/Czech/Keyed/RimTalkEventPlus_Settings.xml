@@ -56,4 +56,9 @@ Když je volba vypnutá, Event+ vždy odešle původní úplný text události.<
   <RimTalkEventPlus_EnableContextFiltering>Filtrovat události podle kontextu konverzace</RimTalkEventPlus_EnableContextFiltering>
   <RimTalkEventPlus_EnableContextFilteringTooltip>Připojit pouze události úkolů, které zahrnují postavy v aktuální konverzaci (okolní postavy, mluvčí, příjemce). Hrozby, podmínky mapy a události světových lokalit jsou vždy odesílány do AI. Šetří tokeny a (možná) zlepšuje zaměření LLM.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>Pokud je tato možnost povolena, úkoly, které nezahrnují žádné postavy v aktuální konverzaci (okolní postavy, mluvčí, příjemce), budou přeskočeny. Tím se sníží spotřeba tokenů a (možná) pomůže LLM zaměřit se na relevantní události. Avšak pokud je tato možnost povolena, postavy nikdy nebudou mluvit o takových úkolech, pokud související postavy nejsou poblíž.</RimTalkEventPlus_ContextFiltering_Description>
+
+  <RimTalkEventPlus_AdvancedModeHeader>Nastavení pokročilého režimu</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AppendToContext>Automaticky přidávat události do {{context}}</RimTalkEventPlus_AppendToContext>
+  <RimTalkEventPlus_AppendToContext_Tooltip>Pokud je povoleno, probíhající události se automaticky přidávají do proměnné {{context}} v RimTalk výzvách.</RimTalkEventPlus_AppendToContext_Tooltip>
+  <RimTalkEventPlus_AppendToContext_Desc>Zakažte tuto možnost, pokud dáváte přednost použití {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}} nebo {{eventplus_location}} jednotlivě ve svých šablonách pokročilého režimu.</RimTalkEventPlus_AppendToContext_Desc>
 </LanguageData>

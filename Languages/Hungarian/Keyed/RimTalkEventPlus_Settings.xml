@@ -56,4 +56,9 @@ Ha a beállítás ki van kapcsolva, az Event+ mindig az esemény teljes, eredeti
   <RimTalkEventPlus_EnableContextFiltering>Események szűrése beszélgetés kontextusa alapján</RimTalkEventPlus_EnableContextFiltering>
   <RimTalkEventPlus_EnableContextFilteringTooltip>Csak olyan küldetés-eseményeket csatol, amelyek az aktuális beszélgetésben szereplő személyeket érintik (közeli személyek, beszélő, címzett). A fenyegetések, térképfeltételek és világhelyszín-események mindig elküldésre kerülnek az AI-nak. Tokent takarít meg, és (talán) javítja a LLM fókuszát.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>Ha engedélyezve van, a küldetéseket átugorja, amelyek nem érintenek személyeket az aktuális beszélgetésben (közeli személyek, beszélő, címzett). Ez csökkenti a tokenhasználatot, és (talán) segít a LLM-nek a releváns eseményekre koncentrálni. Ha azonban engedélyezve van, a személyek soha nem beszélnek az ilyen küldetésekről, ha az érintett személyek nincsenek a közelben.</RimTalkEventPlus_ContextFiltering_Description>
+
+  <RimTalkEventPlus_AdvancedModeHeader>Speciális mód beállításai</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AppendToContext>Események automatikus hozzáadása a {{context}}-hez</RimTalkEventPlus_AppendToContext>
+  <RimTalkEventPlus_AppendToContext_Tooltip>Ha engedélyezve van, a folyamatban lévő események automatikusan hozzáadódnak a {{context}} változóhoz a RimTalk promptokban.</RimTalkEventPlus_AppendToContext_Tooltip>
+  <RimTalkEventPlus_AppendToContext_Desc>Kapcsolja ki ezt, ha inkább a {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}} vagy {{eventplus_location}} egyenként szeretné használni a speciális mód sablonjában.</RimTalkEventPlus_AppendToContext_Desc>
 </LanguageData>

@@ -56,4 +56,9 @@ Devre dışı bırakıldığında Event+, her zaman olayın tam orijinal metnini
   <RimTalkEventPlus_EnableContextFiltering>Olayları konuşma bağlamına göre filtrele</RimTalkEventPlus_EnableContextFiltering>
   <RimTalkEventPlus_EnableContextFilteringTooltip>Yalnızca mevcut konuşmadaki kişileri (yakındaki kişiler, konuşmacı, alıcı) içeren görev olaylarını ekle. Tehditler, harita koşulları ve dünya konumu olayları her zaman AI'ya gönderilir. Token tasarrufu sağlar ve (belki) LLM odağını iyileştirir.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>Etkinleştirildiğinde, mevcut konuşmadaki hiçbir kişiyi (yakındaki kişiler, konuşmacı, alıcı) içermeyen görevler atlanır. Bu, token kullanımını azaltır ve (belki) LLM'nin ilgili olaylara odaklanmasına yardımcı olur. Ancak etkinleştirildiğinde, ilgili kişiler yakında değilse kişiler bu tür görevler hakkında asla konuşmaz.</RimTalkEventPlus_ContextFiltering_Description>
+
+  <RimTalkEventPlus_AdvancedModeHeader>Gelişmiş mod ayarları</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AppendToContext>Olayları {{context}}'e otomatik olarak ekle</RimTalkEventPlus_AppendToContext>
+  <RimTalkEventPlus_AppendToContext_Tooltip>Etkinleştirildiğinde, devam eden olaylar RimTalk istemlerindeki {{context}} değişkenine otomatik olarak eklenir.</RimTalkEventPlus_AppendToContext_Tooltip>
+  <RimTalkEventPlus_AppendToContext_Desc>Gelişmiş mod şablonlarınızda {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}} veya {{eventplus_location}}'ı ayrı ayrı kullanmayı tercih ediyorsanız bunu devre dışı bırakın.</RimTalkEventPlus_AppendToContext_Desc>
 </LanguageData>
