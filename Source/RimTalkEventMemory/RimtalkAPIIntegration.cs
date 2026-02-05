@@ -16,6 +16,10 @@ namespace RimTalkEventPlus
         private static readonly PropertyInfo _contextMapProperty;
         private static readonly bool _apiAvailable;
 
+        private static bool _modeResolved;
+        private static MethodInfo _getSettingsMethod;
+        private static FieldInfo _useAdvancedModeField;
+
         static RimTalkAPIIntegration()
         {
             try
@@ -56,6 +60,42 @@ namespace RimTalkEventPlus
             catch (Exception ex)
             {
                 Log.Warning($"[RimTalk Event+] Failed to integrate with RimTalk API: {ex.Message}");
+            }
+        }
+
+        public static bool IsAdvancedModeEnabled
+        {
+            get
+            {
+                if (!_modeResolved)
+                {
+                    _modeResolved = true;
+                    try
+                    {
+                        var settingsType = AccessTools.TypeByName("RimTalk.Settings");
+                        var rimTalkSettingsType = AccessTools.TypeByName("RimTalk.RimTalkSettings");
+
+                        if (settingsType != null && rimTalkSettingsType != null)
+                        {
+                            _getSettingsMethod = AccessTools.Method(settingsType, "Get");
+                            _useAdvancedModeField = AccessTools.Field(rimTalkSettingsType, "UseAdvancedPromptMode");
+                        }
+                    }
+                    catch { }
+                }
+
+                if (_getSettingsMethod == null || _useAdvancedModeField == null)
+                    return false;
+
+                try
+                {
+                    var settings = _getSettingsMethod.Invoke(null, null);
+                    return settings != null && (bool)_useAdvancedModeField.GetValue(settings);
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
 

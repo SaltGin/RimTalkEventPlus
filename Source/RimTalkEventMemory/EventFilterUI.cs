@@ -96,11 +96,29 @@ namespace RimTalkEventPlus
             listing.Label("RimTalkEventPlus_AdvancedModeHeader".Translate());
             listing.GapLine();
 
-            listing.CheckboxLabeled(
-                "RimTalkEventPlus_AppendToContext".Translate(),
-                ref settings.AppendToContext,
-                "RimTalkEventPlus_AppendToContext_Tooltip".Translate()
-            );
+            bool isAdvancedMode = RimTalkAPIIntegration.IsAdvancedModeEnabled;
+
+            if (isAdvancedMode)
+            {
+                listing.CheckboxLabeled(
+                    "RimTalkEventPlus_AppendToContext".Translate(),
+                    ref settings.AppendToContext,
+                    "RimTalkEventPlus_AppendToContext_Tooltip".Translate()
+                );
+            }
+            else
+            {
+                settings.AppendToContext = true;
+                bool locked = true;
+                using (new ColorBlock(new Color(0.5f, 0.5f, 0.5f)))
+                {
+                    listing.CheckboxLabeled(
+                        "RimTalkEventPlus_AppendToContext".Translate(),
+                        ref locked,
+                        "RimTalkEventPlus_AppendToContext_Tooltip".Translate()
+                    );
+                }
+            }
 
             using (new TextBlock(GameFont.Tiny))
             {
