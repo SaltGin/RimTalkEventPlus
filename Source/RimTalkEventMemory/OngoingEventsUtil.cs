@@ -200,7 +200,7 @@ namespace RimTalkEventPlus
                 if (!ageMarker.NullOrEmpty())
                 {
                     // e.g. "Pickles the Destitute [accepted ~1.3 days ago]"
-                    label = label + " [" + ageMarker + "]";
+                    label = label + " [" + ageMarker + "; quest is active and underway]";
                 }
 
                 // Add key pawn short names if available
