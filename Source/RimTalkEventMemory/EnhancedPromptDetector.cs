@@ -14,13 +14,15 @@ namespace RimTalkEventPlus
         // Cached reflection metadata only
         private static readonly FieldInfo _settingsField;
         private static readonly FieldInfo _enableAutoEventCaptureField;
+        private static readonly PropertyInfo _enableAutoEventCaptureProperty;
 
         public static bool IsAutoEventCaptureEnabled
         {
             get
             {
                 // Fast path: mod not loaded or reflection setup failed
-                if (!IsLoaded || _settingsField == null || _enableAutoEventCaptureField == null)
+                if (!IsLoaded || _settingsField == null
+                    || (_enableAutoEventCaptureField == null && _enableAutoEventCaptureProperty == null))
                     return false;
 
                 try
@@ -30,7 +32,10 @@ namespace RimTalkEventPlus
                     if (settingsInstance == null)
                         return false;
 
-                    // Read current value fresh
+                    // Read current value fresh (prefer property over field)
+                    if (_enableAutoEventCaptureProperty != null)
+                        return (bool)_enableAutoEventCaptureProperty.GetValue(settingsInstance);
+
                     return (bool)_enableAutoEventCaptureField.GetValue(settingsInstance);
                 }
                 catch
@@ -73,12 +78,20 @@ namespace RimTalkEventPlus
                     return;
                 }
 
-                _enableAutoEventCaptureField = AccessTools.Field(
+                _enableAutoEventCaptureProperty = AccessTools.Property(
                     settingsInstance.GetType(),
                     "EnableAutoEventCapture"
                 );
 
-                if (_enableAutoEventCaptureField != null)
+                if (_enableAutoEventCaptureProperty == null)
+                {
+                    _enableAutoEventCaptureField = AccessTools.Field(
+                        settingsInstance.GetType(),
+                        "EnableAutoEventCapture"
+                    );
+                }
+
+                if (_enableAutoEventCaptureProperty != null || _enableAutoEventCaptureField != null)
                 {
                     Log.Message("[RimTalk Event+] Successfully cached Enhanced Prompt settings accessor.");
                 }
