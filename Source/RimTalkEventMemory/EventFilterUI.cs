@@ -911,8 +911,14 @@ namespace RimTalkEventPlus
             if (string.IsNullOrEmpty(colonyId))
                 return false;
 
-            var selectedEvent = events.FirstOrDefault(e => e.instanceID == instanceID);
-            return selectedEvent != null && !settings.disabledEventDefNames.Contains(selectedEvent.rootID);
+            for (int i = 0; i < events.Count; i++)
+            {
+                var evt = events[i];
+                if (evt.instanceID == instanceID)
+                    return !settings.disabledEventDefNames.Contains(evt.rootID);
+            }
+
+            return false;
         }
 
         // Helper to check if instance can be unhidden
@@ -925,8 +931,14 @@ namespace RimTalkEventPlus
             if (string.IsNullOrEmpty(colonyId))
                 return false;
 
-            var selectedEvent = events.FirstOrDefault(e => e.instanceID == instanceID);
-            return selectedEvent != null && !settings.disabledEventDefNames.Contains(selectedEvent.rootID);
+            for (int i = 0; i < events.Count; i++)
+            {
+                var evt = events[i];
+                if (evt.instanceID == instanceID)
+                    return !settings.disabledEventDefNames.Contains(evt.rootID);
+            }
+
+            return false;
         }
 
         // Helper to draw arrow button with enable/disable state
@@ -1257,14 +1269,13 @@ namespace RimTalkEventPlus
         {
             if (evt.Kind == "Quest")
                 return EventCategory.Quest;
-            if (evt.Kind.StartsWith("GameCondition_"))
+            if (evt.Kind.StartsWith("GameCondition_", StringComparison.Ordinal))
                 return EventCategory.MapCondition;
-            if (evt.Kind.StartsWith("SitePart_"))
+            if (evt.Kind.StartsWith("SitePart_", StringComparison.Ordinal))
                 return EventCategory.SitePart;
             if (evt.IsThreat)
                 return EventCategory.Threat;
 
-            // Fallback
             return EventCategory.Quest;
         }
 
