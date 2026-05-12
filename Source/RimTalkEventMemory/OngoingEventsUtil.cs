@@ -165,7 +165,7 @@ namespace RimTalkEventPlus
             if (Find.QuestManager == null)
                 return;
 
-            var quests = Find.QuestManager.QuestsListForReading;
+            var quests = Find.QuestManager.ActiveQuestsListForReading;
             if (quests.NullOrEmpty())
                 return;
 

@@ -120,9 +120,35 @@ namespace RimTalkEventPlus
                 }
             }
 
-            using (new TextBlock(GameFont.Tiny))
+            if (isAdvancedMode)
             {
-                listing.Label("RimTalkEventPlus_AppendToContext_Desc".Translate());
+                using (new TextBlock(GameFont.Tiny))
+                {
+                    listing.Label("RimTalkEventPlus_AppendToContext_Desc".Translate());
+                }
+            }
+            else
+            {
+                using (new TextBlock(GameFont.Tiny))
+                using (new ColorBlock(new Color(0.5f, 0.5f, 0.5f)))
+                {
+                    listing.Label("RimTalkEventPlus_AppendToContext_Desc".Translate());
+                }
+            }
+
+            if (EnhancedPromptDetector.IsLoaded)
+            {
+                listing.Gap(8f);
+                listing.CheckboxLabeled(
+                    "RimTalkEventPlus_MandatoryLockToggle".Translate(),
+                    ref settings.allowEnhancedPromptOverlap,
+                    "RimTalkEventPlus_MandatoryLockToggle_Tooltip".Translate()
+                );
+
+                using (new TextBlock(GameFont.Tiny))
+                {
+                    listing.Label("RimTalkEventPlus_MandatoryLockToggle_Desc".Translate());
+                }
             }
 
             listing.Gap(SECTION_SPACING);
@@ -134,7 +160,7 @@ namespace RimTalkEventPlus
             listing.GapLine();
             listing.Gap(10f);
 
-            bool enhancedPromptConflict = EnhancedPromptDetector.IsAutoEventCaptureEnabled;
+            bool enhancedPromptConflict = settings.IsEnhancedPromptLockActive;
 
             if (enhancedPromptConflict)
             {

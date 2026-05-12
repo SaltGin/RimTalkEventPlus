@@ -53,10 +53,19 @@ namespace RimTalkEventPlus
         public bool showThreats = true;
         public bool showSiteParts = true;
 
-        // Effective values (consider Enhanced Prompt conflict)
-        public bool ShowQuestsEffective => showQuests && ! EnhancedPromptDetector.IsAutoEventCaptureEnabled;
-        public bool ShowMapConditionsEffective => showMapConditions && !EnhancedPromptDetector.IsAutoEventCaptureEnabled;
-        public bool ShowThreatsEffective => showThreats && !EnhancedPromptDetector.IsAutoEventCaptureEnabled;
+        // Manual override for Enhanced Prompt conflict lock.
+        // false = keep current mandatory lock behavior (default)
+        // true  = allow Event+ category filters even when Enhanced Prompt auto-capture is enabled
+        public bool allowEnhancedPromptOverlap = false;
+
+        // Effective lock state
+        public bool IsEnhancedPromptLockActive =>
+            EnhancedPromptDetector.IsAutoEventCaptureEnabled && !allowEnhancedPromptOverlap;
+
+        // Effective values (consider Enhanced Prompt conflict lock + manual override)
+        public bool ShowQuestsEffective => showQuests && !IsEnhancedPromptLockActive;
+        public bool ShowMapConditionsEffective => showMapConditions && !IsEnhancedPromptLockActive;
+        public bool ShowThreatsEffective => showThreats && !IsEnhancedPromptLockActive;
         public bool ShowSitePartsEffective => showSiteParts;
 
         // When enabled, only append events involving pawns in the conversation context.
@@ -137,6 +146,12 @@ namespace RimTalkEventPlus
                 ref AppendToContext,
                 "AppendToContext",
                 true
+            );
+
+            Scribe_Values.Look(
+                ref allowEnhancedPromptOverlap,
+                "allowEnhancedPromptOverlap",
+                false
             );
 
             // Ensure collections are initialized after loading
