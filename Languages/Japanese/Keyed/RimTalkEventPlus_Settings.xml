@@ -57,8 +57,12 @@
   <RimTalkEventPlus_EnableContextFilteringTooltip>現在の会話に関わるポーン（近くのポーン、話し手、受け手）を含むクエストイベントのみを追加します。脅威、マップコンディション、ワールドサイトイベントは常にAIに送信されます。トークンを節約し、（おそらく）LLMの集中力を向上させます。</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>有効にすると、現在の会話のどのポーン（近くのポーン、話し手、受け手）も関わらないクエストはスキップされます。これによりトークン使用量が減り、（おそらく）LLMが関連するイベントに集中しやすくなります。ただし、有効にすると、関連するポーンが近くにいない場合、ポーンはそのようなクエストについて話すことはありません。</RimTalkEventPlus_ContextFiltering_Description>
 
-  <RimTalkEventPlus_AdvancedModeHeader>高度モード設定</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AdvancedModeHeader>高度設定</RimTalkEventPlus_AdvancedModeHeader>
   <RimTalkEventPlus_AppendToContext>イベントを {{context}} に自動的に追加</RimTalkEventPlus_AppendToContext>
   <RimTalkEventPlus_AppendToContext_Tooltip>有効にすると、進行中のイベントは RimTalk プロンプトの {{context}} 変数に自動的に追加されます。</RimTalkEventPlus_AppendToContext_Tooltip>
   <RimTalkEventPlus_AppendToContext_Desc>高度モードテンプレートで {{eventplus_all}}、{{eventplus_quests}}、{{eventplus_conditions}}、{{eventplus_threats}}、{{eventplus_location}} を個別に使用したい場合は、この設定を無効にしてください。</RimTalkEventPlus_AppendToContext_Desc>
+  
+  <RimTalkEventPlus_MandatoryLockToggle>Override conflict-prevention lock (Enhanced Prompt Auto Event Capture)</RimTalkEventPlus_MandatoryLockToggle>
+  <RimTalkEventPlus_MandatoryLockToggle_Tooltip>Event+ locks event category filters when Enhanced Prompt's auto event capture is active, to prevent conflicts between their tracking systems. Enable to override this lock and control filters manually.</RimTalkEventPlus_MandatoryLockToggle_Tooltip>
+  <RimTalkEventPlus_MandatoryLockToggle_Desc>Event+ enforces a mandatory category lock when Enhanced Prompt's auto event capture is detected, as both systems track events and may conflict. Only enable this if you want manual filter control despite the potential conflict.</RimTalkEventPlus_MandatoryLockToggle_Desc>
 </LanguageData>

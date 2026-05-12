@@ -57,8 +57,12 @@
   <RimTalkEventPlus_EnableContextFilteringTooltip>僅附加涉及目前對話中角色（附近的角色、說話者、接收者）的任務事件。威脅事件、地圖狀態以及世界地點事件則始終會傳送給 AI。可節省 token 用量，並（可能）提升 LLM 的專注度。</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>啟用後，不涉及目前對話中任何角色（附近的角色、說話者、接收者）的任務將不會傳送給 AI。這可以減少 token 用量，並（可能）幫助 LLM 專注於相關事件。注意：啟用後，如果相關角色不在附近，角色們將永遠不會談論這些任務。</RimTalkEventPlus_ContextFiltering_Description>
 
-  <RimTalkEventPlus_AdvancedModeHeader>高級模式設定</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AdvancedModeHeader>高級設定</RimTalkEventPlus_AdvancedModeHeader>
   <RimTalkEventPlus_AppendToContext>自動將事件附加到 {{context}}</RimTalkEventPlus_AppendToContext>
   <RimTalkEventPlus_AppendToContext_Tooltip>啟用後，正在進行的事件會自動附加到 RimTalk 提示詞中的 {{context}} 變數。</RimTalkEventPlus_AppendToContext_Tooltip>
   <RimTalkEventPlus_AppendToContext_Desc>如果你希望在高級模式模板中單獨使用 {{eventplus_all}}、{{eventplus_quests}}、{{eventplus_conditions}}、{{eventplus_threats}} 或 {{eventplus_location}}，請停用此選項。</RimTalkEventPlus_AppendToContext_Desc>
+  
+  <RimTalkEventPlus_MandatoryLockToggle>Override conflict-prevention lock (Enhanced Prompt Auto Event Capture)</RimTalkEventPlus_MandatoryLockToggle>
+  <RimTalkEventPlus_MandatoryLockToggle_Tooltip>Event+ locks event category filters when Enhanced Prompt's auto event capture is active, to prevent conflicts between their tracking systems. Enable to override this lock and control filters manually.</RimTalkEventPlus_MandatoryLockToggle_Tooltip>
+  <RimTalkEventPlus_MandatoryLockToggle_Desc>Event+ enforces a mandatory category lock when Enhanced Prompt's auto event capture is detected, as both systems track events and may conflict. Only enable this if you want manual filter control despite the potential conflict.</RimTalkEventPlus_MandatoryLockToggle_Desc>
 </LanguageData>

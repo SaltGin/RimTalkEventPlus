@@ -57,8 +57,12 @@
   <RimTalkEventPlus_EnableContextFilteringTooltip>현재 대화에 관련된 폰(근처 폰, 화자, 수신자)이 포함된 퀘스트 이벤트만 추가합니다. 위협, 맵 상태 및 월드 사이트 이벤트는 항상 AI에게 전송됩니다. 토큰을 절약하고 (아마도) LLM 집중력을 향상시킵니다.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>활성화하면 현재 대화에 관련된 폰(근처 폰, 화자, 수신자)이 없는 퀘스트는 건너뜁니다. 이렇게 하면 토큰 사용량이 줄어들고 (아마도) LLM이 관련 이벤트에 집중하는 데 도움이 됩니다. 그러나 활성화하면 관련 폰이 근처에 없는 경우 폰들은 그러한 퀘스트에 대해 절대 이야기하지 않습니다.</RimTalkEventPlus_ContextFiltering_Description>
 
-  <RimTalkEventPlus_AdvancedModeHeader>고급 모드 설정</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AdvancedModeHeader>고급 설정</RimTalkEventPlus_AdvancedModeHeader>
   <RimTalkEventPlus_AppendToContext>이벤트를 {{context}}에 자동으로 추가</RimTalkEventPlus_AppendToContext>
   <RimTalkEventPlus_AppendToContext_Tooltip>활성화하면 진행 중인 이벤트가 RimTalk 프롬프트의 {{context}} 변수에 자동으로 추가됩니다.</RimTalkEventPlus_AppendToContext_Tooltip>
   <RimTalkEventPlus_AppendToContext_Desc>고급 모드 템플릿에서 {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}} 또는 {{eventplus_location}}을 개별적으로 사용하려면 이 설정을 비활성화하세요.</RimTalkEventPlus_AppendToContext_Desc>
+  
+  <RimTalkEventPlus_MandatoryLockToggle>Override conflict-prevention lock (Enhanced Prompt Auto Event Capture)</RimTalkEventPlus_MandatoryLockToggle>
+  <RimTalkEventPlus_MandatoryLockToggle_Tooltip>Event+ locks event category filters when Enhanced Prompt's auto event capture is active, to prevent conflicts between their tracking systems. Enable to override this lock and control filters manually.</RimTalkEventPlus_MandatoryLockToggle_Tooltip>
+  <RimTalkEventPlus_MandatoryLockToggle_Desc>Event+ enforces a mandatory category lock when Enhanced Prompt's auto event capture is detected, as both systems track events and may conflict. Only enable this if you want manual filter control despite the potential conflict.</RimTalkEventPlus_MandatoryLockToggle_Desc>
 </LanguageData>

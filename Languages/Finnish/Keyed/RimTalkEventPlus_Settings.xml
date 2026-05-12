@@ -57,8 +57,12 @@ Kun asetus on pois käytöstä, Event+ lähettää aina tapahtuman alkuperäisen
   <RimTalkEventPlus_EnableContextFilteringTooltip>Lisää vain tehtävätapahtumat, jotka koskevat nykyisessä keskustelussa olevia hahmoja (lähellä olevat hahmot, puhuja, vastaanottaja). Uhat, karttaolosuhteet ja maailmanpaikkojen tapahtumat lähetetään aina tekoälylle. Säästää tokeneita ja (mahdollisesti) parantaa LLM:n keskittymistä.</RimTalkEventPlus_EnableContextFilteringTooltip>
   <RimTalkEventPlus_ContextFiltering_Description>Kun tämä on käytössä, tehtävät, jotka eivät koske ketään nykyisessä keskustelussa olevaa hahmoa (lähellä olevat hahmot, puhuja, vastaanottaja), ohitetaan. Tämä vähentää tokenien käyttöä ja (mahdollisesti) auttaa LLM:ää keskittymään olennaisiin tapahtumiin. Kuitenkin, kun tämä on käytössä, hahmot eivät koskaan puhu tällaisista tehtävistä, jos asiaankuuluvat hahmot eivät ole lähellä.</RimTalkEventPlus_ContextFiltering_Description>
 
-  <RimTalkEventPlus_AdvancedModeHeader>Edistyneen tilan asetukset</RimTalkEventPlus_AdvancedModeHeader>
+  <RimTalkEventPlus_AdvancedModeHeader>Edistyneet asetukset</RimTalkEventPlus_AdvancedModeHeader>
   <RimTalkEventPlus_AppendToContext>Lisää tapahtumat {{context}}:iin automaattisesti</RimTalkEventPlus_AppendToContext>
   <RimTalkEventPlus_AppendToContext_Tooltip>Kun käytössä, meneillään olevat tapahtumat lisätään automaattisesti {{context}}-muuttujaan RimTalk-kehotteissa.</RimTalkEventPlus_AppendToContext_Tooltip>
   <RimTalkEventPlus_AppendToContext_Desc>Poista tämä käytöstä, jos haluat käyttää {{eventplus_all}}, {{eventplus_quests}}, {{eventplus_conditions}}, {{eventplus_threats}} tai {{eventplus_location}} erikseen edistyneen tilan malleissasi.</RimTalkEventPlus_AppendToContext_Desc>
+  
+  <RimTalkEventPlus_MandatoryLockToggle>Override conflict-prevention lock (Enhanced Prompt Auto Event Capture)</RimTalkEventPlus_MandatoryLockToggle>
+  <RimTalkEventPlus_MandatoryLockToggle_Tooltip>Event+ locks event category filters when Enhanced Prompt's auto event capture is active, to prevent conflicts between their tracking systems. Enable to override this lock and control filters manually.</RimTalkEventPlus_MandatoryLockToggle_Tooltip>
+  <RimTalkEventPlus_MandatoryLockToggle_Desc>Event+ enforces a mandatory category lock when Enhanced Prompt's auto event capture is detected, as both systems track events and may conflict. Only enable this if you want manual filter control despite the potential conflict.</RimTalkEventPlus_MandatoryLockToggle_Desc>
 </LanguageData>
