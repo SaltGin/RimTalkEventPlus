@@ -255,7 +255,8 @@ namespace RimTalkEventPlus
         #region Quest Affects Map
 
         // True if this quest should be considered as affecting the given map.
-        // Results are cached for performance since this is called repeatedly.
+        // Only positive results are cached: quest targets can be assigned later,
+        // so false results are recalculated on the next prompt.
         public static bool QuestAffectsMap(Quest quest, Map map)
         {
             if (quest == null || map == null)
@@ -279,7 +280,8 @@ namespace RimTalkEventPlus
                             return cached;
 
                         bool computed = QuestAffectsMap_Uncached(quest, map);
-                        cache.StoreQuestAffectsMap(questId, mapUid, computed);
+                        if (computed)
+                            cache.StoreQuestAffectsMap(questId, mapUid, true);
                         return computed;
                     }
                 }

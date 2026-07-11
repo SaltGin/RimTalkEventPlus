@@ -8,6 +8,10 @@ namespace RimTalkEventPlus
         /// DefName of the underlying quest root / incident / condition, if known.
         public string SourceDefName;
 
+        /// Stable ID of the source quest, or -1 for non-quest events.
+        /// Used to match a snapshot back to its exact active quest.
+        public int QuestId = -1;
+
         /// Underlying type name, e.g. "Quest", "ChoiceLetter_ThreatBig".
         public string Kind;
 

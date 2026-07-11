@@ -24,9 +24,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\1.6\Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -84,6 +84,7 @@
     <Compile Include="PromptService_OngoingEventsPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestBlacklist.cs" />
+    <Compile Include="Quest_End_ClearCache_Patch.cs" />
     <Compile Include="QuestLinkUtil.cs" />
     <Compile Include="RimTalkQuestBlacklistDef.cs" />
   </ItemGroup>

@@ -7,7 +7,7 @@ namespace RimTalkEventPlus
 {
     // Per-game cache for quest-related lookups:
     // 1. FieldInfo for QuestPart subclass fields (avoids repeated Type.GetField calls)
-    // 2. Quest-Map affinity results (avoids expensive QuestAffectsMap recomputation)
+    // 2. Known-positive quest-map affinity results (avoids expensive recomputation)
     // 3. Quest-Pawns extraction results (avoids repeated reflection on quest parts)
     public class QuestCacheComponent : GameComponent
     {
@@ -54,18 +54,82 @@ namespace RimTalkEventPlus
             return ((long)questId << 32) | (uint)mapUniqueId;
         }
 
-        // Try to get cached quest-map affinity result.
+        // Only positive results are cached. A missing entry means the relationship
+        // must be checked again, so a quest that retargets later is not hidden.
         public bool TryGetQuestAffectsMap(int questId, int mapUniqueId, out bool affects)
         {
             long key = MakeQuestMapKey(questId, mapUniqueId);
             return _questAffectsMapCache.TryGetValue(key, out affects);
         }
 
-        // Store quest-map affinity result in cache.
+        // Store a known-positive quest-map affinity result.
         public void StoreQuestAffectsMap(int questId, int mapUniqueId, bool affects)
         {
+            if (!affects)
+                return;
+
             long key = MakeQuestMapKey(questId, mapUniqueId);
             _questAffectsMapCache[key] = affects;
+        }
+
+        // Clear all runtime data for a quest once it has ended.
+        public void InvalidateQuest(int questId)
+        {
+            if (questId < 0)
+                return;
+
+            List<long> keysToRemove = null;
+            foreach (var entry in _questAffectsMapCache)
+            {
+                if ((int)(entry.Key >> 32) != questId)
+                    continue;
+
+                if (keysToRemove == null)
+                    keysToRemove = new List<long>();
+                keysToRemove.Add(entry.Key);
+            }
+
+            if (keysToRemove != null)
+            {
+                foreach (var key in keysToRemove)
+                    _questAffectsMapCache.Remove(key);
+            }
+
+            _questPawnsCache.Remove(questId);
+        }
+
+        #endregion
+
+        #region Map Prewarm
+
+        // Called after the map-generation long event has completed, rather than
+        // querying quest parts directly from Map.FinalizeInit.
+        public void PrewarmActiveQuestsForMap(Map map)
+        {
+            if (map == null)
+                return;
+
+            var quests = Find.QuestManager?.ActiveQuestsListForReading;
+            if (quests == null)
+                return;
+
+            for (int i = 0; i < quests.Count; i++)
+            {
+                var quest = quests[i];
+                if (!QuestLinkUtil.IsQuestOngoing(quest))
+                    continue;
+
+                try
+                {
+                    QuestLinkUtil.QuestAffectsMap(quest, map);
+                }
+                catch (Exception ex)
+                {
+                    // Prewarm is optional; never let it interfere with gameplay.
+                    if (Prefs.DevMode)
+                        Log.Warning($"[RimTalk Event+] Failed to prewarm quest {quest?.name}: {ex.Message}");
+                }
+            }
         }
 
         #endregion

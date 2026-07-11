@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using System;
 using Verse;
 
 namespace RimTalkEventPlus
@@ -11,27 +10,17 @@ namespace RimTalkEventPlus
         {
             if (__instance == null) return;
 
-            // Prewarm QuestAffectsMap cache for smoother first call.
-            var quests = Find.QuestManager?.QuestsListForReading;
-            if (quests != null)
+            // Run once the current long event has completed. This keeps the
+            // expensive reflection work out of Map.FinalizeInit while warming the
+            // cache before the first player conversation on the map.
+            LongEventHandler.ExecuteWhenFinished(() =>
             {
-                for (int i = 0; i < quests.Count; i++)
-                {
-                    var q = quests[i];
-                    if (q == null) continue;
+                // The map can be removed before the deferred callback runs.
+                if (Current.Game == null || Find.Maps == null || !Find.Maps.Contains(__instance))
+                    return;
 
-                    try
-                    {
-                        QuestLinkUtil.QuestAffectsMap(q, __instance);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Log but don't propagate - this is optional caching, not critical
-                        if (Prefs.DevMode)
-                            Log.Warning($"[RimTalk Event+] Failed to cache quest {q?.name}:  {ex.Message}");
-                    }
-                }
-            }
+                Current.Game.GetComponent<QuestCacheComponent>()?.PrewarmActiveQuestsForMap(__instance);
+            });
 
             // Only dump/log the ongoing events list in DevMode.
             if (!Prefs.DevMode) return;

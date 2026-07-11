@@ -112,34 +112,55 @@ namespace RimTalkEventPlus
             if (contextPawnIds == null || contextPawnIds.Count == 0)
                 return events;
 
-            var filtered = new List<OngoingEventSnapshot>();
-
-            var questManager = Find.QuestManager;
-            var questsById = new Dictionary<int, Quest>();
-
-            if (questManager != null)
-            {
-                foreach (var quest in questManager.QuestsListForReading)
-                {
-                    if (quest != null)
-                        questsById[quest.id] = quest;
-                }
-            }
+            var filtered = new List<OngoingEventSnapshot>(events.Count);
+            var activeQuestsById = BuildActiveQuestLookup(events);
 
             foreach (var evt in events)
             {
-                if (ShouldIncludeEvent(evt, contextPawnIds, questsById))
+                if (ShouldIncludeEvent(evt, contextPawnIds, activeQuestsById))
                     filtered.Add(evt);
             }
 
             return filtered;
         }
 
+        // Only build a lookup when the event set contains quests. Snapshot QuestId
+        // lets us retrieve the exact active quest without scanning historical quests
+        // or comparing mutable display labels.
+        private static Dictionary<int, Quest> BuildActiveQuestLookup(List<OngoingEventSnapshot> events)
+        {
+            bool hasQuestEvent = false;
+            foreach (var evt in events)
+            {
+                if (evt != null && evt.Kind == "Quest")
+                {
+                    hasQuestEvent = true;
+                    break;
+                }
+            }
+
+            if (!hasQuestEvent)
+                return null;
+
+            var activeQuests = Find.QuestManager?.ActiveQuestsListForReading;
+            if (activeQuests == null || activeQuests.Count == 0)
+                return null;
+
+            var questsById = new Dictionary<int, Quest>(activeQuests.Count);
+            foreach (var quest in activeQuests)
+            {
+                if (quest != null && quest.id >= 0)
+                    questsById[quest.id] = quest;
+            }
+
+            return questsById;
+        }
+
         // Determine if an event should be included based on context pawns.
         private static bool ShouldIncludeEvent(
             OngoingEventSnapshot evt,
             HashSet<int> contextPawnIds,
-            Dictionary<int, Quest> questsById)
+            Dictionary<int, Quest> activeQuestsById)
         {
             // Always include threats
             if (evt.IsThreat)
@@ -149,32 +170,11 @@ namespace RimTalkEventPlus
             if (evt.Kind == null || !evt.Kind.Equals("Quest"))
                 return true;
 
-            // For quests, we need to find the quest and check pawn overlap
-            // Try to find the quest by matching SourceDefName against ongoing quests
-            Quest matchedQuest = null;
-
-            foreach (var kvp in questsById)
+            // A missing ID or lookup entry is treated conservatively: include the
+            // event rather than accidentally hiding information from the prompt.
+            if (evt.QuestId < 0 || activeQuestsById == null ||
+                !activeQuestsById.TryGetValue(evt.QuestId, out var matchedQuest))
             {
-                var quest = kvp.Value;
-                if (quest == null || !QuestLinkUtil.IsQuestOngoing(quest))
-                    continue;
-
-                string questDefName = quest.root?.defName;
-                if (questDefName != null && questDefName == evt.SourceDefName)
-                {
-                    // Additional check: match by label content to handle multiple quests with same def
-                    string questLabel = QuestLinkUtil.TryGetQuestLabel(quest);
-                    if (evt.Label != null && evt.Label.StartsWith(questLabel))
-                    {
-                        matchedQuest = quest;
-                        break;
-                    }
-                }
-            }
-
-            if (matchedQuest == null)
-            {
-                // Could not find quest - include by default
                 return true;
             }
 

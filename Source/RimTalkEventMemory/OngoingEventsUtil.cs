@@ -217,6 +217,7 @@ namespace RimTalkEventPlus
                 {
                     Kind = "Quest",
                     SourceDefName = rootDefName,
+                    QuestId = quest.id,
                     Label = label,
                     Body = desc,
                     QuestDescription = desc,
