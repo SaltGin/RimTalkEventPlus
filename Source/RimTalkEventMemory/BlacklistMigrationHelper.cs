@@ -54,8 +54,8 @@ namespace RimTalkEventPlus
                     var questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(questDefName);
                     if (questDef != null)
                     {
-                        // Quest def exists, migrate it
-                        settings.disabledEventDefNames.Add(questDefName);
+                        // Quest filters are stored in the typed quest rule set.
+                        settings.DisableType(EventCategory.Quest, questDefName);
                         validatedDefs.Add(questDefName);
                     }
                     else

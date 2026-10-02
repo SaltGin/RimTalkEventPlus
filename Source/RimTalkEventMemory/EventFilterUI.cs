@@ -20,8 +20,8 @@ namespace RimTalkEventPlus
         private static Vector2 _scrollPosHiddenInstances = Vector2.zero;
 
         // Selection tracking
-        private static string _selectedAvailableType = null;
-        private static string _selectedDisabledType = null;
+        private static FilterableEvent _selectedAvailableType = null;
+        private static FilterableEvent _selectedDisabledType = null;
         private static string _selectedCurrentInstance = null;
         private static string _selectedHiddenInstance = null;
 
@@ -44,8 +44,12 @@ namespace RimTalkEventPlus
         // Banner height for conflict notification headers
         private const float BANNER_HEIGHT = 80f;
 
-        // Subtitles (examples) for type rows, keyed by rootID (quests & threats only)
-        private static readonly Dictionary<string, string> _typeSubtitles = new Dictionary<string, string>();
+        private static readonly EventCategory[] TypeFilterCategories =
+        {
+            EventCategory.Quest,
+            EventCategory.MapCondition,
+            EventCategory.SitePart
+        };
 
         // Helper method to ensure minimum content height for scrollbars to function
         private static float EnsureMinimumScrollHeight(float contentHeight, float scrollRectHeight)
@@ -89,6 +93,7 @@ namespace RimTalkEventPlus
             listing.Gap(SECTION_SPACING);
 
             RenderAdvancedModeSection(listing, settings);
+
         }
 
         private static void RenderAdvancedModeSection(Listing_Standard listing, EventFilterSettings settings)
@@ -271,6 +276,12 @@ namespace RimTalkEventPlus
             Widgets.EndScrollView();
         }
 
+        // Helper to draw horizontal divider
+        private static void DrawHorizontalDivider(float width, float yPos)
+        {
+            Widgets.DrawLineHorizontal(0f, yPos, width);
+        }
+
         // Helper to draw section headers consistently
         private static void DrawSectionHeader(Rect rect, string titleKey, string descKey)
         {
@@ -285,12 +296,6 @@ namespace RimTalkEventPlus
             {
                 Widgets.Label(descRect, descKey.Translate());
             }
-        }
-
-        // Helper to draw horizontal divider
-        private static void DrawHorizontalDivider(float width, float yPos)
-        {
-            Widgets.DrawLineHorizontal(0f, yPos, width);
         }
 
         // Helper to draw reset buttons
@@ -312,8 +317,7 @@ namespace RimTalkEventPlus
 
             if (Widgets.ButtonText(resetTypeButtonRect, resetTypeText))
             {
-                int count = settings.disabledEventDefNames.Count;
-                settings.disabledEventDefNames.Clear();
+                int count = settings.ClearTypeFilters();
 
                 SoundDefOf.Click.PlayOneShotOnCamera(null);
                 Messages.Message(
@@ -380,15 +384,15 @@ namespace RimTalkEventPlus
 
             // Get available and disabled events
             var allEvents = GetAvailableEventTypes(_showCurrentEventsOnly, settings);
-            var availableEvents = allEvents.Where(e => !settings.disabledEventDefNames.Contains(e.rootID)).ToList();
-            var disabledEvents = allEvents.Where(e => settings.disabledEventDefNames.Contains(e.rootID)).ToList();
+            var availableEvents = allEvents.Where(e => !settings.IsTypeDisabled(e.category, e.defName)).ToList();
+            var disabledEvents = allEvents.Where(e => settings.IsTypeDisabled(e.category, e.defName)).ToList();
 
             // Draw columns
             DoEventTypeColumn(layout.LeftColumn, "RimTalkEventPlus_AvailableTypes".Translate(), availableEvents, settings, ref _scrollPosAvailableTypes, false);
             DoEventTypeColumn(layout.RightColumn, "RimTalkEventPlus_DisabledTypes".Translate(), disabledEvents, settings, ref _scrollPosDisabledTypes, true);
 
             // Draw arrow buttons
-            DoTypeFilterButtons(layout.ButtonsArea, availableEvents, disabledEvents, settings);
+            DoTypeFilterButtons(layout.ButtonsArea, settings);
         }
 
         // Helper to draw radio buttons for event source selection
@@ -457,43 +461,37 @@ namespace RimTalkEventPlus
 
             float yPos = HEADER_HEIGHT + 30f;
 
-            // Auto-cleanup:  Remove instances that are no longer active
+            // Auto-cleanup: remove instance filters that are no longer active.
             CleanupInactiveInstances(settings);
 
             // Two-column layout
             var layout = new TwoColumnLayout(rect, yPos);
 
             string colonyId = OngoingEventsUtil.GetCurrentColonyId();
-            var instanceSet = settings.GetInstanceSet(colonyId);
+            var instanceSet = settings.GetQuestInstanceSet(colonyId);
+            var allInstances = GetCurrentEventInstances();
 
-            // Get current and hidden instances (filtered by current map)
-            var allInstances = GetCurrentEventInstances(settings);
-
-            // Helper to check if category is disabled
-            Func<FilterableEvent, bool> isCategoryDisabled = e =>
-                (e.category == EventCategory.Quest && !settings.ShowQuestsEffective) ||
-                (e.category == EventCategory.MapCondition && !settings.ShowMapConditionsEffective) ||
-                (e.category == EventCategory.Threat && !settings.ShowThreatsEffective) ||
-                (e.category == EventCategory.SitePart && !settings.ShowSitePartsEffective);
+            Func<FilterableEvent, bool> isCategoryDisabled =
+                e => !settings.IsCategoryShown(e.category);
 
             var currentInstances = allInstances.Where(e =>
                 (instanceSet == null || !instanceSet.Contains(e.instanceID)) &&
-                !settings.disabledEventDefNames.Contains(e.rootID) &&
+                !settings.IsTypeDisabled(e.category, e.defName) &&
                 !isCategoryDisabled(e)
             ).ToList();
 
-            // Hidden instances include manually hidden, globally disabled, AND category disabled
+            // Preserve the existing visual grouping order: manual filters,
+            // then global type filters, then category filters.
             var hiddenInstances = new List<FilterableEvent>();
-            hiddenInstances.AddRange(allInstances.Where(e => instanceSet != null && instanceSet.Contains(e.instanceID)));
+            hiddenInstances.AddRange(allInstances.Where(
+                e => instanceSet != null && instanceSet.Contains(e.instanceID)));
             hiddenInstances.AddRange(allInstances.Where(e =>
-                settings.disabledEventDefNames.Contains(e.rootID) &&
-                (instanceSet == null || !instanceSet.Contains(e.instanceID))
-            ));
+                settings.IsTypeDisabled(e.category, e.defName) &&
+                (instanceSet == null || !instanceSet.Contains(e.instanceID))));
             hiddenInstances.AddRange(allInstances.Where(e =>
                 isCategoryDisabled(e) &&
-                !settings.disabledEventDefNames.Contains(e.rootID) &&
-                (instanceSet == null || !instanceSet.Contains(e.instanceID))
-            ));
+                !settings.IsTypeDisabled(e.category, e.defName) &&
+                (instanceSet == null || !instanceSet.Contains(e.instanceID))));
 
             // Draw columns
             DoEventInstanceColumn(layout.LeftColumn, "RimTalkEventPlus_CurrentInstances".Translate(), currentInstances, settings, ref _scrollPosCurrentInstances, false);
@@ -606,19 +604,16 @@ namespace RimTalkEventPlus
             }
 
             var hiddenCategories = new List<EventCategory>();
-            if (!settings.ShowQuestsEffective) hiddenCategories.Add(EventCategory.Quest);
-            if (!settings.ShowMapConditionsEffective) hiddenCategories.Add(EventCategory.MapCondition);
-            if (!settings.ShowThreatsEffective) hiddenCategories.Add(EventCategory.Threat);
-            if (!settings.ShowSitePartsEffective) hiddenCategories.Add(EventCategory.SitePart);
+            for (int i = 0; i < TypeFilterCategories.Length; i++)
+            {
+                EventCategory category = TypeFilterCategories[i];
+                if (!settings.IsCategoryShown(category))
+                    hiddenCategories.Add(category);
+            }
 
             float categoryIndicatorHeight = (isDisabled && hiddenCategories.Count > 0) ? hiddenCategories.Count * 30f : 0f;
 
-            var filteredEvents = events.Where(e =>
-                (e.category == EventCategory.Quest && settings.ShowQuestsEffective) ||
-                (e.category == EventCategory.MapCondition && settings.ShowMapConditionsEffective) ||
-                (e.category == EventCategory.Threat && settings.ShowThreatsEffective) ||
-                (e.category == EventCategory.SitePart && settings.ShowSitePartsEffective)
-            ).ToList();
+            var filteredEvents = events.Where(e => settings.IsCategoryShown(e.category)).ToList();
 
             var groupedEvents = filteredEvents.GroupBy(e => e.category).OrderBy(g => g.Key).ToList();
 
@@ -627,7 +622,7 @@ namespace RimTalkEventPlus
                 float perGroup = 25f;
                 foreach (var evt in g)
                 {
-                    bool hasSubtitle = evt.category == EventCategory.Quest || evt.category == EventCategory.Threat;
+                    bool hasSubtitle = !evt.instanceName.NullOrEmpty();
                     perGroup += hasSubtitle ? 41f : 25f; // 25 base + 16 subtitle
                 }
                 return perGroup;
@@ -655,12 +650,10 @@ namespace RimTalkEventPlus
 
                 foreach (var evt in group)
                 {
-                    bool isSelected = isDisabled ? (_selectedDisabledType == evt.rootID) : (_selectedAvailableType == evt.rootID);
-                    string subtitle = null;
-                    if (evt.category == EventCategory.Quest || evt.category == EventCategory.Threat)
-                    {
-                        _typeSubtitles.TryGetValue(evt.rootID, out subtitle);
-                    }
+                    bool isSelected = IsSelectedType(
+                        isDisabled ? _selectedDisabledType : _selectedAvailableType,
+                        evt);
+                    string subtitle = evt.instanceName;
 
                     yOffset += DrawSelectableItem(
                         viewRect.width,
@@ -671,9 +664,9 @@ namespace RimTalkEventPlus
                         () =>
                         {
                             if (isDisabled)
-                                _selectedDisabledType = evt.rootID;
+                                _selectedDisabledType = evt;
                             else
-                                _selectedAvailableType = evt.rootID;
+                                _selectedAvailableType = evt;
                         });
                 }
             }
@@ -701,7 +694,7 @@ namespace RimTalkEventPlus
                 foreach (var evt in group)
                 {
                     contentHeight += 25f;
-                    if (settings.disabledEventDefNames.Contains(evt.rootID))
+                    if (settings.IsTypeDisabled(evt.category, evt.defName))
                         contentHeight += 15f;
                 }
             }
@@ -719,18 +712,14 @@ namespace RimTalkEventPlus
 
                 foreach (var evt in group)
                 {
-                    bool isGloballyDisabled = settings.disabledEventDefNames.Contains(evt.rootID);
-                    bool isCategoryDisabled =
-                        (evt.category == EventCategory.Quest && !settings.ShowQuestsEffective) ||
-                        (evt.category == EventCategory.MapCondition && !settings.ShowMapConditionsEffective) ||
-                        (evt.category == EventCategory.Threat && !settings.ShowThreatsEffective) ||
-                        (evt.category == EventCategory.SitePart && !settings.ShowSitePartsEffective);
+                    bool isGloballyDisabled = settings.IsTypeDisabled(evt.category, evt.defName);
+                    bool isCategoryDisabled = !settings.IsCategoryShown(evt.category);
                     bool isDisabled = isGloballyDisabled || isCategoryDisabled;
                     bool isSelected = isHidden ? (_selectedHiddenInstance == evt.instanceID) : (_selectedCurrentInstance == evt.instanceID);
 
                     string displayText = string.IsNullOrEmpty(evt.instanceName)
-                        ? evt.rootID
-                        : $"{evt.instanceName} ({evt.rootID})";
+                        ? evt.defName
+                        : $"{evt.instanceName} ({evt.defName})";
 
                     yOffset += DrawSelectableItem(
                         viewRect.width,
@@ -837,33 +826,44 @@ namespace RimTalkEventPlus
             return 15f;
         }
 
+        private static bool IsSelectedType(FilterableEvent selected, FilterableEvent candidate)
+        {
+            return selected != null && candidate != null &&
+                selected.category == candidate.category &&
+                selected.defName == candidate.defName;
+        }
+
         // Draws arrow buttons for type filtering.
-        private static void DoTypeFilterButtons(Rect rect, List<FilterableEvent> available, List<FilterableEvent> disabled, EventFilterSettings settings)
+        private static void DoTypeFilterButtons(Rect rect, EventFilterSettings settings)
         {
             float centerY = rect.y + rect.height / 2f;
             float centerX = rect.x + (rect.width - BUTTON_WIDTH) / 2f;
 
             Rect rightArrowRect = new Rect(centerX, centerY - 40f, BUTTON_WIDTH, 30f);
-            bool canDisable = !string.IsNullOrEmpty(_selectedAvailableType);
+            bool canDisable = _selectedAvailableType != null;
 
             if (DrawArrowButton(rightArrowRect, "→", canDisable))
             {
-                settings.disabledEventDefNames.Add(_selectedAvailableType);
+                settings.DisableType(_selectedAvailableType.category, _selectedAvailableType.defName);
                 _selectedAvailableType = null;
             }
 
             Rect leftArrowRect = new Rect(centerX, centerY + 10f, BUTTON_WIDTH, 30f);
-            bool canEnable = !string.IsNullOrEmpty(_selectedDisabledType);
+            bool canEnable = _selectedDisabledType != null;
 
             if (DrawArrowButton(leftArrowRect, "←", canEnable))
             {
-                settings.disabledEventDefNames.Remove(_selectedDisabledType);
+                settings.EnableType(_selectedDisabledType.category, _selectedDisabledType.defName);
                 _selectedDisabledType = null;
             }
         }
 
         // Draws arrow buttons for instance filtering. 
-        private static void DoInstanceFilterButtons(Rect rect, List<FilterableEvent> current, List<FilterableEvent> hidden, EventFilterSettings settings)
+        private static void DoInstanceFilterButtons(
+            Rect rect,
+            List<FilterableEvent> current,
+            List<FilterableEvent> hidden,
+            EventFilterSettings settings)
         {
             float centerY = rect.y + rect.height / 2f;
             float centerX = rect.x + (rect.width - BUTTON_WIDTH) / 2f;
@@ -877,7 +877,7 @@ namespace RimTalkEventPlus
             {
                 if (!string.IsNullOrEmpty(colonyId))
                 {
-                    var instanceSet = settings.GetOrCreateInstanceSet(colonyId);
+                    var instanceSet = settings.GetOrCreateQuestInstanceSet(colonyId);
                     instanceSet.Add(_selectedCurrentInstance);
                 }
                 _selectedCurrentInstance = null;
@@ -890,7 +890,7 @@ namespace RimTalkEventPlus
             {
                 if (!string.IsNullOrEmpty(colonyId))
                 {
-                    var instanceSet = settings.GetInstanceSet(colonyId);
+                    var instanceSet = settings.GetQuestInstanceSet(colonyId);
                     if (instanceSet != null)
                     {
                         instanceSet.Remove(_selectedHiddenInstance);
@@ -915,7 +915,7 @@ namespace RimTalkEventPlus
             {
                 var evt = events[i];
                 if (evt.instanceID == instanceID)
-                    return !settings.disabledEventDefNames.Contains(evt.rootID);
+                    return !settings.IsTypeDisabled(evt.category, evt.defName);
             }
 
             return false;
@@ -935,12 +935,11 @@ namespace RimTalkEventPlus
             {
                 var evt = events[i];
                 if (evt.instanceID == instanceID)
-                    return !settings.disabledEventDefNames.Contains(evt.rootID);
+                    return !settings.IsTypeDisabled(evt.category, evt.defName);
             }
 
             return false;
         }
-
         // Helper to draw arrow button with enable/disable state
         private static bool DrawArrowButton(Rect rect, string label, bool enabled)
         {
@@ -956,144 +955,43 @@ namespace RimTalkEventPlus
             return Widgets.ButtonText(rect, label);
         }
 
-        // Gets all available event types based on user selection. 
-        // When currentOnly is true, derives types from OngoingEventsUtil to match actual runtime behavior.
+        // Gets all available event types based on the selected source.
+        // Current types are derived from the same snapshots used for prompt insertion.
         private static List<FilterableEvent> GetAvailableEventTypes(bool currentOnly, EventFilterSettings settings)
         {
             var events = new List<FilterableEvent>();
-            _typeSubtitles.Clear();
+            var addedDefs = new Dictionary<EventCategory, HashSet<string>>();
 
             if (currentOnly)
             {
-                // Derive types from actual appendable instances using OngoingEventsUtil
-                var appendableEvents = GetCurrentAppendableEvents(settings);
-                var addedDefs = new HashSet<string>();
-
+                var appendableEvents = GetCurrentAppendableEvents();
                 foreach (var inst in appendableEvents)
+                    TryAddTypeOption(events, addedDefs, inst.category, inst.defName, inst.instanceName);
+
+                // Category-specific rules carry their category permanently, so
+                // inactive entries never need Def-database guessing.
+                for (int i = 0; i < TypeFilterCategories.Length; i++)
                 {
-                    if (!addedDefs.Add(inst.rootID))
+                    EventCategory category = TypeFilterCategories[i];
+                    HashSet<string> disabledDefs = settings.GetDisabledTypeDefNames(category);
+                    if (disabledDefs == null)
                         continue;
 
-                    // Try to get proper label from def database based on category
-                    string displayName = inst.rootID;
-                    switch (inst.category)
+                    foreach (string defName in disabledDefs)
                     {
-                        case EventCategory.Quest:
-                            var questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(inst.rootID);
-                            if (questDef != null && !questDef.LabelCap.NullOrEmpty())
-                                displayName = questDef.LabelCap;
-                            break;
-                        case EventCategory.MapCondition:
-                            var condDef = DefDatabase<GameConditionDef>.GetNamedSilentFail(inst.rootID);
-                            if (condDef != null && !condDef.LabelCap.NullOrEmpty())
-                                displayName = condDef.LabelCap;
-                            break;
-                        case EventCategory.SitePart:
-                            var siteDef = DefDatabase<SitePartDef>.GetNamedSilentFail(inst.rootID);
-                            if (siteDef != null && !siteDef.LabelCap.NullOrEmpty())
-                                displayName = siteDef.LabelCap;
-                            break;
-                        case EventCategory.Threat:
-                            var letterDef = DefDatabase<LetterDef>.GetNamedSilentFail(inst.rootID);
-                            if (letterDef != null && !letterDef.LabelCap.NullOrEmpty())
-                                displayName = letterDef.LabelCap;
-                            break;
+                        TryAddTypeOption(events, addedDefs, category, defName, null);
                     }
-
-                    events.Add(new FilterableEvent(
-                        inst.rootID,
-                        displayName,
-                        null,
-                        inst.category,
-                        inst.sourceDefName
-                    ));
-
-                    // Capture subtitle for quests and threats
-                    if ((inst.category == EventCategory.Quest || inst.category == EventCategory.Threat)
-                        && !inst.instanceName.NullOrEmpty())
-                    {
-                        _typeSubtitles[inst.rootID] = inst.instanceName;
-                    }
-                }
-
-                // Also include disabled types that are not currently active,
-                // so they still appear in the disabled column
-                foreach (var disabledDefName in settings.disabledEventDefNames)
-                {
-                    if (addedDefs.Contains(disabledDefName))
-                        continue;
-
-                    // Try to find the def and determine its category
-                    string displayName = disabledDefName;
-                    EventCategory category = EventCategory.Quest; // Default fallback
-
-                    var questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(disabledDefName);
-                    if (questDef != null)
-                    {
-                        if (!questDef.LabelCap.NullOrEmpty())
-                            displayName = questDef.LabelCap;
-                        category = EventCategory.Quest;
-                    }
-                    else
-                    {
-                        var condDef = DefDatabase<GameConditionDef>.GetNamedSilentFail(disabledDefName);
-                        if (condDef != null)
-                        {
-                            if (!condDef.LabelCap.NullOrEmpty())
-                                displayName = condDef.LabelCap;
-                            category = EventCategory.MapCondition;
-                        }
-                        else
-                        {
-                            var siteDef = DefDatabase<SitePartDef>.GetNamedSilentFail(disabledDefName);
-                            if (siteDef != null)
-                            {
-                                if (!siteDef.LabelCap.NullOrEmpty())
-                                    displayName = siteDef.LabelCap;
-                                category = EventCategory.SitePart;
-                            }
-                            else
-                            {
-                                var letterDef = DefDatabase<LetterDef>.GetNamedSilentFail(disabledDefName);
-                                if (letterDef != null)
-                                {
-                                    if (!letterDef.LabelCap.NullOrEmpty())
-                                        displayName = letterDef.LabelCap;
-                                    category = EventCategory.Threat;
-                                }
-                            }
-                        }
-                    }
-
-                    events.Add(new FilterableEvent(
-                        disabledDefName,
-                        displayName,
-                        null,
-                        category,
-                        disabledDefName
-                    ));
-
-                    addedDefs.Add(disabledDefName);
                 }
             }
             else
             {
-                // Show all event types from def databases
                 var questDefs = DefDatabase<QuestScriptDef>.AllDefsListForReading;
                 if (questDefs != null)
                 {
                     foreach (var def in questDefs)
                     {
                         if (def?.defName != null)
-                        {
-                            events.Add(new FilterableEvent(
-                                def.defName,
-                                (def.LabelCap.NullOrEmpty() ? def.defName : (string)def.LabelCap),
-                                null,
-                                EventCategory.Quest,
-                                def.defName
-                            ));
-                        }
+                            TryAddTypeOption(events, addedDefs, EventCategory.Quest, def.defName, null);
                     }
                 }
 
@@ -1103,15 +1001,7 @@ namespace RimTalkEventPlus
                     foreach (var def in conditionDefs)
                     {
                         if (def?.defName != null && def.displayOnUI)
-                        {
-                            events.Add(new FilterableEvent(
-                                def.defName,
-                                (def.LabelCap.NullOrEmpty() ? def.defName : (string)def.LabelCap),
-                                null,
-                                EventCategory.MapCondition,
-                                def.defName
-                            ));
-                        }
+                            TryAddTypeOption(events, addedDefs, EventCategory.MapCondition, def.defName, null);
                     }
                 }
 
@@ -1121,31 +1011,7 @@ namespace RimTalkEventPlus
                     foreach (var def in sitePartDefs)
                     {
                         if (def?.defName != null)
-                        {
-                            events.Add(new FilterableEvent(
-                                def.defName,
-                                (def.LabelCap.NullOrEmpty() ? def.defName : (string)def.LabelCap),
-                                null,
-                                EventCategory.SitePart,
-                                def.defName
-                            ));
-                        }
-                    }
-                }
-
-                // Threat types: letters only (ThreatBig / ThreatSmall)
-                var threatLetters = new[] { LetterDefOf.ThreatBig, LetterDefOf.ThreatSmall };
-                foreach (var def in threatLetters)
-                {
-                    if (def?.defName != null)
-                    {
-                        events.Add(new FilterableEvent(
-                            def.defName,
-                            (def.LabelCap.NullOrEmpty() ? def.defName : (string)def.LabelCap),
-                            null,
-                            EventCategory.Threat,
-                            def.defName
-                        ));
+                            TryAddTypeOption(events, addedDefs, EventCategory.SitePart, def.defName, null);
                     }
                 }
             }
@@ -1153,9 +1019,68 @@ namespace RimTalkEventPlus
             return events;
         }
 
-        // Gets all currently appendable events for type-based filtering. 
-        // Uses OngoingEventsUtil to match actual runtime behavior. 
-        private static List<FilterableEvent> GetCurrentAppendableEvents(EventFilterSettings settings)
+        private static void TryAddTypeOption(
+            List<FilterableEvent> events,
+            Dictionary<EventCategory, HashSet<string>> addedDefs,
+            EventCategory category,
+            string defName,
+            string exampleName)
+        {
+            if (!EventFilterSettings.SupportsTypeFiltering(category) || defName.NullOrEmpty())
+                return;
+
+            FilterableEvent option = CreateTypeOption(category, defName, exampleName);
+            if (option == null)
+                return;
+
+            if (!addedDefs.TryGetValue(category, out HashSet<string> categoryDefs))
+            {
+                categoryDefs = new HashSet<string>();
+                addedDefs[category] = categoryDefs;
+            }
+
+            if (categoryDefs.Add(defName))
+                events.Add(option);
+        }
+
+        private static FilterableEvent CreateTypeOption(
+            EventCategory category,
+            string defName,
+            string exampleName)
+        {
+            string displayName = null;
+            switch (category)
+            {
+                case EventCategory.Quest:
+                    QuestScriptDef questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(defName);
+                    if (questDef == null)
+                        return null;
+                    displayName = questDef.LabelCap;
+                    break;
+                case EventCategory.MapCondition:
+                    GameConditionDef conditionDef = DefDatabase<GameConditionDef>.GetNamedSilentFail(defName);
+                    if (conditionDef == null || !conditionDef.displayOnUI)
+                        return null;
+                    displayName = conditionDef.LabelCap;
+                    break;
+                case EventCategory.SitePart:
+                    SitePartDef sitePartDef = DefDatabase<SitePartDef>.GetNamedSilentFail(defName);
+                    if (sitePartDef == null)
+                        return null;
+                    displayName = sitePartDef.LabelCap;
+                    break;
+                default:
+                    return null;
+            }
+
+            if (displayName.NullOrEmpty())
+                displayName = defName;
+
+            return new FilterableEvent(defName, displayName, exampleName, category);
+        }
+
+        // Gets all currently appendable events for type-based filtering.
+        private static List<FilterableEvent> GetCurrentAppendableEvents()
         {
             var events = new List<FilterableEvent>();
 
@@ -1166,33 +1091,27 @@ namespace RimTalkEventPlus
             if (currentMap == null)
                 return events;
 
-            // Use OngoingEventsUtil to get the same events that would be appended to RimTalk
-            bool isInDanger = currentMap.dangerWatcher?.DangerRating != StoryDanger.None;
             var ongoingEvents = OngoingEventsUtil.GetOngoingEventsNow(
                 currentMap,
-                isInDanger,
                 maxEvents: int.MaxValue,
-                maxThreatScanBack: 50
-            );
+                maxThreatScanBack: 50);
 
             foreach (var evt in ongoingEvents)
             {
-                if (evt == null || string.IsNullOrEmpty(evt.SourceDefName))
+                if (evt == null || !evt.Category.HasValue)
                     continue;
 
-                // Determine category from Kind
-                EventCategory category = DetermineEventCategory(evt);
+                EventCategory category = evt.Category.Value;
+                if (!EventFilterSettings.SupportsTypeFiltering(category) || evt.SourceDefName.NullOrEmpty())
+                    continue;
 
-                // Extract clean label for display
                 string instanceName = evt.Label;
-                if (category == EventCategory.Quest)
+                if (category == EventCategory.Quest && !instanceName.NullOrEmpty())
                 {
-                    // Extract base label (before any metadata like "[accepted ~1.3 days ago]")
                     int bracketIdx = instanceName.IndexOf(" [");
                     if (bracketIdx > 0)
                         instanceName = instanceName.Substring(0, bracketIdx);
 
-                    // Also remove " | characters:" suffix if present
                     int charIdx = instanceName.IndexOf(" | characters:");
                     if (charIdx > 0)
                         instanceName = instanceName.Substring(0, charIdx);
@@ -1202,18 +1121,15 @@ namespace RimTalkEventPlus
                     evt.SourceDefName,
                     evt.SourceDefName,
                     instanceName,
-                    category,
-                    evt.SourceDefName,
-                    null // No instance ID needed for type-based filtering
-                ));
+                    category));
             }
 
             return events;
         }
 
         // Gets all current quest instances for instance-based filtering.
-        // Only quests support instance-based filtering; other event types use type-based filtering only.
-        private static List<FilterableEvent> GetCurrentEventInstances(EventFilterSettings settings)
+        // Only quests support instance-based filtering; other event types use type filters.
+        private static List<FilterableEvent> GetCurrentEventInstances()
         {
             var instances = new List<FilterableEvent>();
 
@@ -1221,11 +1137,7 @@ namespace RimTalkEventPlus
                 return instances;
 
             Map currentMap = Find.CurrentMap;
-            if (currentMap == null)
-                return instances;
-
-            // Only quests support instance-based filtering
-            if (Find.QuestManager == null)
+            if (currentMap == null || Find.QuestManager == null)
                 return instances;
 
             var quests = Find.QuestManager.QuestsListForReading;
@@ -1237,46 +1149,26 @@ namespace RimTalkEventPlus
                 if (quest == null ||
                     quest.State != QuestState.Ongoing ||
                     QuestLinkUtil.IsQuestHidden(quest))
+                {
                     continue;
+                }
 
-                // Skip global, not map-specific quests.
                 if (quest.root != null && quest.root.isRootSpecial)
                     continue;
 
-                // Apply map-affinity filter to match OngoingEventsUtil behavior
                 if (!QuestLinkUtil.QuestAffectsMap(quest, currentMap))
                     continue;
 
                 string questDefName = quest.root?.defName ?? "Unknown";
-                string questLabel = QuestLinkUtil.TryGetQuestLabel(quest);
-                string instanceID = quest.id.ToString();
-
                 instances.Add(new FilterableEvent(
                     questDefName,
                     questDefName,
-                    questLabel,
+                    QuestLinkUtil.TryGetQuestLabel(quest),
                     EventCategory.Quest,
-                    questDefName,
-                    instanceID
-                ));
+                    quest.id.ToString()));
             }
 
             return instances;
-        }
-
-        // Determines the EventCategory from an OngoingEventSnapshot's Kind field.
-        private static EventCategory DetermineEventCategory(OngoingEventSnapshot evt)
-        {
-            if (evt.Kind == "Quest")
-                return EventCategory.Quest;
-            if (evt.Kind.StartsWith("GameCondition_", StringComparison.Ordinal))
-                return EventCategory.MapCondition;
-            if (evt.Kind.StartsWith("SitePart_", StringComparison.Ordinal))
-                return EventCategory.SitePart;
-            if (evt.IsThreat)
-                return EventCategory.Threat;
-
-            return EventCategory.Quest;
         }
 
         // Removes instance filters for events that are no longer active.
@@ -1292,7 +1184,7 @@ namespace RimTalkEventPlus
             if (string.IsNullOrEmpty(colonyId))
                 return;
 
-            var instanceSet = settings.GetInstanceSet(colonyId);
+            var instanceSet = settings.GetQuestInstanceSet(colonyId);
             if (instanceSet == null || instanceSet.Count == 0)
             {
                 PruneEmptyInstanceSet(settings, colonyId);
@@ -1300,16 +1192,13 @@ namespace RimTalkEventPlus
             }
 
             var activeInstanceIDs = new HashSet<string>();
-
             var quests = Find.QuestManager.QuestsListForReading;
             if (quests != null)
             {
                 foreach (var quest in quests)
                 {
                     if (quest != null && quest.State == QuestState.Ongoing)
-                    {
                         activeInstanceIDs.Add(quest.id.ToString());
-                    }
                 }
             }
 
@@ -1318,25 +1207,21 @@ namespace RimTalkEventPlus
                 .ToList();
 
             foreach (var instanceID in toRemove)
-            {
                 instanceSet.Remove(instanceID);
-            }
 
             PruneEmptyInstanceSet(settings, colonyId);
         }
 
-        // Helper to remove empty per-colony instance sets
+        // Helper to remove empty per-colony instance sets.
         private static void PruneEmptyInstanceSet(EventFilterSettings settings, string colonyId)
         {
             if (settings?.disabledEventInstances == null || string.IsNullOrEmpty(colonyId))
                 return;
 
-            if (settings.disabledEventInstances.TryGetValue(colonyId, out var set))
+            if (settings.disabledEventInstances.TryGetValue(colonyId, out var set) &&
+                (set == null || set.Count == 0))
             {
-                if (set == null || set.Count == 0)
-                {
-                    settings.disabledEventInstances.Remove(colonyId);
-                }
+                settings.disabledEventInstances.Remove(colonyId);
             }
         }
 

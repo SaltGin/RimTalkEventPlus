@@ -63,13 +63,10 @@ namespace RimTalkEventPlus
         }
 
         // Store a known-positive quest-map affinity result.
-        public void StoreQuestAffectsMap(int questId, int mapUniqueId, bool affects)
+        public void StorePositiveQuestAffectsMap(int questId, int mapUniqueId)
         {
-            if (!affects)
-                return;
-
             long key = MakeQuestMapKey(questId, mapUniqueId);
-            _questAffectsMapCache[key] = affects;
+            _questAffectsMapCache[key] = true;
         }
 
         // Clear all runtime data for a quest once it has ended.
@@ -146,12 +143,6 @@ namespace RimTalkEventPlus
         public void StoreQuestPawns(int questId, List<Pawn> pawns)
         {
             _questPawnsCache[questId] = pawns;
-        }
-
-        // Clear cached pawns for a specific quest (call when quest state changes).
-        public void InvalidateQuestPawns(int questId)
-        {
-            _questPawnsCache.Remove(questId);
         }
 
         #endregion

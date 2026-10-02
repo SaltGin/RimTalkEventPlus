@@ -109,8 +109,7 @@ namespace RimTalkEventPlus
                 {
                     var map = GetMap(ctx);
                     if (map == null) return string.Empty;
-                    bool isInDanger = map.IsPlayerHome && map.dangerWatcher?.DangerRating != StoryDanger.None;
-                    return Format(OngoingEventsUtil.GetOngoingEventsNow(map, isInDanger));
+                    return Format(OngoingEventsUtil.GetOngoingEventsNow(map));
                 });
 
             Register("eventplus_quests",
@@ -142,9 +141,8 @@ namespace RimTalkEventPlus
                     var map = GetMap(ctx);
                     if (map == null) return string.Empty;
                     var result = new List<OngoingEventSnapshot>();
-                    bool isInDanger = map.IsPlayerHome && map.dangerWatcher?.DangerRating != StoryDanger.None;
-                    if (isInDanger)
-                        OngoingEventsUtil.TryAddMostRecentThreatLetter(result, 1, 30);
+                    OngoingEventsUtil.TryAddActiveThreatsForMap(map, result, 5);
+                    OngoingEventsUtil.TryAddMostRecentThreatLetter(map, result, 5, 30);
                     return Format(result);
                 });
 

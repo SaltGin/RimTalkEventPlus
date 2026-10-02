@@ -27,7 +27,6 @@ namespace RimTalkEventPlus
 
             var ongoing = OngoingEventsUtil.GetOngoingEventsNow(
                 __instance,
-                isInDanger: false,
                 maxEvents: 5,
                 maxThreatScanBack: 30
             );

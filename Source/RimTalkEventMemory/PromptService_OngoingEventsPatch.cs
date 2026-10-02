@@ -65,13 +65,8 @@ namespace RimTalkEventPlus
 
                 Map map = initiator.Map;
 
-                // Only compute danger/threat state on player home maps.
-                bool isInDanger = map.IsPlayerHome &&
-                    map.dangerWatcher?.DangerRating != StoryDanger.None;
-
                 var ongoingEvents = OngoingEventsUtil.GetOngoingEventsNow(
                     map,
-                    isInDanger,
                     maxEvents: 5,
                     maxThreatScanBack: 30
                 );

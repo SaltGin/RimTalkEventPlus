@@ -7,47 +7,34 @@ namespace RimTalkEventPlus
 {
     public static class OngoingEventsUtil
     {
-        // 3 in-game hours * 2500 ticks per hour = 7500 ticks
-        // Hell yeah no more magical numbers
-        private const int ThreatLetterTimeoutTicks = 7500;
-
         // Helper method to check if an event should be filtered based on settings.
-        private static bool IsEventFiltered(string defName, string instanceID, EventCategory? category, EventFilterSettings settings)
+        private static bool IsEventFiltered(
+            EventCategory category,
+            string defName,
+            string instanceID,
+            EventFilterSettings settings)
         {
             if (settings == null)
                 return false;
 
-            // Filter by category
-            if (category.HasValue)
-            {
-                switch (category.Value)
-                {
-                    case EventCategory.Quest:
-                        if (!settings.ShowQuestsEffective) return true;
-                        break;
-                    case EventCategory.MapCondition:
-                        if (!settings.ShowMapConditionsEffective) return true;
-                        break;
-                    case EventCategory.Threat:
-                        if (!settings.ShowThreatsEffective) return true;
-                        break;
-                    case EventCategory.SitePart:
-                        if (!settings.ShowSitePartsEffective) return true;
-                        break;
-                }
-            }
-
-            // Filter by type (def name)
-            if (!string.IsNullOrEmpty(defName) && settings.IsEventDefDisabled(defName))
+            if (!settings.IsCategoryShown(category))
                 return true;
 
-            // Filter by instance ID (per-colony)
-            if (!string.IsNullOrEmpty(instanceID))
+            // Threats intentionally have no type or instance rules. Their
+            // stable, correct control is the category toggle above.
+            if (!EventFilterSettings.SupportsTypeFiltering(category))
+                return false;
+
+            if (settings.IsTypeDisabled(category, defName))
+                return true;
+
+            if (EventFilterSettings.SupportsInstanceFiltering(category) &&
+                !string.IsNullOrEmpty(instanceID))
             {
                 var worldInfo = Find.World?.info;
                 string colonyId = worldInfo != null ? $"{worldInfo.seedString}_{worldInfo.persistentRandomValue}" : null;
 
-                if (!string.IsNullOrEmpty(colonyId) && settings.IsEventInstanceDisabled(colonyId, instanceID))
+                if (!string.IsNullOrEmpty(colonyId) && settings.IsQuestInstanceDisabled(colonyId, instanceID))
                     return true;
             }
 
@@ -58,12 +45,14 @@ namespace RimTalkEventPlus
         // Stateless: reads QuestManager + archive each time.
         //
         // Priority order:
-        // - Threat letter: at most one most-recent red threat letter, only if isInDanger == true.
+        // - Detailed structured threats: live Lord-backed snapshots, with
+        //   raids represented as their richer subtype.
+        // - Generic threat letter: at most one red letter with a target that
+        //   RimWorld currently considers an active threat on this map.
         // - Game conditions: all active GameConditions on this map (solar flare, psychic drone, etc.).
         // - Quests: QuestManager-based, only quests that are ongoing and affect this map.
         public static List<OngoingEventSnapshot> GetOngoingEventsNow(
             Map map,
-            bool isInDanger,
             int maxEvents = 5,
             int maxThreatScanBack = 30)
         {
@@ -78,20 +67,28 @@ namespace RimTalkEventPlus
                 TryAddSitePartEvents(map, result, maxEvents);
             }
 
-            // 1) Single active threat letter (raid/siege), only if caller says we're in danger.
-            if (isInDanger && result.Count < maxEvents)
+            // 1) Lord-backed threats are independent from the letter path.
+            if (result.Count < maxEvents)
             {
-                TryAddMostRecentThreatLetter(result, maxEvents, maxThreatScanBack);
+                TryAddActiveThreatsForMap(map, result, maxEvents);
             }
 
-            // 2) Active game conditions on this map (solar flare, psychic drone, heat wave, etc.)
+            // 2) Generic threats verify their own live target. DangerWatcher is
+            // not used as truth because it is cached/map-wide and excludes
+            // fleeing groups.
+            if (result.Count < maxEvents)
+            {
+                TryAddMostRecentThreatLetter(map, result, maxEvents, maxThreatScanBack);
+            }
+
+            // 3) Active game conditions on this map (solar flare, psychic drone, heat wave, etc.)
             int remaining = maxEvents - result.Count;
             if (remaining > 0)
             {
                 TryAddActiveGameConditionsForMap(map, result, remaining);
             }
 
-            // 3) Ongoing quests that affect this map (refugees, guild members, etc.)
+            // 4) Ongoing quests that affect this map (refugees, guild members, etc.)
             if (result.Count < maxEvents)
             {
                 TryAddOngoingQuestsForMap(map, result, maxEvents);
@@ -127,16 +124,19 @@ namespace RimTalkEventPlus
             {
                 if (result.Count >= maxEvents)
                     break;
-                if (part == null || part.def == null)
+                if (part == null || part.def == null || part.hidden)
                     continue;
 
                 var def = part.def;
 
                 // Check new filtering system using helper method
-                if (IsEventFiltered(def.defName, null, EventCategory.SitePart, RimTalkEventPlus.Settings))
+                if (IsEventFiltered(EventCategory.SitePart, def.defName, null, RimTalkEventPlus.Settings))
                     continue;
 
                 string label = def.LabelCap;
+
+                if (part == parts[0])
+                    label = site.LabelCap;
                 if (label.NullOrEmpty())
                 {
                     label = def.label;
@@ -148,16 +148,46 @@ namespace RimTalkEventPlus
                 // Body:  "A hostile company of mercenaries hiding out in an ancient structure."
                 result.Add(new OngoingEventSnapshot
                 {
-                    Kind = "SitePart_" + def.defName,
+                    Category = EventCategory.SitePart,
                     SourceDefName = def.defName,
                     Label = "[current location] " + label,
                     Body = desc,
-                    QuestDescription = string.Empty,
                     IsThreat = false
                 });
             }
         }
 
+        // Structured Lord threats provide richer live information than a letter
+        // alone. Non-Lord threats (such as manhunter packs) use the live-target
+        // letter fallback below.
+        public static void TryAddActiveThreatsForMap(
+            Map map,
+            List<OngoingEventSnapshot> result,
+            int maxEvents)
+        {
+            if (map == null || result == null || result.Count >= maxEvents || Current.Game == null)
+                return;
+
+            ThreatTrackerComponent tracker = Current.Game.GetComponent<ThreatTrackerComponent>();
+            if (tracker == null)
+                return;
+
+            // Resolve every live candidate before filtering. Otherwise a
+            // disabled first threat could consume the small collection budget
+            // and hide a later enabled threat from the prompt and filter UI.
+            List<OngoingEventSnapshot> threats = tracker.GetPromptSnapshotsForMap(map, int.MaxValue);
+            for (int i = 0; i < threats.Count && result.Count < maxEvents; i++)
+            {
+                OngoingEventSnapshot threat = threats[i];
+                if (threat == null)
+                    continue;
+
+                if (IsEventFiltered(EventCategory.Threat, null, null, RimTalkEventPlus.Settings))
+                    continue;
+
+                result.Add(threat);
+            }
+        }
 
         // Quest side: use QuestManager, no letters.
         public static void TryAddOngoingQuestsForMap(Map map, List<OngoingEventSnapshot> result, int maxEvents)
@@ -182,7 +212,7 @@ namespace RimTalkEventPlus
                 // Check new filtering system using helper method
                 string questDefName = quest.root?.defName;
                 string questInstanceID = quest.id.ToString();
-                if (IsEventFiltered(questDefName, questInstanceID, EventCategory.Quest, RimTalkEventPlus.Settings))
+                if (IsEventFiltered(EventCategory.Quest, questDefName, questInstanceID, RimTalkEventPlus.Settings))
                     continue;
 
                 if (QuestLinkUtil.IsQuestHidden(quest))
@@ -215,12 +245,11 @@ namespace RimTalkEventPlus
 
                 result.Add(new OngoingEventSnapshot
                 {
-                    Kind = "Quest",
+                    Category = EventCategory.Quest,
                     SourceDefName = rootDefName,
                     QuestId = quest.id,
                     Label = label,
                     Body = desc,
-                    QuestDescription = desc,
                     IsThreat = false
                 });
 
@@ -262,7 +291,7 @@ namespace RimTalkEventPlus
                     continue;
 
                 // Check new filtering system using helper method
-                if (IsEventFiltered(cond.def.defName, null, EventCategory.MapCondition, RimTalkEventPlus.Settings))
+                if (IsEventFiltered(EventCategory.MapCondition, cond.def.defName, null, RimTalkEventPlus.Settings))
                     continue;
 
                 // Use the instance's Label/Description
@@ -271,11 +300,10 @@ namespace RimTalkEventPlus
 
                 result.Add(new OngoingEventSnapshot
                 {
-                    Kind = "GameCondition_" + cond.def.defName,
+                    Category = EventCategory.MapCondition,
                     SourceDefName = cond.def.defName,
                     Label = label,
                     Body = body,
-                    QuestDescription = string.Empty,
                     IsThreat = false
                 });
 
@@ -297,23 +325,25 @@ namespace RimTalkEventPlus
             return $"{worldInfo.seedString ?? ""}_{worldInfo.persistentRandomValue}";
         }
 
-        // Threat side: at most one most-recent red threat letter,
-        // only if isInDanger == true, and only if it's not too old
-        // (currently within 3 in-game hours).
+        // Threat side: at most one most-recent red threat letter whose target
+        // is currently a live threat on this exact map. Archive age is not a
+        // lifecycle signal and is deliberately not used here.
         public static void TryAddMostRecentThreatLetter(
+            Map map,
             List<OngoingEventSnapshot> result,
             int maxEvents,
             int maxThreatScanBack)
         {
-            if (Find.Archive == null)
+            if (map == null || Find.Archive == null)
                 return;
 
             var list = Find.Archive.ArchivablesListForReading;
             if (list == null || list.Count == 0)
                 return;
 
-            // Current in-game time for age computation
-            int nowTicks = (Find.TickManager != null) ? Find.TickManager.TicksGame : -1;
+            ThreatTrackerComponent tracker = Current.Game?.GetComponent<ThreatTrackerComponent>();
+            if (tracker == null)
+                return;
 
             int count = list.Count;
             int scanned = 0;
@@ -334,58 +364,22 @@ namespace RimTalkEventPlus
                 if (!isThreatLetter)
                     continue;
 
-                // Check new filtering system using helper method
-                if (IsEventFiltered(def.defName, null, EventCategory.Threat, RimTalkEventPlus.Settings))
+                // The pipeline decides whether a specialized instance owns or
+                // intentionally suppresses this letter before generic fallback.
+                if (!tracker.TryGetGenericLetterSnapshot(letter, map, out OngoingEventSnapshot threat))
                     continue;
 
-                // Age filter: skip (and stop) if the newest threat is already too old.
-                if (nowTicks >= 0 && ThreatLetterTimeoutTicks > 0)
-                {
-                    int createdTicks = 0;
-                    try
-                    {
-                        createdTicks = a.CreatedTicksGame;
-                    }
-                    catch
-                    {
-                        // If we can't read CreatedTicksGame, fall back to old behavior (no age filter).
-                        createdTicks = 0;
-                    }
+                // Check new filtering system using helper method
+                if (IsEventFiltered(EventCategory.Threat, null, null, RimTalkEventPlus.Settings))
+                    continue;
 
-                    if (createdTicks > 0)
-                    {
-                        int ageTicks = nowTicks - createdTicks;
-                        if (ageTicks > ThreatLetterTimeoutTicks)
-                        {
-                            // This is already older than our timeout; since we're scanning from newest
-                            // to oldest, all remaining threat letters will be even older.
-                            break;
-                        }
-                    }
-                }
-
-                string label;
-                string tooltip;
-                try { label = a.ArchivedLabel ?? string.Empty; }
-                catch { label = string.Empty; }
-
-                try { tooltip = a.ArchivedTooltip ?? string.Empty; }
-                catch { tooltip = string.Empty; }
-
-                result.Add(new OngoingEventSnapshot
-                {
-                    Kind = letter.GetType().Name,
-                    SourceDefName = letter.def.defName,
-                    Label = label,
-                    Body = tooltip,
-                    QuestDescription = string.Empty,
-                    IsThreat = true
-                });
+                result.Add(threat);
 
                 break; // only one threat event
 
             }
 
         }
+
     }
 }

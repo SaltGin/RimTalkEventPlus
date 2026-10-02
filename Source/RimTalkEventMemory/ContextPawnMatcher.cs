@@ -1,7 +1,9 @@
 ﻿using RimTalk.Service;
 using RimTalk.Util;
+using HarmonyLib;
 using RimWorld;
 using System.Collections.Generic;
+using System.Reflection;
 using Verse;
 
 namespace RimTalkEventPlus
@@ -11,6 +13,10 @@ namespace RimTalkEventPlus
     public static class ContextPawnMatcher
     {
         private const float NearbyAnimalRange = 20f;
+
+        private static readonly MethodInfo NearbyPawnsMethod = FindNearbyPawnsMethod();
+        private static readonly bool UsesAnnouncementParameter =
+            NearbyPawnsMethod?.GetParameters().Length == 3;
 
         // Collect all context-relevant pawn IDs from the conversation.
         // Includes:  pawns parameter (speaker/recipient) + nearby pawns from RimTalk's selector + nearby animals.
@@ -31,7 +37,7 @@ namespace RimTalkEventPlus
             // Add nearby pawns using RimTalk's selector
             try
             {
-                var nearbyPawns = PawnSelector.GetAllNearByPawns(initiator, recipient);
+                var nearbyPawns = GetNearbyPawnsCompat(initiator, recipient);
                 if (nearbyPawns != null)
                 {
                     foreach (var p in nearbyPawns)
@@ -64,6 +70,29 @@ namespace RimTalkEventPlus
             catch { }
 
             return pawnIds;
+        }
+
+        // Resolve once: RimTalk v1.1.0+ adds a third parameter to the older API.
+        private static MethodInfo FindNearbyPawnsMethod()
+        {
+            const string name = "GetAllNearByPawns";
+
+            return AccessTools.Method(typeof(PawnSelector), name,
+                new[] { typeof(Pawn), typeof(Pawn), typeof(bool) })
+                ?? AccessTools.Method(typeof(PawnSelector), name,
+                    new[] { typeof(Pawn), typeof(Pawn) });
+        }
+
+        private static List<Pawn> GetNearbyPawnsCompat(Pawn initiator, Pawn recipient)
+        {
+            if (NearbyPawnsMethod == null)
+                return null;
+
+            object[] arguments = UsesAnnouncementParameter
+                ? new object[] { initiator, recipient, false }
+                : new object[] { initiator, recipient };
+
+            return (List<Pawn>)NearbyPawnsMethod.Invoke(null, arguments);
         }
 
         // Get nearby animals within range of the conversation participants.
@@ -132,7 +161,7 @@ namespace RimTalkEventPlus
             bool hasQuestEvent = false;
             foreach (var evt in events)
             {
-                if (evt != null && evt.Kind == "Quest")
+                if (evt != null && evt.Category == EventCategory.Quest)
                 {
                     hasQuestEvent = true;
                     break;
@@ -166,8 +195,9 @@ namespace RimTalkEventPlus
             if (evt.IsThreat)
                 return true;
 
-            // Always include non-quest events (GameConditions, SiteParts)
-            if (evt.Kind == null || !evt.Kind.Equals("Quest"))
+            // Always include non-quest or unclassified events. A missing
+            // category must not hide information from the prompt.
+            if (evt.Category != EventCategory.Quest)
                 return true;
 
             // A missing ID or lookup entry is treated conservatively: include the
@@ -195,26 +225,5 @@ namespace RimTalkEventPlus
             return false;
         }
 
-        // Check if a specific quest involves any of the context pawns.
-        public static bool QuestInvolvesContextPawns(Quest quest, HashSet<int> contextPawnIds)
-        {
-            if (quest == null || contextPawnIds == null || contextPawnIds.Count == 0)
-                return true; // Default to include
-
-            var questPawns = QuestLinkUtil.GetQuestKeyPawns(quest);
-
-            // Quest has no pawns - consider it relevant
-            if (questPawns == null || questPawns.Count == 0)
-                return true;
-
-            // Check overlap
-            foreach (var p in questPawns)
-            {
-                if (p != null && contextPawnIds.Contains(p.thingIDNumber))
-                    return true;
-            }
-
-            return false;
-        }
     }
 }

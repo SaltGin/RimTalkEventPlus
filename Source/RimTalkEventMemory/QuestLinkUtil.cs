@@ -281,7 +281,7 @@ namespace RimTalkEventPlus
 
                         bool computed = QuestAffectsMap_Uncached(quest, map);
                         if (computed)
-                            cache.StoreQuestAffectsMap(questId, mapUid, true);
+                            cache.StorePositiveQuestAffectsMap(questId, mapUid);
                         return computed;
                     }
                 }

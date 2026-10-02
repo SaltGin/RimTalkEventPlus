@@ -3,8 +3,8 @@ namespace RimTalkEventPlus
     // Represents a filterable event with display and identification information.
     public class FilterableEvent
     {
-        // Stable def name for filtering (e.g., "Hospitality_Refugee_Chased").
-        public string rootID;
+        // Def name for a category that explicitly supports type filtering.
+        public string defName;
 
         // Human-readable name for display (e.g., "Hospitality Refugee Chased").
         public string displayName;
@@ -15,19 +15,20 @@ namespace RimTalkEventPlus
         // Event type category.
         public EventCategory category;
 
-        // Source def name from the event.
-        public string sourceDefName;
-
         // For instance filtering: unique instance ID (e.g., quest.id.ToString()).
         public string instanceID;
 
-        public FilterableEvent(string rootID, string displayName, string instanceName, EventCategory category, string sourceDefName, string instanceID = null)
+        public FilterableEvent(
+            string defName,
+            string displayName,
+            string instanceName,
+            EventCategory category,
+            string instanceID = null)
         {
-            this.rootID = rootID;
+            this.defName = defName;
             this.displayName = displayName;
             this.instanceName = instanceName;
             this.category = category;
-            this.sourceDefName = sourceDefName;
             this.instanceID = instanceID;
         }
     }

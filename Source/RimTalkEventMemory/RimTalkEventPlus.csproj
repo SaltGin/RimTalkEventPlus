@@ -77,6 +77,14 @@
     <Compile Include="FilterableEvent.cs" />
     <Compile Include="Map_FinalizeInit_OngoingEventsDump_Patch.cs" />
     <Compile Include="QuestCacheComponent.cs" />
+    <Compile Include="ThreatModel.cs" />
+    <Compile Include="ThreatCapture.cs" />
+    <Compile Include="ThreatUtility.cs" />
+    <Compile Include="ThreatTrackerComponent.cs" />
+    <Compile Include="ThreatHandlers\RaidThreatHandler.cs" />
+    <Compile Include="ThreatHandlers\SightstealerThreatHandler.cs" />
+    <Compile Include="ThreatHandlers\MechClusterThreatHandler.cs" />
+    <Compile Include="ThreatHandlers\GenericLordThreatHandler.cs" />
     <Compile Include="RimTalkEventPlus.cs" />
     <Compile Include="OngoingEventsFormatter.cs" />
     <Compile Include="OngoingEventSnapshot.cs" />

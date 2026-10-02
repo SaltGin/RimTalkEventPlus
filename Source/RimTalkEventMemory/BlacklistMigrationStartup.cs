@@ -8,7 +8,12 @@ namespace RimTalkEventPlus
         static BlacklistMigrationStartup()
         {
             // Now DefDatabase is fully populated
-            if (BlacklistMigrationHelper.TryMigrateBlacklist(RimTalkEventPlus.Settings))
+            EventFilterSettings settings = RimTalkEventPlus.Settings;
+            bool settingsChanged = BlacklistMigrationHelper.TryMigrateBlacklist(settings);
+            settingsChanged |= settings.TryMigrateLegacyTypeFilters();
+            settingsChanged |= settings.PruneUnsupportedTypeRules();
+
+            if (settingsChanged)
             {
                 RimTalkEventPlus.Instance.WriteSettings();
             }
