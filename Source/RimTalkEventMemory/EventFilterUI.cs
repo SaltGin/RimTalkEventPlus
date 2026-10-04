@@ -19,6 +19,11 @@ namespace RimTalkEventPlus
         private static Vector2 _scrollPosCurrentInstances = Vector2.zero;
         private static Vector2 _scrollPosHiddenInstances = Vector2.zero;
 
+        private static readonly QuickSearchWidget _searchAvailableTypes = new QuickSearchWidget { maxSearchTextLength = 200 };
+        private static readonly QuickSearchWidget _searchDisabledTypes = new QuickSearchWidget { maxSearchTextLength = 200 };
+        private static readonly QuickSearchWidget _searchCurrentInstances = new QuickSearchWidget { maxSearchTextLength = 200 };
+        private static readonly QuickSearchWidget _searchHiddenInstances = new QuickSearchWidget { maxSearchTextLength = 200 };
+
         // Selection tracking
         private static FilterableEvent _selectedAvailableType = null;
         private static FilterableEvent _selectedDisabledType = null;
@@ -30,10 +35,12 @@ namespace RimTalkEventPlus
         private const float BUTTON_WIDTH = 30f;
         private const float HEADER_HEIGHT = 30f;
         private const float FILTER_CHECKBOX_HEIGHT = 24f;
+        private const float SEARCH_ROW_HEIGHT = 34f;
+        private const float LIST_HEADER_HEIGHT = 30f + SEARCH_ROW_HEIGHT;
 
         // Fixed section heights to ensure visibility
-        private const float MIN_TYPE_SECTION_HEIGHT = 400f;
-        private const float MIN_INSTANCE_SECTION_HEIGHT = 400f;
+        private const float MIN_TYPE_SECTION_HEIGHT = 400f + SEARCH_ROW_HEIGHT;
+        private const float MIN_INSTANCE_SECTION_HEIGHT = 400f + SEARCH_ROW_HEIGHT;
 
         // Outer scroll view state
         private static Vector2 _scrollPosOuter = Vector2.zero;
@@ -388,8 +395,8 @@ namespace RimTalkEventPlus
             var disabledEvents = allEvents.Where(e => settings.IsTypeDisabled(e.category, e.defName)).ToList();
 
             // Draw columns
-            DoEventTypeColumn(layout.LeftColumn, "RimTalkEventPlus_AvailableTypes".Translate(), availableEvents, settings, ref _scrollPosAvailableTypes, false);
-            DoEventTypeColumn(layout.RightColumn, "RimTalkEventPlus_DisabledTypes".Translate(), disabledEvents, settings, ref _scrollPosDisabledTypes, true);
+            DoEventTypeColumn(layout.LeftColumn, "RimTalkEventPlus_AvailableTypes".Translate(), availableEvents, settings, ref _scrollPosAvailableTypes, _searchAvailableTypes, false);
+            DoEventTypeColumn(layout.RightColumn, "RimTalkEventPlus_DisabledTypes".Translate(), disabledEvents, settings, ref _scrollPosDisabledTypes, _searchDisabledTypes, true);
 
             // Draw arrow buttons
             DoTypeFilterButtons(layout.ButtonsArea, settings);
@@ -494,8 +501,8 @@ namespace RimTalkEventPlus
                 (instanceSet == null || !instanceSet.Contains(e.instanceID))));
 
             // Draw columns
-            DoEventInstanceColumn(layout.LeftColumn, "RimTalkEventPlus_CurrentInstances".Translate(), currentInstances, settings, ref _scrollPosCurrentInstances, false);
-            DoEventInstanceColumn(layout.RightColumn, "RimTalkEventPlus_HiddenInstances".Translate(), hiddenInstances, settings, ref _scrollPosHiddenInstances, true);
+            DoEventInstanceColumn(layout.LeftColumn, "RimTalkEventPlus_CurrentInstances".Translate(), currentInstances, settings, ref _scrollPosCurrentInstances, _searchCurrentInstances, false);
+            DoEventInstanceColumn(layout.RightColumn, "RimTalkEventPlus_HiddenInstances".Translate(), hiddenInstances, settings, ref _scrollPosHiddenInstances, _searchHiddenInstances, true);
 
             // Draw arrow buttons
             DoInstanceFilterButtons(layout.ButtonsArea, currentInstances, hiddenInstances, settings);
@@ -592,8 +599,25 @@ namespace RimTalkEventPlus
             );
         }
 
+        private static bool DrawListSearch(Rect rect, QuickSearchWidget search, ref Vector2 scrollPos)
+        {
+            string previousQuery = search.filter.Text;
+            float clearSpace = search.filter.Active ? 0f : (QuickSearchWidget.IconSize + 2f * QuickSearchWidget.IconMargin) / 2f;
+            search.OnGUI(new Rect(rect.x + 8f, rect.y + 30f, rect.width - 16f - clearSpace, QuickSearchWidget.WidgetHeight));
+            if (search.filter.Text == previousQuery)
+                return false;
+
+            scrollPos = Vector2.zero;
+            return true;
+        }
+
+        private static bool MatchesSearch(FilterableEvent entry, QuickSearchFilter filter)
+        {
+            return filter.Matches(entry.displayName) || filter.Matches(entry.defName) || filter.Matches(entry.instanceName);
+        }
+
         // Draws a column of event types.
-        private static void DoEventTypeColumn(Rect rect, string title, List<FilterableEvent> events, EventFilterSettings settings, ref Vector2 scrollPos, bool isDisabled)
+        private static void DoEventTypeColumn(Rect rect, string title, List<FilterableEvent> events, EventFilterSettings settings, ref Vector2 scrollPos, QuickSearchWidget search, bool isDisabled)
         {
             Widgets.DrawMenuSection(rect);
 
@@ -603,6 +627,14 @@ namespace RimTalkEventPlus
                 Widgets.Label(titleRect, title);
             }
 
+            if (DrawListSearch(rect, search, ref scrollPos))
+            {
+                if (isDisabled)
+                    _selectedDisabledType = null;
+                else
+                    _selectedAvailableType = null;
+            }
+
             var hiddenCategories = new List<EventCategory>();
             for (int i = 0; i < TypeFilterCategories.Length; i++)
             {
@@ -610,10 +642,13 @@ namespace RimTalkEventPlus
                 if (!settings.IsCategoryShown(category))
                     hiddenCategories.Add(category);
             }
+            if (!settings.IsCategoryShown(EventCategory.Threat))
+                hiddenCategories.Add(EventCategory.Threat);
 
             float categoryIndicatorHeight = (isDisabled && hiddenCategories.Count > 0) ? hiddenCategories.Count * 30f : 0f;
 
-            var filteredEvents = events.Where(e => settings.IsCategoryShown(e.category)).ToList();
+            var filteredEvents = events.Where(e => settings.IsCategoryShown(e.category) && MatchesSearch(e, search.filter)).ToList();
+            search.noResultsMatched = filteredEvents.Count == 0;
 
             var groupedEvents = filteredEvents.GroupBy(e => e.category).OrderBy(g => g.Key).ToList();
 
@@ -628,7 +663,7 @@ namespace RimTalkEventPlus
                 return perGroup;
             }) + categoryIndicatorHeight;
 
-            Rect scrollRect = new Rect(rect.x, rect.y + 30f, rect.width, rect.height - 30f);
+            Rect scrollRect = new Rect(rect.x, rect.y + LIST_HEADER_HEIGHT, rect.width, rect.height - LIST_HEADER_HEIGHT);
             contentHeight = EnsureMinimumScrollHeight(contentHeight, scrollRect.height);
 
             Rect viewRect = new Rect(0f, 0f, scrollRect.width - 16f, contentHeight);
@@ -675,7 +710,7 @@ namespace RimTalkEventPlus
         }
 
         // Draws a column of event instances. 
-        private static void DoEventInstanceColumn(Rect rect, string title, List<FilterableEvent> events, EventFilterSettings settings, ref Vector2 scrollPos, bool isHidden)
+        private static void DoEventInstanceColumn(Rect rect, string title, List<FilterableEvent> events, EventFilterSettings settings, ref Vector2 scrollPos, QuickSearchWidget search, bool isHidden)
         {
             Widgets.DrawMenuSection(rect);
 
@@ -685,7 +720,17 @@ namespace RimTalkEventPlus
                 Widgets.Label(titleRect, title);
             }
 
-            var groupedEvents = events.GroupBy(e => e.category).OrderBy(g => g.Key).ToList();
+            if (DrawListSearch(rect, search, ref scrollPos))
+            {
+                if (isHidden)
+                    _selectedHiddenInstance = null;
+                else
+                    _selectedCurrentInstance = null;
+            }
+
+            var filteredEvents = events.Where(e => MatchesSearch(e, search.filter)).ToList();
+            search.noResultsMatched = filteredEvents.Count == 0;
+            var groupedEvents = filteredEvents.GroupBy(e => e.category).OrderBy(g => g.Key).ToList();
 
             float contentHeight = 0f;
             foreach (var group in groupedEvents)
@@ -699,7 +744,7 @@ namespace RimTalkEventPlus
                 }
             }
 
-            Rect scrollRect = new Rect(rect.x, rect.y + 30f, rect.width, rect.height - 30f);
+            Rect scrollRect = new Rect(rect.x, rect.y + LIST_HEADER_HEIGHT, rect.width, rect.height - LIST_HEADER_HEIGHT);
             contentHeight = EnsureMinimumScrollHeight(contentHeight, scrollRect.height);
 
             Rect viewRect = new Rect(0f, 0f, scrollRect.width - 16f, contentHeight);
@@ -1052,6 +1097,8 @@ namespace RimTalkEventPlus
             switch (category)
             {
                 case EventCategory.Quest:
+                    if (QuestLinkUtil.IsQuestRootExcluded(defName))
+                        return null;
                     QuestScriptDef questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(defName);
                     if (questDef == null)
                         return null;
@@ -1153,7 +1200,8 @@ namespace RimTalkEventPlus
                     continue;
                 }
 
-                if (quest.root != null && quest.root.isRootSpecial)
+                if (QuestLinkUtil.IsQuestRootExcluded(quest.root?.defName) ||
+                    (quest.root != null && quest.root.isRootSpecial))
                     continue;
 
                 if (!QuestLinkUtil.QuestAffectsMap(quest, currentMap))

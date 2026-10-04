@@ -7,8 +7,8 @@ namespace RimTalkEventPlus
 {
     public static class OngoingEventsUtil
     {
-        // Helper method to check if an event should be filtered based on settings.
-        private static bool IsEventFiltered(
+        // Categories are checked once before collection; these rules apply per event.
+        private static bool IsTypeOrInstanceFiltered(
             EventCategory category,
             string defName,
             string instanceID,
@@ -17,11 +17,6 @@ namespace RimTalkEventPlus
             if (settings == null)
                 return false;
 
-            if (!settings.IsCategoryShown(category))
-                return true;
-
-            // Threats intentionally have no type or instance rules. Their
-            // stable, correct control is the category toggle above.
             if (!EventFilterSettings.SupportsTypeFiltering(category))
                 return false;
 
@@ -107,6 +102,10 @@ namespace RimTalkEventPlus
             if (result.Count >= maxEvents)
                 return;
 
+            var settings = RimTalkEventPlus.Settings;
+            if (settings != null && !settings.IsCategoryShown(EventCategory.SitePart))
+                return;
+
             MapParent parent = map.Parent;
             if (parent == null)
                 return;
@@ -130,7 +129,7 @@ namespace RimTalkEventPlus
                 var def = part.def;
 
                 // Check new filtering system using helper method
-                if (IsEventFiltered(EventCategory.SitePart, def.defName, null, RimTalkEventPlus.Settings))
+                if (IsTypeOrInstanceFiltered(EventCategory.SitePart, def.defName, null, settings))
                     continue;
 
                 string label = def.LabelCap;
@@ -168,21 +167,19 @@ namespace RimTalkEventPlus
             if (map == null || result == null || result.Count >= maxEvents || Current.Game == null)
                 return;
 
+            var settings = RimTalkEventPlus.Settings;
+            if (settings != null && !settings.IsCategoryShown(EventCategory.Threat))
+                return;
+
             ThreatTrackerComponent tracker = Current.Game.GetComponent<ThreatTrackerComponent>();
             if (tracker == null)
                 return;
 
-            // Resolve every live candidate before filtering. Otherwise a
-            // disabled first threat could consume the small collection budget
-            // and hide a later enabled threat from the prompt and filter UI.
             List<OngoingEventSnapshot> threats = tracker.GetPromptSnapshotsForMap(map, int.MaxValue);
             for (int i = 0; i < threats.Count && result.Count < maxEvents; i++)
             {
                 OngoingEventSnapshot threat = threats[i];
                 if (threat == null)
-                    continue;
-
-                if (IsEventFiltered(EventCategory.Threat, null, null, RimTalkEventPlus.Settings))
                     continue;
 
                 result.Add(threat);
@@ -192,6 +189,10 @@ namespace RimTalkEventPlus
         // Quest side: use QuestManager, no letters.
         public static void TryAddOngoingQuestsForMap(Map map, List<OngoingEventSnapshot> result, int maxEvents)
         {
+            var settings = RimTalkEventPlus.Settings;
+            if (settings != null && !settings.IsCategoryShown(EventCategory.Quest))
+                return;
+
             if (Find.QuestManager == null)
                 return;
 
@@ -206,13 +207,13 @@ namespace RimTalkEventPlus
 
                 // Skip endgame quests
                 string rootDefName = quest.root?.defName;
-                if (rootDefName != null && rootDefName.StartsWith("EndGame_"))
+                if (QuestLinkUtil.IsQuestRootExcluded(rootDefName))
                     continue;
 
                 // Check new filtering system using helper method
                 string questDefName = quest.root?.defName;
                 string questInstanceID = quest.id.ToString();
-                if (IsEventFiltered(EventCategory.Quest, questDefName, questInstanceID, RimTalkEventPlus.Settings))
+                if (IsTypeOrInstanceFiltered(EventCategory.Quest, questDefName, questInstanceID, settings))
                     continue;
 
                 if (QuestLinkUtil.IsQuestHidden(quest))
@@ -268,12 +269,17 @@ namespace RimTalkEventPlus
             if (maxToAdd <= 0 || map == null)
                 return;
 
+            var settings = RimTalkEventPlus.Settings;
+            if (settings != null && !settings.IsCategoryShown(EventCategory.MapCondition))
+                return;
+
             var gcm = map.gameConditionManager;
             if (gcm == null)
                 return;
 
-            var conds = gcm.ActiveConditions;
-            if (conds == null || conds.Count == 0)
+            var conds = new List<GameCondition>();
+            gcm.GetAllGameConditionsAffectingMap(map, conds);
+            if (conds.Count == 0)
                 return;
 
             int added = 0;
@@ -285,13 +291,13 @@ namespace RimTalkEventPlus
                 if (cond == null || cond.def == null)
                     continue;
 
-                // Skip game conditions that are explicitly hidden from the UI.
-                // This corresponds to <displayOnUI>false</displayOnUI> in the GameConditionDef.
-                if (!cond.def.displayOnUI)
+                // The native collector checks map applicability, including world conditions.
+                // Apply the remaining visibility rules used by RimWorld's condition UI.
+                if (!cond.def.displayOnUI || cond.HiddenByOtherCondition(map))
                     continue;
 
                 // Check new filtering system using helper method
-                if (IsEventFiltered(EventCategory.MapCondition, cond.def.defName, null, RimTalkEventPlus.Settings))
+                if (IsTypeOrInstanceFiltered(EventCategory.MapCondition, cond.def.defName, null, settings))
                     continue;
 
                 // Use the instance's Label/Description
@@ -337,6 +343,10 @@ namespace RimTalkEventPlus
             if (map == null || Find.Archive == null)
                 return;
 
+            var settings = RimTalkEventPlus.Settings;
+            if (settings != null && !settings.IsCategoryShown(EventCategory.Threat))
+                return;
+
             var list = Find.Archive.ArchivablesListForReading;
             if (list == null || list.Count == 0)
                 return;
@@ -367,10 +377,6 @@ namespace RimTalkEventPlus
                 // The pipeline decides whether a specialized instance owns or
                 // intentionally suppresses this letter before generic fallback.
                 if (!tracker.TryGetGenericLetterSnapshot(letter, map, out OngoingEventSnapshot threat))
-                    continue;
-
-                // Check new filtering system using helper method
-                if (IsEventFiltered(EventCategory.Threat, null, null, RimTalkEventPlus.Settings))
                     continue;
 
                 result.Add(threat);

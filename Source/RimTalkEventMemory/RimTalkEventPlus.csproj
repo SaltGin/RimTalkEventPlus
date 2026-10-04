@@ -93,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestBlacklist.cs" />
     <Compile Include="Quest_End_ClearCache_Patch.cs" />
+    <Compile Include="Quest_CacheInvalidation_Patches.cs" />
     <Compile Include="QuestLinkUtil.cs" />
     <Compile Include="RimTalkQuestBlacklistDef.cs" />
   </ItemGroup>

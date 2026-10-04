@@ -64,6 +64,12 @@ namespace RimTalkEventPlus
             return quest?.State == QuestState.Ongoing;
         }
 
+        // Shared by prompt collection and the filter UI, including inactive types.
+        public static bool IsQuestRootExcluded(string defName)
+        {
+            return defName != null && defName.StartsWith("EndGame_", StringComparison.Ordinal);
+        }
+
         #endregion
 
         #region Quest Accepted Age
@@ -159,8 +165,9 @@ namespace RimTalkEventPlus
                 // 1) Single pawn field:  "pawn"
                 try
                 {
-                    var pawnField = cache?.GetField(partType, "pawn")
-                        ?? partType.GetField("pawn", FallbackBindingFlags);
+                    var pawnField = cache != null
+                        ? cache.GetField(partType, "pawn")
+                        : partType.GetField("pawn", FallbackBindingFlags);
 
                     if (pawnField != null)
                     {
@@ -177,8 +184,9 @@ namespace RimTalkEventPlus
                 // 2) List field: "pawns"
                 try
                 {
-                    var pawnsField = cache?.GetField(partType, "pawns")
-                        ?? partType.GetField("pawns", FallbackBindingFlags);
+                    var pawnsField = cache != null
+                        ? cache.GetField(partType, "pawns")
+                        : partType.GetField("pawns", FallbackBindingFlags);
 
                     if (pawnsField != null)
                     {
@@ -297,7 +305,7 @@ namespace RimTalkEventPlus
                 return false;
 
             MapParent mapParent = map.info?.parent;
-            int mapTile = map.Tile;
+            var mapTile = map.Tile;
 
             var parts = quest.PartsListForReading;
             var cache = GetCache();
@@ -332,8 +340,8 @@ namespace RimTalkEventPlus
                                         return true;
                                 }
 
-                                // Check tile match
-                                int targetTile = target.Tile;
+                                // Keep native equality: PlanetTile also identifies the layer in 1.6.
+                                var targetTile = target.Tile;
                                 if (targetTile >= 0 && targetTile == mapTile)
                                     return true;
                             }
@@ -362,8 +370,9 @@ namespace RimTalkEventPlus
                     // Check "worldObject" field
                     try
                     {
-                        FieldInfo worldObjectField = cache?.GetField(partType, "worldObject")
-                            ?? partType.GetField("worldObject", FallbackBindingFlags);
+                        FieldInfo worldObjectField = cache != null
+                            ? cache.GetField(partType, "worldObject")
+                            : partType.GetField("worldObject", FallbackBindingFlags);
 
                         if (worldObjectField != null)
                         {
@@ -386,8 +395,9 @@ namespace RimTalkEventPlus
                     // Check "site" field (used by QuestPart_DistressCallAmbush, etc.)
                     try
                     {
-                        FieldInfo siteField = cache?.GetField(partType, "site")
-                            ?? partType.GetField("site", FallbackBindingFlags);
+                        FieldInfo siteField = cache != null
+                            ? cache.GetField(partType, "site")
+                            : partType.GetField("site", FallbackBindingFlags);
 
                         if (siteField != null)
                         {
@@ -451,8 +461,9 @@ namespace RimTalkEventPlus
                     // Try field "mapParent"
                     try
                     {
-                        FieldInfo mapParentField = cache?.GetField(partType, "mapParent")
-                            ?? partType.GetField("mapParent", FallbackBindingFlags);
+                        FieldInfo mapParentField = cache != null
+                            ? cache.GetField(partType, "mapParent")
+                            : partType.GetField("mapParent", FallbackBindingFlags);
 
                         if (mapParentField != null)
                             partParent = mapParentField.GetValue(part) as MapParent;
@@ -464,7 +475,9 @@ namespace RimTalkEventPlus
                     {
                         try
                         {
-                            var mapParentProp = partType.GetProperty("MapParent", FallbackBindingFlags);
+                            var mapParentProp = cache != null
+                                ? cache.GetProperty(partType, "MapParent")
+                                : partType.GetProperty("MapParent", FallbackBindingFlags);
                             if (mapParentProp != null)
                                 partParent = mapParentProp.GetValue(part) as MapParent;
                         }

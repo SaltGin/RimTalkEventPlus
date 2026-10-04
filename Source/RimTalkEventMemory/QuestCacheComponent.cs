@@ -6,7 +6,7 @@ using Verse;
 namespace RimTalkEventPlus
 {
     // Per-game cache for quest-related lookups:
-    // 1. FieldInfo for QuestPart subclass fields (avoids repeated Type.GetField calls)
+    // 1. FieldInfo/PropertyInfo for QuestPart members, including missing members
     // 2. Known-positive quest-map affinity results (avoids expensive recomputation)
     // 3. Quest-Pawns extraction results (avoids repeated reflection on quest parts)
     public class QuestCacheComponent : GameComponent
@@ -14,6 +14,9 @@ namespace RimTalkEventPlus
         // FieldInfo cache for QuestPart subclass fields
         private readonly Dictionary<(Type, string), FieldInfo> _fieldCache =
             new Dictionary<(Type, string), FieldInfo>();
+
+        private readonly Dictionary<(Type, string), PropertyInfo> _propertyCache =
+            new Dictionary<(Type, string), PropertyInfo>();
 
         // Quest-Map affinity cache (key: questId << 32 | mapUniqueId)
         private readonly Dictionary<long, bool> _questAffectsMapCache =
@@ -30,7 +33,7 @@ namespace RimTalkEventPlus
         {
         }
 
-        #region FieldInfo Cache
+        #region Reflection Metadata Cache
 
         // Get cached FieldInfo for a QuestPart subclass field.
         // Returns null if field doesn't exist (result is cached to avoid repeated lookups).
@@ -43,6 +46,19 @@ namespace RimTalkEventPlus
             var field = type.GetField(fieldName, AllInstanceFlags);
             _fieldCache[key] = field;
             return field;
+        }
+
+        // Cache metadata only; the property's current value is read from the part.
+        // Missing properties are cached as null, just like missing fields.
+        public PropertyInfo GetProperty(Type type, string propertyName)
+        {
+            var key = (type, propertyName);
+            if (_propertyCache.TryGetValue(key, out var cached))
+                return cached;
+
+            var property = type.GetProperty(propertyName, AllInstanceFlags);
+            _propertyCache[key] = property;
+            return property;
         }
 
         #endregion
@@ -69,7 +85,7 @@ namespace RimTalkEventPlus
             _questAffectsMapCache[key] = true;
         }
 
-        // Clear all runtime data for a quest once it has ended.
+        // Clear mutable runtime data when a quest changes or ends.
         public void InvalidateQuest(int questId)
         {
             if (questId < 0)
