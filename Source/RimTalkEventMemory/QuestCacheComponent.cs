@@ -122,7 +122,11 @@ namespace RimTalkEventPlus
             if (map == null)
                 return;
 
+#if RW1_5
+            var quests = RimWorld15Compat.GetActiveQuests(Find.QuestManager);
+#else
             var quests = Find.QuestManager?.ActiveQuestsListForReading;
+#endif
             if (quests == null)
                 return;
 

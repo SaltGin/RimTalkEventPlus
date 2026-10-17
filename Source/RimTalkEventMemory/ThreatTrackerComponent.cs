@@ -71,16 +71,24 @@ namespace RimTalkEventPlus
 
         internal void NotifySightstealerBecameVisible(Pawn pawn)
         {
-            if (!ThreatUtility.IsSightstealer(pawn) || pawn.lord == null)
+            if (!ThreatUtility.IsSightstealer(pawn))
+                return;
+
+#if RW1_5
+            Lord lord = RimWorld15Compat.GetLord(pawn);
+#else
+            Lord lord = pawn.lord;
+#endif
+            if (lord == null)
                 return;
 
             EnsureCollections();
             PruneInvalidRecords();
-            SightstealerThreatRecord record = FindSightstealerRecord(pawn.lord);
+            SightstealerThreatRecord record = FindSightstealerRecord(lord);
             if (record == null)
             {
-                RegisterUnscopedLord(pawn.lord);
-                record = FindSightstealerRecord(pawn.lord);
+                RegisterUnscopedLord(lord);
+                record = FindSightstealerRecord(lord);
             }
 
             if (record != null)

@@ -6,6 +6,7 @@
   <supportedVersions>
     <li>1.5</li>
     <li>1.6</li>
+    <li>1.7</li>
   </supportedVersions>
   <modDependencies>
 	<li>
@@ -22,7 +23,5 @@
   <loadAfter>
 	  <li>cj.rimtalk</li>
 	</loadAfter>
-  <description>
-    Lightweight event sensing expansion layer for RimTalk. Experimental.
-  </description>
+  <description>Expands RimTalk with information about ongoing quests, raids, mech clusters and other threats, environmental conditions, and world sites, helping pawn conversations reflect what is happening around them.</description>
 </ModMetaData>

@@ -206,7 +206,12 @@ namespace RimTalkEventPlus
                 if (pawn == null)
                     continue;
 
+#if RW1_5
+                Lord lord = RimWorld15Compat.GetLord(pawn);
+                if (lord != null && core.lords.Contains(lord))
+#else
                 if (pawn.lord != null && core.lords.Contains(pawn.lord))
+#endif
                     return true;
 
                 for (int lordIndex = 0; lordIndex < core.lords.Count; lordIndex++)
@@ -293,12 +298,20 @@ namespace RimTalkEventPlus
                 if (pawn != null && (pawn.IsPsychologicallyInvisible() || pawn.IsHiddenFromPlayer()))
                     continue;
 
+#if RW1_5
+                LordToil toil = RimWorld15Compat.GetLord(pawn)?.CurLordToil;
+#else
                 LordToil toil = pawn?.lord?.CurLordToil;
+#endif
                 if (toil is LordToil_PanicFlee || toil is LordToil_ExitMap ||
                     toil?.GetType().Name.IndexOf("Exit", StringComparison.OrdinalIgnoreCase) >= 0)
                     continue;
 
+#if RW1_5
+                if (RimWorld15Compat.IsActiveThreatToPlayer(target))
+#else
                 if (GenHostility.IsActiveThreatToPlayer(target, canBeFogged: true))
+#endif
                     return true;
             }
 

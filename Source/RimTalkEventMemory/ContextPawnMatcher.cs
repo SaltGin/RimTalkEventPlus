@@ -171,7 +171,11 @@ namespace RimTalkEventPlus
             if (!hasQuestEvent)
                 return null;
 
+#if RW1_5
+            var activeQuests = RimWorld15Compat.GetActiveQuests(Find.QuestManager);
+#else
             var activeQuests = Find.QuestManager?.ActiveQuestsListForReading;
+#endif
             if (activeQuests == null || activeQuests.Count == 0)
                 return null;
 

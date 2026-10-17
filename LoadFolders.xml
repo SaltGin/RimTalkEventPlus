@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<loadFolders>
+  <v1.5>
+    <li>/</li>
+    <li>1.5</li>
+  </v1.5>
+  <v1.6>
+    <li>/</li>
+    <li>1.6</li>
+  </v1.6>
+  <!-- Explicitly use the shared 1.6 build on 1.7. -->
+  <v1.7>
+    <li>/</li>
+    <li>1.6</li>
+  </v1.7>
+</loadFolders>
