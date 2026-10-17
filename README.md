@@ -34,8 +34,9 @@ using their existing native APIs. No runtime version detection is added.
 
 ## Shared 1.6/1.7 release
 
-`About/About.xml` declares support for 1.5, 1.6, and 1.7. `LoadFolders.xml`
-explicitly selects the assembly directory for each version:
+`About/About.xml` declares support for 1.5, 1.6, and 1.7. RimWorld automatically
+loads the matching version folder, or the newest available older version folder
+when no exact match exists. With this package's layout, it selects:
 
 | RimWorld version | Assembly directory |
 | --- | --- |
@@ -43,10 +44,7 @@ explicitly selects the assembly directory for each version:
 | 1.6 | `1.6/Assemblies` |
 | 1.7 | `1.6/Assemblies` (shared 1.6 build) |
 
-All versions also load the root directory for shared language assets. Build the
-shared release with `GameVersion=1.6` and matching 1.6 references; a duplicate
-DLL or native .NET 10 build in a `1.7` directory is unnecessary. The explicit
-1.7 support entry removes Event+'s game-version mismatch warning.
+All versions also load the root directory for shared language assets.
 
 ---
 
